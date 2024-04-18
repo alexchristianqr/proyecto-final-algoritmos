@@ -25,7 +25,7 @@ public class Candidato extends Persona {
         return idCandidato;
     }
 
-    public void setIdEmpleado(int idCandidato) {
+    public void setIdCandidato(int idCandidato) {
         this.idCandidato = idCandidato;
     }
 
