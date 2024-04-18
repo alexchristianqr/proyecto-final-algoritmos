@@ -1,4 +1,4 @@
-# Sistema de Evaluacion de Candidatos
+# Sistema de Evaluación de Candidatos
 
 Proyecto final de Algoritmos y Estructura de Datos de la UTP
 
