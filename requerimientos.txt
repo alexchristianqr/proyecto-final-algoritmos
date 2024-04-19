@@ -1,0 +1,51 @@
+[ CANDIDATO ]
+- Listar candidatos
+    - Filtrar por nombre
+- Registrar nuevo candidato
+    - Registrar información basica del candidato
+    - Subir y guardar archivo de antecendentes policiales
+    - Subir y guardar archivo de certificados de trabajo
+    - Subir y guardar archivo de CV
+    - Registrar experiencias laborales
+- Actualizar candidato
+    - Actualizar información basica del candidato
+    - Actualizar estado del candidato. 
+- Eliminar candidato
+
+[ RECLUTADOR ]
+- Listar reclutadores
+    - Filtrar por nombre
+- Registrar nuevo reclutador
+    - Registrar información basica del reclutador
+- Actualizar reclutador
+    - Actualizar información basica del reclutador
+- Eliminar reclutador
+
+[EMPLEOS]
+- Listar empleos
+    - Filtrar por fecha
+    - Filtrar por modalidad de trabajo
+- Registrar nuevo empleo
+- Actualizar empleo
+    - Actualizar disponiblidad definida por parte del reclutador
+    - Actualizar postulación por parte del candidato
+    - Bloquear candidato
+- Eliminar empleo
+
+[ POSTULACIONES ]
+- Listar postulaciones
+    - Filtrar por estado de postulación
+    - Filtrar por fecha de postulación
+    - Filtrar por empresa por parte del reclutador
+- Registrar nueva postulación
+    - Registrar una copia del empleo y marcarlo con el estado de "postulado" 
+- Actualizar postulación
+    - Actualizar estado de postulación "postulado" o "cancelado" por parte del candidato
+    - Bloquear candidato por parte del reclutador
+
+[ REPORTES ]
+- Obtener reporte de postulantes aceptados
+- Obtener reporte de postulantes bloqueados
+- Obtener reporte de postulantes aceptados comparativo con empleados actuales
+- Obtener reporte de postulantes por competencias especificas
+- Obtener reporte de postulantes según evaluación de diversidad y la inclusión 
