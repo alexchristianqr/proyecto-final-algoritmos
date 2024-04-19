@@ -1,11 +1,14 @@
 package views;
 
 import core.forms.BaseJdialog;
+import core.utils.Util;
 import java.util.Arrays;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DialogLogin extends BaseJdialog {
 
+    Util util = new Util();
     ViewMenuPrincipal viewMenuPrincipal;
 
     /**
@@ -150,23 +153,27 @@ public class DialogLogin extends BaseJdialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
         try {
+            // throw new Exception("Prueba error");
             btnLogin.setEnabled(false);
             String username = txtUsername.getText().toLowerCase();
             char[] password = txtPwd.getPassword();
 
             if (username.equalsIgnoreCase("candidato") && isPasswordCorrect(password, "candidato")) {
                 viewMenuPrincipal = new ViewMenuPrincipal(); // Crear objeto del JFrame principal
-                viewMenuPrincipal.setExtendedState(ViewMenuPrincipal.MAXIMIZED_BOTH);
+                // viewMenuPrincipal.setExtendedState(ViewMenuPrincipal.MAXIMIZED_BOTH);
                 viewMenuPrincipal.setVisible(true);// Visualizar frame
+                util.centerOnScreen(viewMenuPrincipal, true);
+                dispose();
             } else {
-                util.alertMessage();
+                util.alertMessage("Usuario o contraseña inválida. Intentalo nuevamente.");
+                btnLogin.setEnabled(true);
+                txtPwd.setText("");
+                txtPwd.requestFocus();
             }
 
-            dispose();
-        } catch (NullPointerException ex) {
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña inválida. Intententalo nuevamente.", "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            util.alertMessage();
             btnLogin.setEnabled(true);
             txtPwd.setText("");
             txtPwd.requestFocus();
