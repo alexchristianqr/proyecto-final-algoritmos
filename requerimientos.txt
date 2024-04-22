@@ -3,6 +3,7 @@
     - Filtrar por nombre
 - Registrar nuevo candidato
     - Registrar información basica del candidato
+    - Subir y guardar imagen del perfil
     - Subir y guardar archivo de antecendentes policiales
     - Subir y guardar archivo de certificados de trabajo
     - Subir y guardar archivo de CV
