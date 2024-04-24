@@ -81,8 +81,8 @@ public class Ejercicio06 {
 
     // Método para ordenar el arreglo utilizando el método de inserción y mostrar los cambios por fila
     public static void ordenarPorInsercionConMensajesYFilas(int[] arr) {
-        int n = arr.length;
-        for (int i = 1; i < n; ++i) {
+        int tamanoArreglo = arr.length;
+        for (int i = 1; i < tamanoArreglo; ++i) {
             int key = arr[i];
             int j = i - 1;
 
