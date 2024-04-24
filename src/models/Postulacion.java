@@ -1,8 +1,6 @@
 package models;
 
-import java.io.Serializable;
-
-public class Postulacion implements Serializable {
+public class Postulacion {
 
     private int idEmpleo;
     private Empleo empleo;
@@ -53,8 +51,6 @@ public class Postulacion implements Serializable {
     public void setReclutador(Reclutador reclutador) {
         this.reclutador = reclutador;
     }
-    
-    
 
     public int getIdEmpleo() {
         return idEmpleo;

@@ -1,8 +1,6 @@
 package models;
 
-import java.io.Serializable;
-
-public class Reclutador extends Persona implements Serializable {
+public class Reclutador extends Persona {
 
     private int idReclutador;
     private String empresa;

@@ -1,8 +1,6 @@
 package models;
 
-import java.io.Serializable;
-
-public class Empleo implements Serializable {
+public class Empleo {
 
     private String titulo;
     private String empresa;
