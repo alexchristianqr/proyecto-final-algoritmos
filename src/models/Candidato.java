@@ -1,8 +1,6 @@
 package models;
 
-import java.io.Serializable;
-
-public class Candidato extends Persona implements Serializable {
+public class Candidato extends Persona {
 
     private int idCandidato;
     private String imagenPerfil;

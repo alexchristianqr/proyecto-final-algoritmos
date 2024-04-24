@@ -3,8 +3,6 @@ package views;
 import core.forms.BaseJdialog;
 import core.utils.Util;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DialogLogin extends BaseJdialog {
 
@@ -41,9 +39,6 @@ public class DialogLogin extends BaseJdialog {
         } else {
             isCorrect = Arrays.equals(input, correctPassword);
         }
-
-        //Zero out the password.
-        Arrays.fill(correctPassword, '0');
 
         return isCorrect;
     }
@@ -161,7 +156,6 @@ public class DialogLogin extends BaseJdialog {
 
             if (username.equalsIgnoreCase("candidato") && isPasswordCorrect(password, "candidato")) {
                 viewMenuPrincipal = new ViewMenuPrincipal(); // Crear objeto del JFrame principal
-                // viewMenuPrincipal.setExtendedState(ViewMenuPrincipal.MAXIMIZED_BOTH);
                 viewMenuPrincipal.setVisible(true);// Visualizar frame
                 util.centerOnScreen(viewMenuPrincipal, true);
                 dispose();
