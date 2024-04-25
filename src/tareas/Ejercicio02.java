@@ -50,28 +50,28 @@ public class Ejercicio02 {
             int opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1: {
+                case 1:
                     System.out.println("\nDatos originales:");
                     mostrarNumeros(numerosOriginales);
-                }
-                case 2: {
+                    break;
+                case 2:
                     ordenarPorInsercionConMensajesYFilas(numeros);
                     ordenado = true;
                     System.out.println("\nEdades ordenadas por insercion.");
-                }
+                    break;
 
-                case 3: {
+                case 3:
                     if (ordenado) {
                         System.out.println("\nOrden final de las edades:");
                         mostrarNumeros(numeros);
                     }
-                }
-                case 4: {
+                    break;
+                case 4:
                     System.out.println("\nSaliendo del programa...");
                     return;
-                }
                 default:
                     System.out.println("\nOpcion no valida.");
+                    return;
             }
         }
     }
