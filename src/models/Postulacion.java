@@ -2,6 +2,7 @@ package models;
 
 public class Postulacion {
 
+    private int idPostulacion;
     private int idEmpleo;
     private Empleo empleo;
     private int idCandidato;
@@ -16,6 +17,7 @@ public class Postulacion {
     }
 
     public Postulacion(Postulacion postulacion) {
+        this.idPostulacion = postulacion.getIdPostulacion();
         this.idEmpleo = postulacion.getIdEmpleo();
         this.empleo = postulacion.getEmpleo();
         this.idCandidato = postulacion.getIdCandidato();
@@ -25,6 +27,14 @@ public class Postulacion {
         this.estado = postulacion.getEstado();// postulado|cancelado|aceptado|rechazado
         this.fechaCreado = postulacion.getFechaCreado();
         this.fechaActualizado = postulacion.getFechaActualizado();
+    }
+
+    public int getIdPostulacion() {
+        return idPostulacion;
+    }
+
+    public void setIdPostulacion(int idPostulacion) {
+        this.idPostulacion = idPostulacion;
     }
 
     public Empleo getEmpleo() {

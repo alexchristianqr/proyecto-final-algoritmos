@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class MysqlDBService {
 
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://127.0.0.1/dbhotel";
+    private static final String URL = "jdbc:mysql://127.0.0.1/dbpostulantes";
     private static final String USER = "root";
     private static final String PASSWORD = "";
     private Connection conn = null;
