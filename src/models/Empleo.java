@@ -2,6 +2,7 @@ package models;
 
 public class Empleo {
 
+    private int idReclutador;
     private String titulo;
     private String empresa;
     private String sueldo;
@@ -17,6 +18,7 @@ public class Empleo {
     }
 
     public Empleo(Empleo empleo) {
+        this.idReclutador = empleo.getIdReclutador();
         this.titulo = empleo.getTitulo();
         this.empresa = empleo.getEmpresa();
         this.estado = empleo.getEstado();
@@ -28,6 +30,14 @@ public class Empleo {
         this.fechaEliminado = empleo.getFechaEliminado();
     }
 
+    public int getIdReclutador() {
+        return idReclutador;
+    }
+
+    public void setIdReclutador(int idReclutador) {
+        this.idReclutador = idReclutador;
+    }
+
     public String getFechaEliminado() {
         return fechaEliminado;
     }
@@ -35,8 +45,6 @@ public class Empleo {
     public void setFechaEliminado(String fechaEliminado) {
         this.fechaEliminado = fechaEliminado;
     }
-    
-    
 
     public String getDescripcion() {
         return descripcion;
