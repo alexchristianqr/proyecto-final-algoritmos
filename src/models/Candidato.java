@@ -3,6 +3,8 @@ package models;
 public class Candidato extends Persona {
 
     private int idCandidato;
+    private int idUsuario;
+    private String aptitudes;
     private String imagenPerfil;
     private ExperienciaLaboral[] experienciaLaboral;
     private String pathCV;
@@ -14,11 +16,29 @@ public class Candidato extends Persona {
 
     public Candidato(Candidato candidato) {
         super(candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getNombre(), candidato.getApellidos(), candidato.getSexo(), candidato.getEdad(), candidato.getTelefono(), candidato.getEstado(), candidato.getFechaCreado(), candidato.getFechaActualizado(), candidato.getIdPersona());
+        this.idUsuario = candidato.getIdUsuario();
+        this.aptitudes = candidato.getAptitudes();
         this.imagenPerfil = candidato.getImagenPerfil();
         this.experienciaLaboral = candidato.getExperienciaLaboral();
         this.pathCV = candidato.getPathCV();
         this.pathCertificadoTrabajo = candidato.getPathCertificadoTrabajo();
         this.pathAntecedentePolicial = candidato.getPathAntecedentePolicial();
+    }
+
+    public String getAptitudes() {
+        return aptitudes;
+    }
+
+    public void setAptitudes(String aptitudes) {
+        this.aptitudes = aptitudes;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public int getIdCandidato() {
