@@ -8,12 +8,11 @@ public class Postulacion {
     private Candidato candidato;
     private int idReclutador;
     private Reclutador reclutador;
-    private String estado;// postulado|cancelado|bloqueado
+    private String estado;// postulado|en_proceso|contratado|cancelado|bloqueado
     private String fechaCreado;
     private String fechaActualizado;
 
     public Postulacion() {
-
     }
 
     public Postulacion(Postulacion postulacion) {
