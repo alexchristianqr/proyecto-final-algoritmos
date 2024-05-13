@@ -60,7 +60,8 @@ FROM empleos e
 JOIN postulaciones po ON po.id_empleo = e.id 
 JOIN candidatos c ON c.id = po.id_candidato 
 JOIN personas pe ON pe.id = c.id_persona
-WHERE po.estado NOT IN ('cancelado','rechazado','bloqueado');
+WHERE po.id_candidato = 1;
+-- WHERE po.estado NOT IN ('cancelado','rechazado','bloqueado');
 
 -- insertar
 INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado) VALUES (1, 1, 'postulado', NOW());

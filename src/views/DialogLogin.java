@@ -1,8 +1,10 @@
 package views;
 
 import core.forms.BaseJdialog;
+import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import java.util.Arrays;
+import models.Usuario;
 
 public class DialogLogin extends BaseJdialog {
 
@@ -159,6 +161,12 @@ public class DialogLogin extends BaseJdialog {
                 viewMenuPrincipal.setVisible(true);// Visualizar frame
                 util.centerOnScreen(viewMenuPrincipal, true);
                 dispose();
+
+                Usuario usuario = new Usuario();
+                usuario.setIdUsuario(1);
+                usuario.setNombres("Alex Quispe");
+                UsuarioThreadLocal.set(usuario);
+
             } else {
                 util.alertMessage("Usuario o contraseña inválida. Intentalo nuevamente.");
                 btnLogin.setEnabled(true);

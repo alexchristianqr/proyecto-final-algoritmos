@@ -1,6 +1,6 @@
 package models;
 
-public class Postulacion {
+public class Postulacion extends Empleo{
 
     private int idPostulacion;
     private int idEmpleo;
