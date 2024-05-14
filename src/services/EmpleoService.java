@@ -22,17 +22,18 @@ public class EmpleoService extends BaseService {
         db.cerrarConsulta();
     }
 
-    public List listarEmpleos(String[] columnNames, Object[] data) {
+    public List obtenerEmpleosPorReclutador(String[] columnNames, Object[] data) {
 
         List<Postulacion> lista = new ArrayList<>();
         Object[] parametrosSQL_1 = new Object[1];
 
         querySQL_1 = "SELECT e.id, CONCAT(pe.nombre,' ', pe.apellido) AS 'reclutador', e.titulo, e.empresa, e.sueldo, e.modalidad, COUNT(po.id) AS 'total_candidatos_postulados', e.fecha_creado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador JOIN personas pe ON pe.id = r.id_persona LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado') WHERE e.id_reclutador = ? GROUP BY e.id ";
-        parametrosSQL_1[0] = auth.getIdUsuario();
+        parametrosSQL_1[0] = auth.getIdReclutador();
 
         ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
         try {
+            System.out.println();
             for (int i = 0; i < columnNames.length; i++) {
                 System.out.print(columnNames[i].toUpperCase() + " / ");
             }
@@ -46,15 +47,14 @@ public class EmpleoService extends BaseService {
                 data[5] = rs.getString("modalidad");
                 data[6] = rs.getInt("total_candidatos_postulados");
                 data[7] = rs.getString("fecha_creado");
+
+                System.out.println();
+                for (int i = 0; i < data.length; i++) {
+                    System.out.print(data[i] + " / ");
+                }
             }
 
-            System.out.println();
-
-            for (int i = 0; i < data.length; i++) {
-                System.out.print(data[i] + " / ");
-            }
-
-            System.out.println();
+            System.out.print("\n");
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

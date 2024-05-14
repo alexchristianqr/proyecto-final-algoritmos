@@ -22,7 +22,7 @@ public class MysqlDBService {
 
     private Connection conectar() {
         try {
-            System.out.println("[MysqlDBService.conectar()]: ");
+            // System.out.println("[MysqlDBService.conectar()]: ");
 
             Class.forName(DRIVER_NAME);
             return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -47,7 +47,7 @@ public class MysqlDBService {
     public void cerrarConsulta() {
         if (stmt != null) {
 
-            System.out.println("[MysqlDBService.cerrarConsulta()]: ");
+            // System.out.println("[MysqlDBService.cerrarConsulta()]: ");
 
             try {
                 stmt.close();
@@ -62,12 +62,13 @@ public class MysqlDBService {
             int tamano = parametros.length;
             stmt = conn.prepareStatement(sql);
 
-            System.out.println("[MysqlDBService.queryConsultar()] QUERY: " + stmt.toString().replace("com.mysql.cj.jdbc.ClientPreparedStatement: ", ""));
-
             for (int i = 0; i < tamano; i++) {
-                System.out.println(parametros[i]);
+               //  System.out.println(parametros[i]);
                 stmt.setObject(i + 1, parametros[i]);
             }
+            
+            System.out.print("[MysqlDBService.queryConsultar()] QUERY: " + stmt.toString().replace("com.mysql.cj.jdbc.ClientPreparedStatement: ", ""));
+            
             ResultSet rs = stmt.executeQuery();
 
             return rs;

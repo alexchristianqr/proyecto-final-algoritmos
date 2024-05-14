@@ -1,9 +1,7 @@
 package controllers;
 
-import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import models.Postulacion;
-import models.Usuario;
 import views.DialogLogin;
 
 public class Main {
@@ -12,46 +10,48 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) {
-//        DialogLogin dialogLogin = new DialogLogin();
-//        util.centerOnScreen(dialogLogin, true);
-//        dialogLogin.setVisible(true);
+        /*DialogLogin dialogLogin = new DialogLogin();
+        util.centerOnScreen(dialogLogin, true);
+        dialogLogin.setVisible(true);*/
 
         testController();
+        testController2();
     }
 
-    /**
-     * 1: ID prueba de un Candidato
-     * 1 y 2: IDs prueba de un Reclutador
-     * @param idUsuario
-     */
-    public static void testLogin(int idUsuario) {
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(idUsuario);
-        usuario.setNombres("Alex Quispe");
-        UsuarioThreadLocal.set(usuario);
+    public static void testLogin(String rol, String username, String pwd) {
+//        UsuarioThreadLocal.unset();
+        UsuarioController usuarioController = new UsuarioController();
+        usuarioController.login(rol, username, pwd);
+
+//        Usuario usuario = new Usuario();
+//        usuario.setIdCandidato(1);
+//        usuario.setIdReclutador(2);
+//        UsuarioThreadLocal.set(usuario);
     }
-    
+
     public static void testController() {
-        testLogin(1);
-        
+        testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+//        testLogin("candidato", "dante.inigo@gmail.com", "candidato2024");
+
         PostulacionController postulacionController = new PostulacionController();
-        EmpleoController empleoController = new EmpleoController();
-        CandidatoController candiController = new CandidatoController();
-        
+
         // POSTULACION DE UN CANDIDATO
         Postulacion postulacion = new Postulacion();
         postulacion.setIdPostulacion(1);
         postulacion.setEstado("postulado");
         postulacionController.actualizarEstadoPostulacion(postulacion);
-        
+
         // MIS POSTULACIONES
         postulacionController.listarPostulaciones("postulado");
-        
-        testLogin(4);
-        
+    }
+
+    public static void testController2() {
+        testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
+        // testLogin("reclutador", "susan.torres@utp.edu.pe", "reclutador2024");
+
+        EmpleoController empleoController = new EmpleoController();
+
         // MIS PUBLICACIONES
         empleoController.listarPublicaciones();
-
-
     }
 }
