@@ -19,19 +19,13 @@ public class Main {
     }
 
     public static void testLogin(String rol, String username, String pwd) {
-//        UsuarioThreadLocal.unset();
         UsuarioController usuarioController = new UsuarioController();
         usuarioController.login(rol, username, pwd);
-
-//        Usuario usuario = new Usuario();
-//        usuario.setIdCandidato(1);
-//        usuario.setIdReclutador(2);
-//        UsuarioThreadLocal.set(usuario);
     }
 
     public static void testController() {
         testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
-//        testLogin("candidato", "dante.inigo@gmail.com", "candidato2024");
+        // testLogin("candidato", "dante.inigo@gmail.com", "candidato2024");
 
         PostulacionController postulacionController = new PostulacionController();
 
