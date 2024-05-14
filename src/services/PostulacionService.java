@@ -64,10 +64,16 @@ public class PostulacionService extends BaseService {
     public List listarPostulaciones(String[] columnNames, Object[] data, String estado) {
 
         List<Postulacion> lista = new ArrayList<>();
-        Postulacion postulacion = new Postulacion();
+        Object[] parametrosSQL_1 = new Object[2];
 
-        querySQL_1 = "SELECT e.id, e.titulo, e.empresa, e.sueldo, e.modalidad, po.estado, CONCAT(pe.nombre, ' ', pe.apellido) AS 'candidato', po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato JOIN personas pe ON pe.id = c.id_persona WHERE po.id_candidato = ?;";
-        Object[] parametrosSQL_1 = {auth.getIdUsuario()};
+        querySQL_1 = "SELECT e.id, e.titulo, e.empresa, e.sueldo, e.modalidad, po.estado, CONCAT(pe.nombre, ' ', pe.apellido) AS 'candidato', po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato JOIN personas pe ON pe.id = c.id_persona WHERE po.id_candidato = ? ";
+        parametrosSQL_1[0] = auth.getIdUsuario();
+
+        if (estado != null) {
+            querySQL_1 += " AND po.estado = ? ";
+            parametrosSQL_1[1] = estado;
+        }
+
         ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
         try {
@@ -84,10 +90,6 @@ public class PostulacionService extends BaseService {
                 data[5] = rs.getString("estado");
                 data[6] = rs.getString("candidato");
                 data[7] = rs.getString("fecha_creado");
-                
-                postulacion.setIdPostulacion(rs.getInt("id"));
-                postulacion.setTitulo(rs.getString("titulo"));
-                lista.add(postulacion);
             }
 
             System.out.println();
@@ -103,6 +105,7 @@ public class PostulacionService extends BaseService {
         }
 
         db.cerrarConsulta();
+        
         return lista;
     }
 }

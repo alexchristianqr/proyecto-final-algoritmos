@@ -2,6 +2,7 @@ package controllers;
 
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
+import models.Postulacion;
 import models.Usuario;
 import views.DialogLogin;
 
@@ -18,16 +19,39 @@ public class Main {
         testController();
     }
 
-    public static void testLogin() {
+    /**
+     * 1: ID prueba de un Candidato
+     * 1 y 2: IDs prueba de un Reclutador
+     * @param idUsuario
+     */
+    public static void testLogin(int idUsuario) {
         Usuario usuario = new Usuario();
-        usuario.setIdUsuario(1);
+        usuario.setIdUsuario(idUsuario);
         usuario.setNombres("Alex Quispe");
         UsuarioThreadLocal.set(usuario);
     }
     
     public static void testController() {
-        testLogin();
+        testLogin(1);
+        
         PostulacionController postulacionController = new PostulacionController();
+        EmpleoController empleoController = new EmpleoController();
+        CandidatoController candiController = new CandidatoController();
+        
+        // POSTULACION DE UN CANDIDATO
+        Postulacion postulacion = new Postulacion();
+        postulacion.setIdPostulacion(1);
+        postulacion.setEstado("postulado");
+        postulacionController.actualizarEstadoPostulacion(postulacion);
+        
+        // MIS POSTULACIONES
         postulacionController.listarPostulaciones("postulado");
+        
+        testLogin(4);
+        
+        // MIS PUBLICACIONES
+        empleoController.listarPublicaciones();
+
+
     }
 }
