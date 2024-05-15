@@ -15,8 +15,8 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
         service.crearPostulacion(postulacion);
     }
 
-    public void actualizarEstadoPostulacion(Postulacion postulacion) {
-        service.actualizarPostulacion(postulacion, "estado");
+    public void postularEmpleo(Postulacion postulacion) {
+        service.postular(postulacion);
     }
 
     public DefaultTableModel tablaPostulaciones(String estado) {

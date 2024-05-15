@@ -1,10 +1,12 @@
-USE dbprueba;
+USE dbpostulantes;
 
 -- -----------------
 -- Login de Usuarios
 -- -----------------
 
 SELECT * FROM usuarios;
+SELECT * FROM candidatos;
+SELECT * FROM reclutadores;
 
 SELECT 
 u.*,
@@ -61,7 +63,7 @@ FROM empleos e
 JOIN postulaciones po ON po.id_empleo = e.id 
 JOIN candidatos c ON c.id = po.id_candidato 
 JOIN personas pe ON pe.id = c.id_persona
-WHERE po.id_candidato = 2;
+WHERE po.id_candidato = 1;
 -- WHERE po.estado NOT IN ('cancelado','rechazado','bloqueado');
 
 -- insertar
@@ -69,6 +71,12 @@ INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado) VALUES
 INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado) VALUES (2, 2, 'postulado', NOW());
 
 -- actualizar
+UPDATE postulaciones JOIN empleos ON empleos.id = postulaciones.id_empleo AND empleos.estado = 'activo'
+SET postulaciones.estado = 'contratado' WHERE postulaciones.id = 1;
+
+UPDATE postulaciones JOIN empleos ON empleos.id = postulaciones.id_empleo AND empleos.estado = 'disponible'
+SET postulaciones.estado = 'contratado' WHERE postulaciones.id = 1;
+
 UPDATE postulaciones SET estado = 'postulado' WHERE id = 1;
 UPDATE postulaciones SET estado = 'en_proceso' WHERE id = 1;
 UPDATE postulaciones SET estado = 'contratado' WHERE id = 1;
@@ -97,7 +105,7 @@ FROM empleos e
 JOIN reclutadores r ON r.id = e.id_reclutador
 JOIN personas pe ON pe.id = r.id_persona 
 LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado')
-WHERE e.id_reclutador = 2
+WHERE e.id_reclutador = 1
 GROUP BY 
 e.id;
 
@@ -127,7 +135,7 @@ WHERE e.id = 1;
 -- where e.id = 1 and lower(c.aptitudes) like '%javascript%'
 
 -- Filtro: candidato si tiene experiencia
--- where e.id = 1 and cel.id_candidato is not null and lower(c.aptitudes) like '%javascript%';
+-- where e.id = 1 and cel.id_candidato is not null -- and lower(c.aptitudes) like '%javascript%';
 
 -- Filtro: candidato por su edad
 -- where e.id = 1 and p.edad >= 18;
