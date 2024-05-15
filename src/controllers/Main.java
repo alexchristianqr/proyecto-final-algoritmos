@@ -14,8 +14,8 @@ public class Main {
         util.centerOnScreen(dialogLogin, true);
         dialogLogin.setVisible(true);*/
 
-//        testController();
-//        testController2();
+        testController();
+        testController2();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
