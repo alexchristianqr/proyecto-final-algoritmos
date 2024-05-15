@@ -10,12 +10,12 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) {
-        /*DialogLogin dialogLogin = new DialogLogin();
+        DialogLogin dialogLogin = new DialogLogin();
         util.centerOnScreen(dialogLogin, true);
-        dialogLogin.setVisible(true);*/
+        dialogLogin.setVisible(true);
 
-        testController();
-        testController2();
+//        testController();
+//        testController2();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
