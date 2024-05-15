@@ -131,4 +131,3 @@ WHERE e.id = 1;
 
 -- Filtro: candidato por su edad
 -- where e.id = 1 and p.edad >= 18;
-

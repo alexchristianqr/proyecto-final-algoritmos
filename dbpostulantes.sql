@@ -210,7 +210,10 @@ VALUES (2, 'SR Frontend Angular', 'UTP', '7500', 'presencial', 'Encargado de las
 INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado)
 VALUES (1, 1, 'postulado', NOW());
 INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado)
+VALUES (1, 2, 'postulado', NOW());
+INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado)
 VALUES (2, 1, 'postulado', NOW());
+
 
 -- blacklist
 INSERT INTO blacklist (id_candidato, id_empleo, estado, fecha_creado)
