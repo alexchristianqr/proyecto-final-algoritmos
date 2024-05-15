@@ -1,8 +1,7 @@
 package controllers;
 
-import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
-import models.Usuario;
+import models.Postulacion;
 import views.DialogLogin;
 
 public class Main {
@@ -11,23 +10,42 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) {
-//        DialogLogin dialogLogin = new DialogLogin();
-//        util.centerOnScreen(dialogLogin, true);
-//        dialogLogin.setVisible(true);
+        /*DialogLogin dialogLogin = new DialogLogin();
+        util.centerOnScreen(dialogLogin, true);
+        dialogLogin.setVisible(true);*/
 
         testController();
+        testController2();
     }
 
-    public static void testLogin() {
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(1);
-        usuario.setNombres("Alex Quispe");
-        UsuarioThreadLocal.set(usuario);
+    public static void testLogin(String rol, String username, String pwd) {
+        UsuarioController usuarioController = new UsuarioController();
+        usuarioController.login(rol, username, pwd);
     }
-    
+
     public static void testController() {
-        testLogin();
+        testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+        // testLogin("candidato", "dante.inigo@gmail.com", "candidato2024");
+
         PostulacionController postulacionController = new PostulacionController();
+
+        // POSTULACION DE UN CANDIDATO
+        Postulacion postulacion = new Postulacion();
+        postulacion.setIdPostulacion(1);
+        postulacion.setEstado("postulado");
+        postulacionController.actualizarEstadoPostulacion(postulacion);
+
+        // MIS POSTULACIONES
         postulacionController.listarPostulaciones("postulado");
+    }
+
+    public static void testController2() {
+        testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
+        // testLogin("reclutador", "susan.torres@utp.edu.pe", "reclutador2024");
+
+        EmpleoController empleoController = new EmpleoController();
+
+        // MIS PUBLICACIONES
+        empleoController.listarPublicaciones();
     }
 }

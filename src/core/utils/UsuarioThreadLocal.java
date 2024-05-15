@@ -2,12 +2,12 @@ package core.utils;
 
 import models.Usuario;
 
-public class UsuarioThreadLocal  {
+public class UsuarioThreadLocal {
 
-     public static final ThreadLocal THREAD_LOCAL = new ThreadLocal();
+    public static final ThreadLocal THREAD_LOCAL = new ThreadLocal();
 
-    public static void set(Usuario user) {
-        THREAD_LOCAL.set(user);
+    public static void set(Usuario usuario) {
+        THREAD_LOCAL.set(usuario);
     }
 
     public static void unset() {

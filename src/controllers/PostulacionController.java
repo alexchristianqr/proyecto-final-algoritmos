@@ -19,13 +19,18 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
         service.actualizarPostulacion(postulacion, "estado");
     }
 
-    public void listarPostulaciones(String estado) {
-//        DefaultTableModel modelo;
-        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Estado", "Candidato","Fecha creado"};
+    public DefaultTableModel tablaPostulaciones(String estado) {
+        DefaultTableModel modelo;
+        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Estado", "Candidato", "Fecha creado"};
         Object[] data = new Object[columnNames.length];
-//        modelo = new DefaultTableModel(null, columnNames);
-        service.listarPostulaciones(columnNames,data, estado);
-//        System.out.println(modelo);
-//        return modelo;
+        modelo = new DefaultTableModel(null, columnNames);
+        modelo = service.tablaPostulaciones(modelo, data, estado);
+        return modelo;
+    }
+
+    public void listarPostulaciones(String estado) {
+        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Estado", "Candidato", "Fecha creado"};
+        Object[] data = new Object[columnNames.length];
+        service.listarPostulaciones(columnNames, data, estado);
     }
 }
