@@ -21,16 +21,22 @@ public class PostulacionService extends BaseService {
         db.cerrarConsulta();
     }
 
+    public void postular(Postulacion postulacion) {
+        querySQL_1 = "UPDATE postulaciones p JOIN empleos e ON e.id = p.id_empleo AND e.estado = 'activo' SET p.estado = ? WHERE p.id = ?; ";
+        Object[] parametrosSQL_1 = {postulacion.getEstado(), postulacion.getIdPostulacion()};
+        db.queryActualizar(querySQL_1, parametrosSQL_1);
+        db.cerrarConsulta();
+    }
+
     public void actualizarPostulacion(Postulacion postulacion, String columna) {
 
         if (columna == null) {
             util.alertMessage("El campo columna es necesario");
         }
 
-        querySQL_1 = String.format("UPDATE postulaciones SET %s = ? WHERE id = ?", columna);
+        querySQL_1 = String.format("UPDATE postulaciones p JOIN empleos e ON e.id = p.id_empleo AND e.estado = 'activo' SET p.%s = ? WHERE p.id = ?; ", columna);
         Object[] parametrosSQL_1 = {postulacion.getEstado(), postulacion.getIdPostulacion()};
         db.queryActualizar(querySQL_1, parametrosSQL_1);
-
         db.cerrarConsulta();
     }
 
@@ -57,6 +63,7 @@ public class PostulacionService extends BaseService {
         }
 
         db.cerrarConsulta();
+        
         return modelo;
     }
 

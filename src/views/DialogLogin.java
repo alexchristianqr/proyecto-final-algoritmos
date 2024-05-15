@@ -10,6 +10,7 @@ public class DialogLogin extends BaseJdialog {
 
     Util util = new Util();
     ViewMenuPrincipal viewMenuPrincipal;
+    RegistroPostulacion registroPostulacion = new RegistroPostulacion();
 
     /**
      * Creates new form DialogLogin
@@ -74,12 +75,6 @@ public class DialogLogin extends BaseJdialog {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Contraseña");
-
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
-            }
-        });
 
         btnLogin.setBackground(new java.awt.Color(153, 153, 153));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -155,10 +150,6 @@ public class DialogLogin extends BaseJdialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         try {
@@ -195,7 +186,8 @@ public class DialogLogin extends BaseJdialog {
 
     private void btnCrearCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCuentaMouseClicked
         // TODO add your handling code here:
-        
+        this.setVisible(false);
+        registroPostulacion.setVisible(true);
     }//GEN-LAST:event_btnCrearCuentaMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

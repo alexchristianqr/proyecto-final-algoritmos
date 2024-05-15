@@ -24,22 +24,24 @@ public class Main {
     }
 
     public static void testController() {
+        // INCIO DE SESION DE USUARIO CANDIDATO
         testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
         // testLogin("candidato", "dante.inigo@gmail.com", "candidato2024");
 
         PostulacionController postulacionController = new PostulacionController();
 
-        // POSTULACION DE UN CANDIDATO
+        // POSTULACION DE UN CANDIDATO A UN EMPLEO
         Postulacion postulacion = new Postulacion();
         postulacion.setIdPostulacion(1);
         postulacion.setEstado("postulado");
-        postulacionController.actualizarEstadoPostulacion(postulacion);
+        postulacionController.postularEmpleo(postulacion);
 
         // MIS POSTULACIONES
         postulacionController.listarPostulaciones("postulado");
     }
 
     public static void testController2() {
+        // INCIO DE SESION DE USUARIO RECLUTADOR
         testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
         // testLogin("reclutador", "susan.torres@utp.edu.pe", "reclutador2024");
 
