@@ -22,6 +22,9 @@ FROM usuarios u
 JOIN reclutadores r ON r.id_usuario = u.id AND r.estado = 'activo'
 WHERE u.username = 'maria.gonzales@utp.edu.pe' AND u.pwd = 'reclutador2024' AND u.estado = 'activo' LIMIT 1;
 
+-- actualizar
+UPDATE usuarios SET usuarios.pwd = 'candidato2024v2' WHERE usuarios.id = 1 AND usuarios.username = 'alex.quispe@gmail.com';
+
 -- -------------------------
 -- Información del Candidato
 -- -------------------------

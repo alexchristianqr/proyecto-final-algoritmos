@@ -1,6 +1,11 @@
 package controllers;
 
+import core.services.ExportService;
+import core.services.MysqlDBService;
 import core.utils.Util;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.concurrent.ExecutionException;
 import models.Postulacion;
 import views.DialogLogin;
 
@@ -9,13 +14,22 @@ public class Main {
     public static Util util = new Util();
 
     // Ejecutar programa, mostrando la vista de Login
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         /*DialogLogin dialogLogin = new DialogLogin();
         util.centerOnScreen(dialogLogin, true);
         dialogLogin.setVisible(true);*/
 
-        testController();
-        testController2();
+        // testController();
+        // testController2();
+        try {
+
+            MysqlDBService db = new MysqlDBService();
+            db.stmt = db.conn.prepareStatement("select * from usuarios");
+            ExportService.exportToExcel(db.stmt, "reporte_usuarios_01");
+
+        } catch (InterruptedException | SQLException | ExecutionException e) {
+        }
+
     }
 
     public static void testLogin(String rol, String username, String pwd) {

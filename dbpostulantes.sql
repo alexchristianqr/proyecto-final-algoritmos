@@ -23,13 +23,14 @@ CREATE TABLE usuarios
     nombres VARCHAR(100) NOT NULL,
     apellidos VARCHAR(100) NOT NULL,
     rol ENUM('candidato','reclutador'),
-    username VARCHAR(100),
-    pwd VARCHAR(250),
-    estado ENUM('activo','inactivo'),
+    username VARCHAR(100) NOT NULL,
+    pwd VARCHAR(250) NOT NULL,
+    estado ENUM('activo','inactivo') NOT NULL,
     fecha_creado DATETIME NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT username UNIQUE (username)
 );
 
 -- # crear tabla personas
@@ -43,10 +44,11 @@ CREATE TABLE personas
     sexo CHAR NOT NULL,
     edad VARCHAR(5),
     telefono VARCHAR(30),
-    estado ENUM('activo','inactivo'),
+    estado ENUM('activo','inactivo') NOT NULL,
     fecha_creado DATETIME NOT NULL,
     fecha_actualizado DATETIME,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT nrodocumento UNIQUE (nrodocumento)
 );
 
 -- # crear tabla candidatos
@@ -60,7 +62,7 @@ CREATE TABLE candidatos
     path_curriculum_vitae VARCHAR(250),
     path_certificado_trabajo VARCHAR(250),
     path_antecendente_policial VARCHAR(250),
-    estado ENUM('activo','inactivo'),
+    estado ENUM('activo','inactivo') NOT NULL,
     fecha_creado DATETIME NOT NULL,
     fecha_actualizado DATETIME,
     PRIMARY KEY (id),
@@ -77,7 +79,7 @@ CREATE TABLE experiencias_laborales
     empresa VARCHAR(100) NOT NULL,
     fecha_inicio VARCHAR(50) NOT NULL,
     fecha_fin VARCHAR(50) NOT NULL,
-    estado ENUM('activo','inactivo'),
+    estado ENUM('activo','inactivo') NOT NULL,
     fecha_creado DATETIME NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
@@ -100,7 +102,7 @@ CREATE TABLE reclutadores
     id INT NOT NULL AUTO_INCREMENT,
     id_persona INT NOT NULL,
     id_usuario INT NOT NULL,
-    estado ENUM('activo','inactivo'),
+    estado ENUM('activo','inactivo') NOT NULL,
     fecha_creado DATETIME NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
@@ -117,9 +119,9 @@ CREATE TABLE empleos
     titulo VARCHAR(250) NOT NULL,
     empresa VARCHAR(250) NOT NULL,
     sueldo VARCHAR(30) NOT NULL,
-    modalidad ENUM('remoto','presencial'),
+    modalidad ENUM('remoto','presencial') NOT NULL,
     descripcion TEXT NOT NULL,
-    estado ENUM('activo','disponible','indisponible','eliminado'),
+    estado ENUM('activo','disponible','indisponible','eliminado') NOT NULL,
     fecha_creado DATETIME NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
@@ -133,7 +135,7 @@ CREATE TABLE postulaciones
     id INT NOT NULL AUTO_INCREMENT,
     id_candidato INT NOT NULL,
     id_empleo INT NOT NULL,
-    estado ENUM('postulado','en_proceso','contratado','cancelado','bloqueado'),
+    estado ENUM('postulado','en_proceso','contratado','cancelado','bloqueado') NOT NULL,
     fecha_creado DATETIME NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
@@ -146,7 +148,7 @@ CREATE TABLE blacklist
 (
     id_candidato INT NOT NULL,
     id_empleo INT NOT NULL,
-    estado ENUM('activo','inactivo','eliminado'),
+    estado ENUM('activo','inactivo','eliminado') NOT NULL,
     fecha_creado DATETIME NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,

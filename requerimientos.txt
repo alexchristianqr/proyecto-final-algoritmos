@@ -1,17 +1,24 @@
+[ LOGIN ]
+- Iniciar sesión de usaurio
+- Validar rol
+- Registrar usuario
+- Recuperar contraseña
+
 [ CANDIDATO ]
 - Listar candidatos
+    - Filtrar por fecha de creación
     - Filtrar por nombre
-- Registrar nuevo candidato
+    - Filtrar por apellido
+    - Filtrar por estado
+- Registrar candidato
     - Registrar información basica del candidato
     - Subir y guardar imagen del perfil
-    - Subir y guardar archivo de antecendentes policiales
     - Subir y guardar archivo de certificados de trabajo
     - Subir y guardar archivo de CV
     - Registrar experiencias laborales
 - Actualizar candidato
     - Actualizar información basica del candidato
-    - Actualizar estado del candidato. 
-- Eliminar candidato
+    - Actualizar estado del candidato
 
 [ RECLUTADOR ]
 - Listar reclutadores
@@ -20,7 +27,6 @@
     - Registrar información basica del reclutador
 - Actualizar reclutador
     - Actualizar información basica del reclutador
-- Eliminar reclutador
 
 [EMPLEOS]
 - Listar empleos
@@ -31,14 +37,13 @@
     - Actualizar disponiblidad definida por parte del reclutador
     - Actualizar postulación por parte del candidato
     - Bloquear candidato
-- Eliminar empleo
 
 [ POSTULACIONES ]
 - Listar postulaciones
     - Filtrar por estado de postulación
     - Filtrar por fecha de postulación
     - Filtrar por empresa por parte del reclutador
-- Registrar nueva postulación
+- Registrar postulación
     - Registrar una copia del empleo y marcarlo con el estado de "postulado" 
 - Actualizar postulación
     - Actualizar estado de postulación "postulado" o "cancelado" por parte del candidato

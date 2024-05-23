@@ -1,6 +1,6 @@
 package services;
 
-import core.db.MysqlDBService;
+import core.services.MysqlDBService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import models.Usuario;
