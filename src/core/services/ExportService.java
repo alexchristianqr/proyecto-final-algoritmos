@@ -17,11 +17,16 @@ public class ExportService {
     }
 
     private static void prepareFile(PreparedStatement stmt, String filename, String fileExtension) throws IOException, InterruptedException, ExecutionException {
-        File fileDownload = new File("D:\\Apps\\src\\src-utp\\proyecto-final-algoritmos\\src\\exports\\" + filename + fileExtension);
+        String basePath = "D:\\Apps\\src\\src-utp\\proyecto-final-algoritmos\\src\\exports\\";
+        File fileDownload = new File(basePath + filename + fileExtension);
         exportFile(stmt, fileDownload);
     }
 
     private static void exportFile(PreparedStatement stmt, File fileDownload) throws IOException, InterruptedException, ExecutionException {
+        /*
+            Docs: https://firegloves.github.io/MemPOI/
+        */
+        
         MemPOI memPOI = MempoiBuilder.aMemPOI()
                 .withFile(fileDownload)
                 .addMempoiSheet(new MempoiSheet(stmt))

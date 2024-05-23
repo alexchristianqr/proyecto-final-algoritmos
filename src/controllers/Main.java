@@ -21,14 +21,7 @@ public class Main {
 
         // testController();
         // testController2();
-        try {
-
-            MysqlDBService db = new MysqlDBService();
-            db.stmt = db.conn.prepareStatement("select * from usuarios");
-            ExportService.exportToExcel(db.stmt, "reporte_usuarios_01");
-
-        } catch (InterruptedException | SQLException | ExecutionException e) {
-        }
+        testReporte();
 
     }
 
@@ -63,5 +56,18 @@ public class Main {
 
         // MIS PUBLICACIONES
         empleoController.listarPublicaciones();
+    }
+
+    public static void testReporte() throws IOException {
+        try {
+            String sql = "select * from usuarios where id = 1";
+            
+            MysqlDBService db = new MysqlDBService();
+            db.stmt = db.conn.prepareStatement(sql);
+            
+            ExportService.exportToExcel(db.stmt, "reporte_de_usuarios_01");
+
+        } catch (InterruptedException | SQLException | ExecutionException e) {
+        }
     }
 }
