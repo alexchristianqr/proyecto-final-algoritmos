@@ -3,7 +3,6 @@ USE dbpostulantes;
 -- -----------------
 -- Login de Usuarios
 -- -----------------
-
 SELECT * FROM usuarios;
 SELECT * FROM candidatos;
 SELECT * FROM reclutadores;
@@ -25,10 +24,9 @@ WHERE u.username = 'maria.gonzales@utp.edu.pe' AND u.pwd = 'reclutador2024' AND 
 -- actualizar
 UPDATE usuarios SET usuarios.pwd = 'candidato2024v2' WHERE usuarios.id = 1 AND usuarios.username = 'alex.quispe@gmail.com';
 
--- -------------------------
--- Información del Candidato
--- -------------------------
-
+-- ---------
+-- CANDIDATO
+-- ---------
 SELECT 
 c.id, 
 c.id_persona, 
@@ -47,9 +45,8 @@ JOIN candidatos_experiencias_laborales cel ON cel.id_experiencia_laboral = el.id
 WHERE cel.id_candidato = 1;
 
 -- -----------------
--- Mis Postulaciones
+-- MIS POSTULACIONES
 -- -----------------
-
 SELECT * FROM empleos;
 SELECT * FROM postulaciones;
 
@@ -81,14 +78,15 @@ UPDATE postulaciones JOIN empleos ON empleos.id = postulaciones.id_empleo AND em
 SET postulaciones.estado = 'contratado' WHERE postulaciones.id = 1;
 
 UPDATE postulaciones SET estado = 'postulado' WHERE id = 1;
-UPDATE postulaciones SET estado = 'en_proceso' WHERE id = 1;
+UPDATE postulaciones SET estado = 'contactado' WHERE id = 1;
+UPDATE postulaciones SET estado = 'entrevistado' WHERE id = 1;
 UPDATE postulaciones SET estado = 'contratado' WHERE id = 1;
 UPDATE postulaciones SET estado = 'cancelado' WHERE id = 1;
 UPDATE postulaciones SET estado = 'rechazado' WHERE id = 1;
 UPDATE postulaciones SET estado = 'bloqueado' WHERE id = 1;
 
 -- -----------------
--- Mis Publicaciones
+-- MIS PUBLICACIONES
 -- -----------------
 SELECT * FROM postulaciones;
 SELECT * FROM candidatos;
@@ -131,14 +129,81 @@ JOIN personas p ON p.id = c.id_persona
 LEFT JOIN candidatos_experiencias_laborales cel ON cel.id_candidato = c.id 
 LEFT JOIN experiencias_laborales el ON el.id = cel.id_experiencia_laboral
 JOIN personas pe ON pe.id = c.id_persona
--- // Mostrar un empleo y sus candidatos postulados
+-- Filtro: ID empleo
 WHERE e.id = 1;
-
 -- Filtro: candidato que tiene una aptitud en especifica
--- where e.id = 1 and lower(c.aptitudes) like '%javascript%'
-
+WHERE e.id = 1 AND LOWER(c.aptitudes) LIKE '%javascript%';
 -- Filtro: candidato si tiene experiencia
--- where e.id = 1 and cel.id_candidato is not null -- and lower(c.aptitudes) like '%javascript%';
-
+WHERE e.id = 1 AND cel.id_candidato IS NOT NULL; -- and lower(c.aptitudes) like '%javascript%';
 -- Filtro: candidato por su edad
--- where e.id = 1 and p.edad >= 18;
+WHERE e.id = 1 AND p.edad >= 18;
+
+-- ------------------------
+-- ACTUALIZAR EMPLEO ACTIVO
+-- ------------------------
+SELECT * FROM empleos;
+UPDATE empleos e SET e.estado = 'disponible' WHERE e.id = 1 AND e.estado = 'activo';
+
+-- ---------------------------
+-- MOSTRAR EMPLEOS DISPONIBLES
+-- ---------------------------
+SELECT * FROM empleos;
+SELECT * 
+FROM empleos e
+JOIN postulaciones p ON p.id_empleo = e.id AND e.estado IN ('disponible');
+
+-- ---------------------
+-- FINALIZAR PUBLICACION
+-- ---------------------
+SELECT * FROM empleos;
+UPDATE empleos e SET e.estado = 'finalizado' WHERE e.id = 1 AND e.estado = 'disponible';
+
+-- -----------------------------
+-- ENVIAR FEEDBACK PERSONALIZADO
+-- -----------------------------
+SELECT * FROM postulaciones;
+UPDATE postulaciones p JOIN empleos e ON e.id = p.id_empleo AND e.estado = 'finalizado'
+SET p.feedback = 'Asunto: Resultado del proceso de selección para [nombre del puesto]
+
+Estimado/a [Nombre del Candidato],
+
+Espero que te encuentres bien. Quería agradecerte por tu interés en la posición de [nombre del puesto] en nuestra empresa. Hemos evaluado cuidadosamente todas las candidaturas recibidas y lamentablemente, en esta ocasión, hemos decidido no proceder con tu candidatura.
+
+Quiero enfatizar que tu perfil es valioso y que apreciamos el tiempo y esfuerzo que invertiste en el proceso de selección. Sin embargo, hemos optado por avanzar con otro candidato que se ajusta más a nuestras necesidades actuales.
+
+A continuación, te proporciono algunos comentarios constructivos sobre tu candidatura:
+
+Fortalezas:
+[Mencionar aspectos positivos específicos de la candidatura, como habilidades técnicas, experiencia relevante, etc.]
+Áreas de mejora:
+[Identificar áreas en las que el candidato podría mejorar, como habilidades específicas, experiencia adicional, etc.]
+Feedback adicional:
+[Cualquier otra observación o consejo que puedas ofrecer al candidato para futuras oportunidades.]
+Agradecemos nuevamente tu interés en nuestra empresa y te deseamos mucho éxito en tu búsqueda de empleo. No dudes en mantenernos informados sobre tu carrera profesional, ya que podríamos tener futuras oportunidades que se ajusten a tu perfil.
+
+Atentamente,
+
+[Tu Nombre] [Nombre del Puesto] [Nombre de la Empresa] [Tu Correo Electrónico] [Tu Número de Teléfono]
+
+Recuerda que el feedback constructivo es valioso para el crecimiento profesional de los candidatos. Siempre es importante ser respetuoso y considerado al comunicar una decisión de rechazo. ¡Buena suerte en tus futuras oportunidades!' 
+WHERE p.id = 1 AND p.estado = 'entrevistado';
+
+-- -----------------------------
+-- ENVIAR FEEDBACK GENERICO
+-- -----------------------------
+SELECT * FROM postulaciones;
+UPDATE postulaciones p JOIN empleos e ON e.id = p.id_empleo AND e.estado = 'finalizado'
+SET p.feedback = 'Asunto: Resultado de la selección
+
+Estimado/a [Nombre del Candidato],
+
+Agradecemos tu interés en nuestra empresa y tu participación en el proceso de selección. Lamentablemente, en esta ocasión no avanzaremos con tu candidatura.
+
+Te deseamos mucho éxito en tu búsqueda de empleo y agradecemos nuevamente tu interés.
+
+Atentamente,
+
+[Tu Nombre] [Nombre de la Empresa]
+
+Recuerda que la búsqueda de empleo es un proceso desafiante y que cada oportunidad es una experiencia de aprendizaje. ¡Mucho ánimo en tus futuras aplicaciones!' 
+WHERE e.id = 1 AND p.estado = 'postulado';
