@@ -148,13 +148,13 @@ CREATE TABLE postulaciones
 CREATE TABLE blacklist
 (
     id_candidato INT NOT NULL,
-    id_empleo INT NOT NULL,
-    estado ENUM('activo','inactivo','eliminado') NOT NULL,
-    fecha_creado DATETIME NOT NULL,
+    id_reclutador INT NOT NULL,
+    estado ENUM('activo','inactivo','eliminado') NULL DEFAULT 'activo',
+    fecha_creado DATETIME DEFAULT NOW(),
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
     FOREIGN KEY (id_candidato) REFERENCES candidatos(id),
-    FOREIGN KEY (id_empleo) REFERENCES empleos(id)
+    FOREIGN KEY (id_reclutador) REFERENCES reclutadores(id)
 );
 -- CREATE INDEX id_candidato ON blacklist (id_candidato);
 -- CREATE INDEX id_empleo ON blacklist (id_empleo);

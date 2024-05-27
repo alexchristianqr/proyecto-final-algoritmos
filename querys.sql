@@ -158,6 +158,18 @@ JOIN postulaciones p ON p.id_empleo = e.id AND e.estado IN ('disponible');
 SELECT * FROM empleos;
 UPDATE empleos e SET e.estado = 'finalizado' WHERE e.id = 1 AND e.estado = 'disponible';
 
+-- ------------------------------------------------
+-- BLOQUEAR CANDIDATO Y MOSTRAR EMPLEOS DISPONIBLES
+-- ------------------------------------------------
+SELECT * FROM empleos;
+SELECT * FROM postulaciones;
+SELECT * FROM blacklist;
+SELECT * 
+FROM empleos e
+JOIN postulaciones p ON p.id_empleo = e.id AND e.estado IN ('disponible')
+JOIN blacklist b ON b.id_reclutador = e.id_reclutador AND b.id_candidato = p.id_candidato AND b.estado = 'inactivo'; 
+INSERT INTO blacklist (id_candidato,id_reclutador) VALUES(1,1);
+
 -- -----------------------------
 -- ENVIAR FEEDBACK PERSONALIZADO
 -- -----------------------------
