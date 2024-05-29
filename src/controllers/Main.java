@@ -19,10 +19,9 @@ public class Main {
         util.centerOnScreen(dialogLogin, true);
         dialogLogin.setVisible(true);*/
 
-        // testController();
-        // testController2();
-        // testReporte();
-
+        // testMisPostulaciones();
+        // testMisPublicaciones();
+        // testReporteUsuarios();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
@@ -58,7 +57,7 @@ public class Main {
         empleoController.listarPublicaciones();
     }
 
-    public static void testReporte() throws IOException {
+    public static void testReporteUsuarios() throws IOException {
         try {
             String sql = "select * from usuarios";
             
