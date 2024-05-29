@@ -19,9 +19,9 @@ public class Main {
         util.centerOnScreen(dialogLogin, true);
         dialogLogin.setVisible(true);*/
 
-        // testMisPostulaciones();
-        // testMisPublicaciones();
-        // testReporteUsuarios();
+        testMisPostulaciones();
+        testMisPublicaciones();
+        testReporteUsuarios();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
@@ -30,40 +30,42 @@ public class Main {
     }
 
     public static void testMisPostulaciones() {
-        // INCIO DE SESION DE USUARIO CANDIDATO
+
+        // INICIO DE SESION DE USUARIO CANDIDATO
         testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
         // testLogin("candidato", "dante.inigo@gmail.com", "candidato2024");
 
         PostulacionController postulacionController = new PostulacionController();
 
-        // POSTULACION DE UN CANDIDATO A UN EMPLEO
+        // POSTULAR A UN EMPLEO
         Postulacion postulacion = new Postulacion();
         postulacion.setIdPostulacion(1);
         postulacion.setEstado("postulado");
         postulacionController.postularEmpleo(postulacion);
 
-        // MIS POSTULACIONES
+        // MOSTRAR POSTULACIONES
         postulacionController.listarPostulaciones("postulado");
     }
 
     public static void testMisPublicaciones() {
-        // INCIO DE SESION DE USUARIO RECLUTADOR
+        
+        // INICIO DE SESION DE USUARIO RECLUTADOR
         testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
         // testLogin("reclutador", "susan.torres@utp.edu.pe", "reclutador2024");
 
         EmpleoController empleoController = new EmpleoController();
 
-        // MIS PUBLICACIONES
+        // MOSTRAR EMPLEOS
         empleoController.listarPublicaciones();
     }
 
     public static void testReporteUsuarios() throws IOException {
         try {
             String sql = "select * from usuarios";
-            
+
             MysqlDBService db = new MysqlDBService();
             db.stmt = db.conn.prepareStatement(sql);
-            
+
             ExportService.exportToExcel(db.stmt, "reporte_de_usuarios_01");
 
         } catch (InterruptedException | SQLException | ExecutionException e) {
