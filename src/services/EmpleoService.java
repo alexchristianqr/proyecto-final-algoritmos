@@ -22,7 +22,7 @@ public class EmpleoService extends BaseService {
         db.cerrarConsulta();
     }
 
-    public List obtenerEmpleosPorReclutador(String[] columnNames, Object[] data) {
+    public List obtenerEmpleosPorReclutador(String[] columnNames) {
 
         List<Postulacion> lista = new ArrayList<>();
         Object[] parametrosSQL_1 = new Object[1];
@@ -33,12 +33,15 @@ public class EmpleoService extends BaseService {
         ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
         try {
-            System.out.println();
-            for (int i = 0; i < columnNames.length; i++) {
-                System.out.print(columnNames[i].toUpperCase() + " / ");
-            }
+            System.out.println("\n");
+            List<Object[]> dataContent = new ArrayList<>();
 
             while (rs.next()) {
+
+                // Nuevo
+                Object[] data = new Object[columnNames.length];
+
+                // Llenar el arreglo de datos con los valores del ResultSet
                 data[0] = rs.getInt("id");
                 data[1] = rs.getString("reclutador");
                 data[2] = rs.getString("titulo");
@@ -48,13 +51,12 @@ public class EmpleoService extends BaseService {
                 data[6] = rs.getInt("total_candidatos_postulados");
                 data[7] = rs.getString("fecha_creado");
 
-                System.out.println();
-                for (int i = 0; i < data.length; i++) {
-                    System.out.print(data[i] + " / ");
-                }
+                // Agregar el arreglo de datos a la lista de contenido de datos
+                dataContent.add(data);
             }
 
-            System.out.print("\n");
+            // Imprimir la tabla utilizando la lista de contenido de datos
+            util.imprimirTabla(columnNames, dataContent.toArray(Object[][]::new));
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

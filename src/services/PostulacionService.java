@@ -63,11 +63,11 @@ public class PostulacionService extends BaseService {
         }
 
         db.cerrarConsulta();
-        
+
         return modelo;
     }
 
-    public List listarPostulaciones(String[] columnNames, Object[] data, String estado) {
+    public List listarPostulaciones(String[] columnNames, String estado) {
 
         List<Postulacion> lista = new ArrayList<>();
         Object[] parametrosSQL_1 = new Object[2];
@@ -83,12 +83,15 @@ public class PostulacionService extends BaseService {
         ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
         try {
-            System.out.println();
-            for (int i = 0; i < columnNames.length; i++) {
-                System.out.print(columnNames[i].toUpperCase() + " / ");
-            }
+            System.out.println("\n");
+            List<Object[]> dataContent = new ArrayList<>();
 
             while (rs.next()) {
+
+                // Nuevo
+                Object[] data = new Object[columnNames.length];
+
+                // Llenar el arreglo de datos con los valores del ResultSet
                 data[0] = rs.getInt("id");
                 data[1] = rs.getString("titulo");
                 data[2] = rs.getString("empresa");
@@ -98,13 +101,12 @@ public class PostulacionService extends BaseService {
                 data[6] = rs.getString("candidato");
                 data[7] = rs.getString("fecha_creado");
 
-                System.out.println();
-                for (int i = 0; i < data.length; i++) {
-                    System.out.print(data[i] + " / ");
-                }
+                // Agregar el arreglo de datos a la lista de contenido de datos
+                dataContent.add(data);
             }
 
-            System.out.print("\n");
+            // Imprimir la tabla utilizando la lista de contenido de datos
+            util.imprimirTabla(columnNames, dataContent.toArray(Object[][]::new));
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

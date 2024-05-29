@@ -11,6 +11,9 @@ import views.DialogLogin;
 
 public class Main {
 
+    // ANSI escape codes for bold text
+    public static final String ANSI_BOLD = "\033[1m";
+    public static final String ANSI_RESET = "\033[0m";
     public static Util util = new Util();
 
     // Ejecutar programa, mostrando la vista de Login
@@ -48,7 +51,7 @@ public class Main {
     }
 
     public static void testMisPublicaciones() {
-        
+
         // INICIO DE SESION DE USUARIO RECLUTADOR
         testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
         // testLogin("reclutador", "susan.torres@utp.edu.pe", "reclutador2024");
@@ -71,4 +74,5 @@ public class Main {
         } catch (InterruptedException | SQLException | ExecutionException e) {
         }
     }
+
 }

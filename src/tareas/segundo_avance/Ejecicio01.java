@@ -10,7 +10,7 @@ public class Ejecicio01 {
 
     /*
         La tienda de zapatillas "YOLU" esta contabilizando los lotes de zapatillas que ingresan al almacén. 
-        Por ello, para un mejor control, se requiere ordenar por los codigos de identificación unicos. 
+        Por ello, para un mejor control, se requiere ingresar y ordenar por los codigos de identificación unicos (N° LOTE). 
         Además, se debe validar que no se pueden permitir valores negativos y ceros. 
      */
     public static void main(String[] args) {
