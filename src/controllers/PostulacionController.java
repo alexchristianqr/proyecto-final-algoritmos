@@ -30,7 +30,6 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
 
     public void listarPostulaciones(String estado) {
         String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Estado", "Candidato", "Fecha creado"};
-        Object[] data = new Object[columnNames.length];
-        service.listarPostulaciones(columnNames, data, estado);
+        service.listarPostulaciones(columnNames, estado);
     }
 }

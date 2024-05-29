@@ -16,7 +16,6 @@ public class EmpleoController extends BaseController<Empleo, EmpleoService> {
 
     public void listarPublicaciones() {
         String[] columnNames = {"Codigo", "Reclutador", "Titulo", "Empresa", "Sueldo", "Modalidad", "Total Postulados", "Fecha creado"};
-        Object[] data = new Object[columnNames.length];
-        service.obtenerEmpleosPorReclutador(columnNames, data);
+        service.obtenerEmpleosPorReclutador(columnNames);
     }
 }
