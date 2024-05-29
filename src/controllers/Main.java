@@ -21,7 +21,7 @@ public class Main {
 
         // testController();
         // testController2();
-        testReporte();
+        // testReporte();
 
     }
 
@@ -30,7 +30,7 @@ public class Main {
         usuarioController.login(rol, username, pwd);
     }
 
-    public static void testController() {
+    public static void testMisPostulaciones() {
         // INCIO DE SESION DE USUARIO CANDIDATO
         testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
         // testLogin("candidato", "dante.inigo@gmail.com", "candidato2024");
@@ -47,7 +47,7 @@ public class Main {
         postulacionController.listarPostulaciones("postulado");
     }
 
-    public static void testController2() {
+    public static void testMisPublicaciones() {
         // INCIO DE SESION DE USUARIO RECLUTADOR
         testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
         // testLogin("reclutador", "susan.torres@utp.edu.pe", "reclutador2024");
@@ -60,7 +60,7 @@ public class Main {
 
     public static void testReporte() throws IOException {
         try {
-            String sql = "select * from usuarios where id = 1";
+            String sql = "select * from usuarios";
             
             MysqlDBService db = new MysqlDBService();
             db.stmt = db.conn.prepareStatement(sql);

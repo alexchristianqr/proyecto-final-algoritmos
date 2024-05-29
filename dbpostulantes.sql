@@ -25,12 +25,12 @@ CREATE TABLE usuarios
     rol ENUM('candidato','reclutador'),
     username VARCHAR(100) NOT NULL,
     pwd VARCHAR(250) NOT NULL,
-    estado ENUM('activo','inactivo') NOT NULL,
-    fecha_creado DATETIME NOT NULL,
+    estado ENUM('activo','inactivo') DEFAULT 'activo' NOT NULL,
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
     PRIMARY KEY (id),
-    CONSTRAINT username UNIQUE (username)
+    UNIQUE (username, estado)
 );
 
 -- # crear tabla personas
@@ -44,11 +44,11 @@ CREATE TABLE personas
     sexo CHAR NOT NULL,
     edad VARCHAR(5),
     telefono VARCHAR(30),
-    estado ENUM('activo','inactivo') NOT NULL,
-    fecha_creado DATETIME NOT NULL,
+    estado ENUM('activo','inactivo') DEFAULT 'activo' NOT NULL,
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,
     PRIMARY KEY (id),
-    CONSTRAINT nrodocumento UNIQUE (nrodocumento)
+    UNIQUE (tipo_documento, nrodocumento)
 );
 
 -- # crear tabla candidatos
@@ -57,18 +57,19 @@ CREATE TABLE candidatos
     id INT NOT NULL AUTO_INCREMENT,
     id_persona INT NOT NULL,
     id_usuario INT NOT NULL,
-    aptitudes TEXT NOT NULL,
+    aptitudes VARCHAR(700),
     imagen_perfil VARCHAR(250),
     path_curriculum_vitae VARCHAR(250),
     path_certificado_trabajo VARCHAR(250),
     path_antecendente_policial VARCHAR(250),
-    estado ENUM('activo','inactivo') NOT NULL,
-    fecha_creado DATETIME NOT NULL,
+    estado ENUM('activo','inactivo') DEFAULT 'activo' NOT NULL,
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,
     PRIMARY KEY (id),
     FOREIGN KEY (id_persona) REFERENCES personas(id),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
+CREATE INDEX IX_1 ON candidatos (aptitudes, fecha_creado);
 
 -- # crear tabla experiencias_laborales
 CREATE TABLE experiencias_laborales
@@ -79,19 +80,23 @@ CREATE TABLE experiencias_laborales
     empresa VARCHAR(100) NOT NULL,
     fecha_inicio VARCHAR(50) NOT NULL,
     fecha_fin VARCHAR(50) NOT NULL,
-    estado ENUM('activo','inactivo') NOT NULL,
-    fecha_creado DATETIME NOT NULL,
+    estado ENUM('activo','inactivo') DEFAULT 'activo' NOT NULL,
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
     PRIMARY KEY (id)
 );
+CREATE INDEX IX_1 ON experiencias_laborales (titulo, fecha_creado);
 
 -- # crear tabla candidatos_experiencias_laborales
 CREATE TABLE candidatos_experiencias_laborales
 (
+    id INT NOT NULL AUTO_INCREMENT,
     id_candidato INT NOT NULL,
     id_experiencia_laboral INT NOT NULL,
     orden INT NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (id_candidato, id_experiencia_laboral),
     FOREIGN KEY (id_candidato) REFERENCES candidatos(id),
     FOREIGN KEY (id_experiencia_laboral) REFERENCES experiencias_laborales(id)
 );
@@ -102,8 +107,8 @@ CREATE TABLE reclutadores
     id INT NOT NULL AUTO_INCREMENT,
     id_persona INT NOT NULL,
     id_usuario INT NOT NULL,
-    estado ENUM('activo','inactivo') NOT NULL,
-    fecha_creado DATETIME NOT NULL,
+    estado ENUM('activo','inactivo') DEFAULT 'activo' NOT NULL,
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
     PRIMARY KEY (id),
@@ -121,13 +126,14 @@ CREATE TABLE empleos
     sueldo VARCHAR(30) NOT NULL,
     modalidad ENUM('remoto','presencial') NOT NULL,
     descripcion TEXT NOT NULL,
-    estado ENUM('activo','disponible','indisponible','eliminado','finalizado') NOT NULL,
-    fecha_creado DATETIME NOT NULL,
+    estado ENUM('activo','disponible','indisponible','eliminado','finalizado') DEFAULT 'activo' NOT NULL,
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
     PRIMARY KEY (id),
     FOREIGN KEY (id_reclutador) REFERENCES reclutadores(id)
 );
+CREATE INDEX IX_1 ON empleos (titulo, fecha_creado);
 
 -- # crear tabla postulaciones
 CREATE TABLE postulaciones
@@ -137,27 +143,30 @@ CREATE TABLE postulaciones
     id_empleo INT NOT NULL,
     estado ENUM('postulado','contactado','entrevistado','contratado','cancelado','rechazado','bloqueado') NOT NULL,
     feedback TEXT,
-    fecha_creado DATETIME NOT NULL,
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
     PRIMARY KEY (id),
     FOREIGN KEY (id_candidato) REFERENCES candidatos(id),
     FOREIGN KEY (id_empleo) REFERENCES empleos(id)
 );
+CREATE INDEX IX_1 ON postulaciones (fecha_creado);
+
 
 CREATE TABLE blacklist
 (
+    id INT NOT NULL AUTO_INCREMENT,
     id_candidato INT NOT NULL,
     id_reclutador INT NOT NULL,
-    estado ENUM('activo','inactivo','eliminado') NULL DEFAULT 'activo',
-    fecha_creado DATETIME DEFAULT NOW(),
+    estado ENUM('activo','inactivo','eliminado') DEFAULT 'activo' NOT NULL,
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,
     fecha_eliminado DATETIME,
+    PRIMARY KEY (id),
     FOREIGN KEY (id_candidato) REFERENCES candidatos(id),
     FOREIGN KEY (id_reclutador) REFERENCES reclutadores(id)
 );
--- CREATE INDEX id_candidato ON blacklist (id_candidato);
--- CREATE INDEX id_empleo ON blacklist (id_empleo);
+
 
 -- usuarios
 INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
@@ -174,7 +183,7 @@ VALUES ('Susan', 'Torres', 'reclutador', 'susan.torres@utp.edu.pe', 'reclutador2
 INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad, fecha_creado) 
 VALUES ('Alex', 'Quispe', 1, '74567890', 'M', '30', NOW());
 INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial, estado, fecha_creado) 
-VALUES (1, 1, 'java, javascript, php, laravel, docker, aws, vue, git, bash', 'upload/1_perfil.jpg', 'upload/1_cv.pdf', 'upload/1_certif.pdf', 'upload/1_antec.pdf', 'activo', NOW());
+VALUES (1, 1, 'java, javascript, php, laravel, docker, aws, vue, git, bash''java, javascript, php, laravel, docker, aws, vue, git, bash', 'upload/1_perfil.jpg', 'upload/1_cv.pdf', 'upload/1_certif.pdf', 'upload/1_antec.pdf', 'activo', NOW());
 
 -- 002
 INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad, fecha_creado) 
@@ -218,7 +227,7 @@ INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado)
 VALUES (2, 1, 'postulado', NOW());
 
 -- blacklist
-INSERT INTO blacklist (id_candidato, id_empleo, estado, fecha_creado)
+INSERT INTO blacklist (id_candidato, id_reclutador, estado, fecha_creado)
 VALUES (1, 1, 'activo', NOW());
 
 
