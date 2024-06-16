@@ -50,9 +50,7 @@ public class AuthService extends BaseService {
                         throw new AssertionError();
                 }
 
-                usuario.setNombres(rs.getString("nombres"));
-                usuario.setApellidos(rs.getString("apellidos"));
-                usuario.setFullname(rs.getString("nombres") + " " + rs.getString("apellidos"));
+                usuario.setFullname(rs.getString("fullname"));
                 usuario.setRol(rs.getString("rol"));
                 usuario.setUsername(rs.getString("username"));
                 usuario.setPassword(rs.getString("pwd"));

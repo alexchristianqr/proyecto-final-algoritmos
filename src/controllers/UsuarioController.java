@@ -6,19 +6,23 @@ import services.UsuarioService;
 
 public class UsuarioController extends BaseController<Usuario, UsuarioService> {
 
-    private AuthService authService;
-    private UsuarioService usuarioService;
-    
+    private final AuthService authService;
+    private final UsuarioService usuarioService;
+
     public UsuarioController() {
         usuarioService = new UsuarioService();
         authService = new AuthService();
     }
 
-    public void signIn(String rol, String username, String pwd) {
+    public void login(String rol, String username, String pwd) {
         authService.login(rol, username, pwd);
     }
-    
-    public void register(Usuario usuario) {
-        usuarioService.crearRegistro(usuario);
+
+    public void registrarUsuario(Usuario usuario) {
+        usuarioService.registrarUsuario(usuario);
+    }
+
+    public void logout(String id_usuario) {
+        authService.logout(id_usuario);
     }
 }
