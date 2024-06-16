@@ -20,8 +20,7 @@ USE dbpostulantes; -- dbprueba;
 CREATE TABLE usuarios
 (
     id INT NOT NULL AUTO_INCREMENT,
-    nombres VARCHAR(100) NOT NULL,
-    apellidos VARCHAR(100) NOT NULL,
+    fullname VARCHAR(100) NOT NULL,
     rol ENUM('candidato','reclutador'),
     username VARCHAR(100) NOT NULL,
     pwd VARCHAR(250) NOT NULL,
