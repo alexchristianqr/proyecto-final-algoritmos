@@ -10,11 +10,12 @@
 -- CREATE INDEX id_reclutador ON empleos (id_reclutador);
 -- ALTER TABLE empleos ADD FOREIGN KEY (id_reclutador) REFERENCES reclutadores(id); 
 
--- # crear base de datos
-CREATE DATABASE dbpostulantes; -- dbprueba;
+
+-- # crear base de datos / ut8mb_general_ci
+CREATE DATABASE dbpostulantes;
 
 -- # usar base de datos
-USE dbpostulantes; -- dbprueba;
+USE dbpostulantes;
 
 -- # crear tabla usuarios
 CREATE TABLE usuarios
@@ -168,14 +169,14 @@ CREATE TABLE blacklist
 
 
 -- usuarios
-INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Alex', 'Quispe', 'candidato', 'alex.quispe@gmail.com', 'candidato2024', 'activo', NOW());
-INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Dante', 'Inigo', 'candidato', 'dante.inigo@gmail.com', 'candidato2024', 'activo', NOW());
-INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Maria', 'Gonzales', 'reclutador', 'maria.gonzales@utp.edu.pe', 'reclutador2024', 'activo', NOW());
-INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Susan', 'Torres', 'reclutador', 'susan.torres@utp.edu.pe', 'reclutador2024', 'activo', NOW());
+INSERT INTO usuarios (fullname, rol, username, pwd, estado, fecha_creado) 
+VALUES ('Alex Quispe', 'candidato', 'alex.quispe@gmail.com', 'candidato2024', 'activo', NOW());
+INSERT INTO usuarios (fullname, rol, username, pwd, estado, fecha_creado) 
+VALUES ('Dante Inigo', 'candidato', 'dante.inigo@gmail.com', 'candidato2024', 'activo', NOW());
+INSERT INTO usuarios (fullname, rol, username, pwd, estado, fecha_creado) 
+VALUES ('Maria Gonzales', 'reclutador', 'maria.gonzales@utp.edu.pe', 'reclutador2024', 'activo', NOW());
+INSERT INTO usuarios (fullname, rol, username, pwd, estado, fecha_creado) 
+VALUES ('Susan Torres', 'reclutador', 'susan.torres@utp.edu.pe', 'reclutador2024', 'activo', NOW());
 
 -- personas / candidatos
 -- 001
