@@ -21,7 +21,8 @@ USE dbpostulantes;
 CREATE TABLE usuarios
 (
     id INT NOT NULL AUTO_INCREMENT,
-    fullname VARCHAR(100) NOT NULL,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
     rol ENUM('candidato','reclutador'),
     username VARCHAR(100) NOT NULL,
     pwd VARCHAR(250) NOT NULL,
@@ -169,14 +170,14 @@ CREATE TABLE blacklist
 
 
 -- usuarios
-INSERT INTO usuarios (fullname, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Alex Quispe', 'candidato', 'alex.quispe@gmail.com', 'candidato2024', 'activo', NOW());
-INSERT INTO usuarios (fullname, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Dante Inigo', 'candidato', 'dante.inigo@gmail.com', 'candidato2024', 'activo', NOW());
-INSERT INTO usuarios (fullname, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Maria Gonzales', 'reclutador', 'maria.gonzales@utp.edu.pe', 'reclutador2024', 'activo', NOW());
-INSERT INTO usuarios (fullname, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Susan Torres', 'reclutador', 'susan.torres@utp.edu.pe', 'reclutador2024', 'activo', NOW());
+INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
+VALUES ('Alex', 'Quispe', 'candidato', 'alex.quispe@gmail.com', 'candidato2024', 'activo', NOW());
+INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
+VALUES ('Dante', 'Inigo', 'candidato', 'dante.inigo@gmail.com', 'candidato2024', 'activo', NOW());
+INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
+VALUES ('Maria', 'Gonzales', 'reclutador', 'maria.gonzales@utp.edu.pe', 'reclutador2024', 'activo', NOW());
+INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
+VALUES ('Susan', 'Torres', 'reclutador', 'susan.torres@utp.edu.pe', 'reclutador2024', 'activo', NOW());
 
 -- personas / candidatos
 -- 001
