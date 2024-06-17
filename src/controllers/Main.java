@@ -2,8 +2,11 @@ package controllers;
 
 import core.services.ExportService;
 import core.services.MysqlDBService;
+import core.services.UploadService;
 import core.utils.Util;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 import models.Postulacion;
@@ -22,9 +25,35 @@ public class Main {
         util.centerOnScreen(dialogLogin, true);
         dialogLogin.setVisible(true);*/
 
-        testMisPostulaciones();
-        testMisPublicaciones();
-        testReporteUsuarios();
+//        testMisPostulaciones();
+//        testMisPublicaciones();
+//        testReporteUsuarios();
+         // Example usage:
+         UploadService uploader = new UploadService();
+         
+//        UploadFile uploader = new UploadService.();
+        String sourceFilePath = "C:\\Users\\sistemas\\OneDrive - TUI\\Documentos\\src\\src-utp\\proyecto-final-algoritmos\\src\\exports\\file.txt";
+        String destinationFilePath = "C:\\Users\\sistemas\\OneDrive - TUI\\Documentos\\src\\src-utp\\proyecto-final-algoritmos\\src\\exports\\uploaded_file.txt";
+
+        try {
+            // Open an input stream to the source file
+            // Open an input stream to the source file
+            InputStream inputStream = new FileInputStream(sourceFilePath);
+//            InputStream inputStream = UploadService.class.getResourceAsStream(sourceFilePath);
+
+            if (inputStream == null) {
+                System.out.println("File not found: " + sourceFilePath);
+                return;
+            }
+
+            // Upload the file
+            uploader.upload(inputStream, destinationFilePath);
+
+            // Close the input stream
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void testLogin(String rol, String username, String pwd) {
