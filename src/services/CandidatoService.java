@@ -1,7 +1,6 @@
 package services;
 
 import core.services.MysqlDBService;
-import java.sql.Connection;
 import models.Candidato;
 
 public class CandidatoService extends BaseService {
@@ -18,7 +17,6 @@ public class CandidatoService extends BaseService {
     public void crearCandidato(Candidato candidato, boolean useTransaction) {
 
         if (useTransaction) {
-            // Guarda el estado original de auto-commit y desactiva el auto-commit
             originalAutoCommit = db.getAutoCommit();
             db.setAutoCommit(false);
         }
@@ -31,6 +29,6 @@ public class CandidatoService extends BaseService {
         Object[] parametrosSQL_2 = {id_persona, candidato.getIdUsuario(), candidato.getAptitudes(), candidato.getImagenPerfil(), candidato.getPathCV(), candidato.getPathCertificadoTrabajo(), candidato.getPathAntecedentePolicial(), candidato.getEstado()};
         db.queryInsertar(querySQL_2, parametrosSQL_2);
 
-//        db.cerrarConsulta();
+        db.cerrarConsulta();
     }
 }
