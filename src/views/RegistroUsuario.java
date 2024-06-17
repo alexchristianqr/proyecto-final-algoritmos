@@ -11,11 +11,10 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class RegistroUsuario extends javax.swing.JFrame {
-    
- /*   
+
+    /*   
 Login login = new Login();
-    */
-    
+     */
     /**
      * Creates new form RegistroUsuario
      */
@@ -40,8 +39,6 @@ Login login = new Login();
         Apellidos = new javax.swing.JTextField();
         Email_Postulante = new javax.swing.JTextField();
         Contraseña = new javax.swing.JPasswordField();
-        jLabel5 = new javax.swing.JLabel();
-        Celular = new javax.swing.JTextField();
         Registrar = new javax.swing.JButton();
         Tipodecuenta = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
@@ -51,19 +48,11 @@ Login login = new Login();
 
         jLabel1.setText("Nombre");
 
-        jLabel2.setText("Apellido");
+        jLabel2.setText("Apellidos");
 
         jLabel3.setText("Contraseña");
 
         jLabel4.setText("Email");
-
-        jLabel5.setText("Celular");
-
-        Celular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CelularActionPerformed(evt);
-            }
-        });
 
         Registrar.setText("Registrar");
         Registrar.addActionListener(new java.awt.event.ActionListener() {
@@ -100,22 +89,20 @@ Login login = new Login();
                             .addComponent(Apellidos, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Nombre, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Celular, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(257, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Tipodecuenta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(45, 45, 45))
             .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
+                .addGap(157, 157, 157)
                 .addComponent(Registrar)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,27 +129,22 @@ Login login = new Login();
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(Email_Postulante, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Celular, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(Registrar)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarActionPerformed
-    String nombre = Nombre.getText();
+        String nombre = Nombre.getText();
         String apellidos = Apellidos.getText();
         String contraseña = Contraseña.getText();
         String email = Email_Postulante.getText();
-        String celular = Celular.getText();
         String cuenta = Tipodecuenta.getSelectedItem().toString();
 
-        if (nombre.isEmpty() || apellidos.isEmpty() || email.isEmpty() || contraseña.isEmpty() || celular.isEmpty()) {
+        if (nombre.isEmpty() || apellidos.isEmpty() || email.isEmpty() || contraseña.isEmpty()) {
             JOptionPane.showMessageDialog(null, "DEBE COMPLETAR LOS DATOS");
         } else {
             if (cuenta.equalsIgnoreCase("Seleccionar")) {
@@ -181,25 +163,20 @@ Login login = new Login();
                             if (contraseña.length() < 8 || contraseña.length() > 16) {
                                 JOptionPane.showMessageDialog(null, "La contraseña debe tener entre 8 y 16 caracteres");
                             } else {
-                                if (celular.length() != 9 || !celular.startsWith("9")) {
-                                    JOptionPane.showMessageDialog(null, "El número de teléfono debe contener 9 dígitos y empezar con 9");
-                                } else {
-                                    try {
-                                        JOptionPane.showMessageDialog(null,"REGISTRO EXITOSO");
-                                        /*
+                                try {
+                                    JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+                                    /*
                                         String consulta = "insert into usuarios(nombre,apellido,email,clave,dni_carnet,num_doc,telefono,tipo_usuario)VALUES('" + nombre + "','" + apellido + "','" + email + "','" + pass + "','" + doc + "','" + num_doc + "','" + telefono + "','usuario')";
                                         java.sql.PreparedStatement ps = cn.prepareStatement(consulta);
                                         ps.executeUpdate();
                                         limpiar();
                                         JOptionPane.showMessageDialog(null, "DATOS GUARDADOS CORRECTAMENTE");
-                                         */
-                                    } catch (Exception e) {
-                                        JOptionPane.showMessageDialog(null, "NO SE PUDO GUARDAR TU USUARIO" + e);
-                                    }
+                                     */
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(null, "NO SE PUDO GUARDAR TU USUARIO" + e);
                                 }
                             }
                         }
-
                     }
 
                 }
@@ -209,15 +186,11 @@ Login login = new Login();
         }
     }//GEN-LAST:event_RegistrarActionPerformed
 
-    private void CelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CelularActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CelularActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    /*
+        /*
         this.setVisible(false);
         login.setVisible(true);
-        */
+         */
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -258,7 +231,6 @@ Login login = new Login();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Apellidos;
-    private javax.swing.JTextField Celular;
     private javax.swing.JPasswordField Contraseña;
     private javax.swing.JTextField Email_Postulante;
     private javax.swing.JTextField Nombre;
@@ -269,7 +241,6 @@ Login login = new Login();
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 }
