@@ -40,9 +40,9 @@ CREATE TABLE personas
     id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
-    tipo_documento INT NOT NULL,
-    nrodocumento VARCHAR(30) NOT NULL,
-    sexo CHAR NOT NULL,
+    tipo_documento INT,
+    nrodocumento VARCHAR(30),
+    sexo ENUM('F','M'),
     edad VARCHAR(5),
     telefono VARCHAR(30),
     estado ENUM('activo','inactivo') DEFAULT 'activo' NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE candidatos
     FOREIGN KEY (id_persona) REFERENCES personas(id),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
-CREATE INDEX IX_1 ON candidatos (aptitudes, fecha_creado);
+CREATE INDEX IX_1 ON candidatos (aptitudes);
 
 -- # crear tabla experiencias_laborales
 CREATE TABLE experiencias_laborales
@@ -87,7 +87,7 @@ CREATE TABLE experiencias_laborales
     fecha_eliminado DATETIME,
     PRIMARY KEY (id)
 );
-CREATE INDEX IX_1 ON experiencias_laborales (titulo, fecha_creado);
+CREATE INDEX IX_1 ON experiencias_laborales (titulo);
 
 -- # crear tabla candidatos_experiencias_laborales
 CREATE TABLE candidatos_experiencias_laborales
@@ -134,7 +134,7 @@ CREATE TABLE empleos
     PRIMARY KEY (id),
     FOREIGN KEY (id_reclutador) REFERENCES reclutadores(id)
 );
-CREATE INDEX IX_1 ON empleos (titulo, fecha_creado);
+CREATE INDEX IX_1 ON empleos (titulo);
 
 -- # crear tabla postulaciones
 CREATE TABLE postulaciones
@@ -170,65 +170,65 @@ CREATE TABLE blacklist
 
 
 -- usuarios
-INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Alex', 'Quispe', 'candidato', 'alex.quispe@gmail.com', 'candidato2024', 'activo', NOW());
-INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Dante', 'Inigo', 'candidato', 'dante.inigo@gmail.com', 'candidato2024', 'activo', NOW());
-INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Maria', 'Gonzales', 'reclutador', 'maria.gonzales@utp.edu.pe', 'reclutador2024', 'activo', NOW());
-INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado, fecha_creado) 
-VALUES ('Susan', 'Torres', 'reclutador', 'susan.torres@utp.edu.pe', 'reclutador2024', 'activo', NOW());
+INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado) 
+VALUES ('Alex', 'Quispe', 'candidato', 'alex.quispe@gmail.com', 'candidato2024', 'activo');
+INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado) 
+VALUES ('Dante', 'Inigo', 'candidato', 'dante.inigo@gmail.com', 'candidato2024', 'activo');
+INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado) 
+VALUES ('Maria', 'Gonzales', 'reclutador', 'maria.gonzales@utp.edu.pe', 'reclutador2024', 'activo');
+INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado) 
+VALUES ('Susan', 'Torres', 'reclutador', 'susan.torres@utp.edu.pe', 'reclutador2024', 'activo');
 
 -- personas / candidatos
 -- 001
-INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad, fecha_creado) 
-VALUES ('Alex', 'Quispe', 1, '74567890', 'M', '30', NOW());
-INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial, estado, fecha_creado) 
-VALUES (1, 1, 'java, javascript, php, laravel, docker, aws, vue, git, bash''java, javascript, php, laravel, docker, aws, vue, git, bash', 'upload/1_perfil.jpg', 'upload/1_cv.pdf', 'upload/1_certif.pdf', 'upload/1_antec.pdf', 'activo', NOW());
+INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad) 
+VALUES ('Alex', 'Quispe', 1, '74567890', 'M', '30');
+INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial, estado) 
+VALUES (1, 1, 'java, javascript, php, laravel, docker, aws, vue, git, bash''java, javascript, php, laravel, docker, aws, vue, git, bash', 'upload/1_perfil.jpg', 'upload/1_cv.pdf', 'upload/1_certif.pdf', 'upload/1_antec.pdf', 'activo');
 
 -- 002
-INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad, fecha_creado) 
-VALUES ('Dante', 'Inigo', 1, '87653612', 'M', '24', NOW());
-INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial, estado, fecha_creado) 
-VALUES (2, 2, 'javascript, angular, react', 'upload/2_perfil.jpg', 'upload/2_cv.pdf', 'upload/2_certif.pdf', 'upload/2_antec.pdf', 'activo', NOW());
+INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad) 
+VALUES ('Dante', 'Inigo', 1, '87653612', 'M', '24');
+INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial, estado) 
+VALUES (2, 2, 'javascript, angular, react', 'upload/2_perfil.jpg', 'upload/2_cv.pdf', 'upload/2_certif.pdf', 'upload/2_antec.pdf', 'activo');
 
 -- personas / reclutadores
 -- 001
-INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad, fecha_creado) 
-VALUES ('Maria', 'Gonzales', 1, '12345678', 'F', '30', NOW());
-INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad, fecha_creado) 
-VALUES ('Susan', 'Torres', 1, '93885532', 'F', '27', NOW());
+INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad) 
+VALUES ('Maria', 'Gonzales', 1, '12345678', 'F', '30');
+INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, edad) 
+VALUES ('Susan', 'Torres', 1, '93885532', 'F', '27');
 
 -- 002
-INSERT INTO reclutadores (id_persona, id_usuario, estado, fecha_creado) 
-VALUES (3, 3, 'activo', NOW());
-INSERT INTO reclutadores (id_persona, id_usuario, estado, fecha_creado) 
-VALUES (4, 4, 'activo', NOW());
+INSERT INTO reclutadores (id_persona, id_usuario, estado) 
+VALUES (3, 3, 'activo');
+INSERT INTO reclutadores (id_persona, id_usuario, estado) 
+VALUES (4, 4, 'activo');
 
 -- experiencias_laborales
-INSERT INTO experiencias_laborales (titulo, descripcion, empresa, fecha_inicio, fecha_fin, estado, fecha_creado) 
-VALUES ('Desarrollador Backend (NodeJs - AWS)', 'Diseñar, desarrollar e implementar soluciones backend utilizando Node.js.', 'RIMAC', '01/2023', '05/2024', 'activo', NOW());
+INSERT INTO experiencias_laborales (titulo, descripcion, empresa, fecha_inicio, fecha_fin, estado) 
+VALUES ('Desarrollador Backend (NodeJs - AWS)', 'Diseñar, desarrollar e implementar soluciones backend utilizando Node.js.', 'RIMAC', '01/2023', '05/2024', 'activo');
 
 -- candidatos_experiencias_laborales
 INSERT INTO candidatos_experiencias_laborales (id_candidato, id_experiencia_laboral, orden) 
 VALUES (1,1,1);
 
 -- empleos
-INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, estado, fecha_creado)
-VALUES (1, 'SR Frontend REACT JS', 'UTP', '5500', 'remoto', 'Encargado de las tareas de frontend con React JS', 'activo', NOW());
-INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, estado, fecha_creado)
-VALUES (2, 'SR Frontend Angular', 'UTP', '7500', 'presencial', 'Encargado de las tareas de frontend con Angular v15', 'activo', NOW());
+INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, estado)
+VALUES (1, 'SR Frontend REACT JS', 'UTP', '5500', 'remoto', 'Encargado de las tareas de frontend con React JS', 'activo');
+INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, estado)
+VALUES (2, 'SR Frontend Angular', 'UTP', '7500', 'presencial', 'Encargado de las tareas de frontend con Angular v15', 'activo');
 
 -- postulaciones
-INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado)
-VALUES (1, 1, 'postulado', NOW());
-INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado)
-VALUES (1, 2, 'postulado', NOW());
-INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado)
-VALUES (2, 1, 'postulado', NOW());
+INSERT INTO postulaciones (id_candidato, id_empleo, estado)
+VALUES (1, 1, 'postulado');
+INSERT INTO postulaciones (id_candidato, id_empleo, estado)
+VALUES (1, 2, 'postulado');
+INSERT INTO postulaciones (id_candidato, id_empleo, estado)
+VALUES (2, 1, 'postulado');
 
 -- blacklist
-INSERT INTO blacklist (id_candidato, id_reclutador, estado, fecha_creado)
-VALUES (1, 1, 'activo', NOW());
+INSERT INTO blacklist (id_candidato, id_reclutador, estado)
+VALUES (1, 1, 'activo');
 
 

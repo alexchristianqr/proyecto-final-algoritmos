@@ -219,3 +219,8 @@ Atentamente,
 
 Recuerda que la búsqueda de empleo es un proceso desafiante y que cada oportunidad es una experiencia de aprendizaje. ¡Mucho ánimo en tus futuras aplicaciones!' 
 WHERE e.id = 1 AND p.estado = 'postulado';
+
+
+-- TRANSACCIONES
+SHOW FULL PROCESSLIST;
+SELECT COUNT(*) FROM information_schema.innodb_trx;
