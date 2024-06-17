@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 import models.Postulacion;
+import models.Usuario;
 import views.DialogLogin;
 
 public class Main {
@@ -22,9 +23,10 @@ public class Main {
         util.centerOnScreen(dialogLogin, true);
         dialogLogin.setVisible(true);*/
 
-        testMisPostulaciones();
-        testMisPublicaciones();
-        testReporteUsuarios();
+        //testMisPostulaciones();
+        //testMisPublicaciones();
+        //testReporteUsuarios();
+        testRegistrarUsuario();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
@@ -73,6 +75,17 @@ public class Main {
 
         } catch (InterruptedException | SQLException | ExecutionException e) {
         }
+    }
+
+    public static void testRegistrarUsuario() {
+        UsuarioController usuarioController = new UsuarioController();
+        Usuario usuario = new Usuario();
+        usuario.setNombres("Martin");
+        usuario.setApellidos("Torres");
+        usuario.setUsername("martin.torres@gmail.com");
+        usuario.setPassword("candidato2024");
+        usuario.setRol("candidato");
+        usuarioController.registrarUsuario(usuario);
     }
 
 }

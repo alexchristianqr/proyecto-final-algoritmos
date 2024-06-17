@@ -18,12 +18,12 @@ public class UsuarioService extends BaseService {
         try {
 
             // Validación de entrada
-            if (usuario == null || usuario.getFullname() == null || usuario.getRol() == null || usuario.getUsername() == null || usuario.getPassword() == null || usuario.getEstado() == null) {
+            if (usuario == null || usuario.getNombres() == null || usuario.getApellidos() == null || usuario.getRol() == null || usuario.getUsername() == null || usuario.getPassword() == null) {
                 throw new IllegalArgumentException("Datos del usuario incompletos o nulos.");
             }
 
-            querySQL_1 = "INSERT INTO usuarios (fullname, rol, username, pwd, estado) VALUES (?,?,?,?,?)";
-            Object[] parametrosSQL_1 = {usuario.getFullname(), usuario.getRol(), usuario.getUsername(), usuario.getPassword(), usuario.getEstado()};
+            querySQL_1 = "INSERT INTO usuarios (nombres, apellidos, rol, username, pwd, estado) VALUES (?,?,?,?,?)";
+            Object[] parametrosSQL_1 = {usuario.getNombres(), usuario.getRol(), usuario.getUsername(), usuario.getPassword(), usuario.getEstado()};
             int inserted = db.queryInsertar(querySQL_1, parametrosSQL_1);
 
             if (inserted > 0) {
@@ -32,7 +32,8 @@ public class UsuarioService extends BaseService {
                     case "candidato" -> {
                         CandidatoService candidatoService = new CandidatoService();
                         Candidato candidato = new Candidato();
-                        candidato.setNombre(usuario.getFullname());
+                        candidato.setNombre(usuario.getNombres());
+                        candidato.setNombre(usuario.getApellidos());
                         candidatoService.crearCandidato(candidato);
                     }
                     case "reclutador" -> {

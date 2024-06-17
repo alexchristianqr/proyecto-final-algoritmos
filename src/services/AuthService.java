@@ -39,18 +39,19 @@ public class AuthService extends BaseService {
             while (rs.next()) {
                 usuario.setIdUsuario(rs.getInt("id"));
 
-                switch (rol) {
-                    case "candidato" -> {
-                        usuario.setIdCandidato(rs.getInt("id_candidato"));
+                    switch (rol) {
+                        case "candidato" -> {
+                            usuario.setIdCandidato(rs.getInt("id_candidato"));
+                        }
+                        case "reclutador" -> {
+                            usuario.setIdReclutador(rs.getInt("id_reclutador"));
+                        }
+                        default ->
+                            throw new AssertionError();
                     }
-                    case "reclutador" -> {
-                        usuario.setIdReclutador(rs.getInt("id_reclutador"));
-                    }
-                    default ->
-                        throw new AssertionError();
-                }
 
-                usuario.setFullname(rs.getString("fullname"));
+                usuario.setNombres(rs.getString("nombres"));
+                usuario.setApellidos(rs.getString("apellidos"));
                 usuario.setRol(rs.getString("rol"));
                 usuario.setUsername(rs.getString("username"));
                 usuario.setPassword(rs.getString("pwd"));

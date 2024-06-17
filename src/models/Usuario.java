@@ -9,7 +9,8 @@ public class Usuario {
     private String password;
     private String perfil;
     private String estado;// activo|inactivo|pendiente
-    private String fullname;
+    private String nombres;
+    private String apellidos;
     private String rol;
     private String fechaCreado;
     private String fechaActualizado;
@@ -25,20 +26,28 @@ public class Usuario {
         this.password = usuario.getPassword();
         this.perfil = usuario.getPerfil();
         this.estado = usuario.getEstado();
-        this.fullname = usuario.getFullname();
+        this.nombres = usuario.getNombres();
+        this.apellidos = usuario.getApellidos();
         this.rol = usuario.getRol();
         this.fechaCreado = usuario.getFechaCreado();
         this.fechaActualizado = usuario.getFechaActualizado();
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
 
     public String getRol() {
         return rol;
