@@ -27,8 +27,8 @@ public class Main {
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
-        //testRegistrarUsuario();
-        testRegistrarCandidato();
+        testRegistrarUsuario();
+        //testRegistrarCandidato();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
