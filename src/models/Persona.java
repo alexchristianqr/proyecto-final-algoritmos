@@ -3,7 +3,7 @@ package models;
 public abstract class Persona {
 
     private int idPersona;
-    private String tipoDocumento;// DNI|PASAPORTE
+    private int tipoDocumento;// DNI|PASAPORTE
     private String nroDocumento;
     private String nombre;
     private String apellidos;
@@ -17,7 +17,7 @@ public abstract class Persona {
     public Persona() {
     }
 
-    public Persona(String tipoDocumento, String nroDocumento, String nombre, String apellidos, String sexo, String edad, String telefono, String estado, String fechaCreado, String fechaActualizado, int idPersona) {
+    public Persona(int tipoDocumento, String nroDocumento, String nombre, String apellidos, String sexo, String edad, String telefono, String estado, String fechaCreado, String fechaActualizado, int idPersona) {
         this.tipoDocumento = tipoDocumento;
         this.nroDocumento = nroDocumento;
         this.nombre = nombre;
@@ -31,11 +31,11 @@ public abstract class Persona {
         this.idPersona = idPersona;
     }
 
-    public String getTipoDocumento() {
+    public int getTipoDocumento() {
         return tipoDocumento;
     }
 
-    public void setTipoDocumento(String tipoDocumento) {
+    public void setTipoDocumento(int tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
 
