@@ -6,9 +6,10 @@ import core.utils.Util;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
+import models.Candidato;
 import models.Postulacion;
 import models.Usuario;
-import views.DialogLogin;
+import views.Login;
 
 public class Main {
 
@@ -26,7 +27,8 @@ public class Main {
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
-        testRegistrarUsuario();
+        //testRegistrarUsuario();
+        testRegistrarCandidato();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
@@ -88,4 +90,28 @@ public class Main {
         usuarioController.registrarUsuario(usuario);
     }
 
+    public static void testRegistrarCandidato() {
+        CandidatoController candidatoController = new CandidatoController();
+        Candidato candidato = new Candidato();
+
+        // Setea los atributos del candidato
+        candidato.setNombre("John");
+        candidato.setApellidos("Doe");
+        candidato.setTipoDocumento(1);
+        candidato.setNroDocumento("23456789");
+        candidato.setSexo("M");
+        candidato.setEdad("20");
+        candidato.setTelefono("123456789");
+        candidato.setEstado("activo");
+        candidato.setIdUsuario(1);
+        candidato.setAptitudes("Java, SQL");
+        candidato.setImagenPerfil("profile.jpg");
+        candidato.setPathCV("cv.pdf");
+        candidato.setPathCertificadoTrabajo("certificado_trabajo.pdf");
+        candidato.setPathAntecedentePolicial("antecedente_policial.pdf");
+
+        candidatoController.crearCandidato(candidato);
+
+        System.out.println("Candidato creado exitosamente.");
+    }
 }
