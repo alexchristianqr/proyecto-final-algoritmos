@@ -9,16 +9,16 @@ import javax.swing.table.DefaultTableModel;
 import models.Reclutador;
 
 public class ReclutadorService extends BaseService {
-    
-    public ReclutadorService(){
+
+    public ReclutadorService() {
         db = new MysqlDBService();
     }
-    
+
     public void crearReclutador(Reclutador reclutador) {
 
         this.crearReclutador(reclutador, false);
     }
-    
+
     public void crearReclutador(Reclutador reclutador, boolean useTransaction) {
 
         if (useTransaction) {
@@ -34,12 +34,12 @@ public class ReclutadorService extends BaseService {
         db.queryInsertar(querySQL_2, parametrosSQL_2);
 
         db.cerrarConsulta();
-        
+
         if (useTransaction) {
             db.commit();
         }
     }
-    
+
     public DefaultTableModel tablaReclutadores(DefaultTableModel modelo, Object[] data) {
         querySQL_1 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.edad, p.telefono, r.id_usuario, r.fecha_creado FROM personas p JOIN reclutadores ON r.id_persona = r.id_persona;";
         Object[] parametrosSQL_1 = {};
@@ -99,22 +99,21 @@ public class ReclutadorService extends BaseService {
 
         return reclutadors;
     }
-    
+
     //Metodo eliminar reclutador
-    
-    public void eliminarReclutador(int idPersona){      
+    public void eliminarReclutador(int idPersona) {
         try {
             querySQL_1 = "DELETE FROM reclutadores WHERE id_persona = ?";
             Object[] parametrosSQL_1 = {idPersona};
             db.queryEliminar(querySQL_1, parametrosSQL_1);
-            
+
             querySQL_2 = "DELETE FROM personas WHERE id = ?";
             Object[] parametrosSQL_2 = {idPersona};
             db.queryEliminar(querySQL_2, parametrosSQL_2);
-            
+
         } catch (Exception ex) {
             throw new RuntimeException("Error al eliminar el reclutador y la persona", ex);
-        }finally{
+        } finally {
             db.cerrarConsulta();
         }
     }
