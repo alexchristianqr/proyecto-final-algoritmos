@@ -25,9 +25,9 @@ public class CandidatoService extends BaseService {
 //            originalAutoCommit = db.getAutoCommit();
 //            db.setAutoCommit(false);
 //        }
-        querySQL_1 = "INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, estado, fecha_nacimiento, telefono, fecha_creado) VALUES (?,?,?,?,?,?,?,?,NOW())";
-        Object[] parametrosSQL_1 = {candidato.getNombre(), candidato.getApellidos(), candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getSexo(), candidato.getEstado(), candidato.getFecha_nacimiento(), candidato.getTelefono()};
-        int id_persona = db.queryInsertar(querySQL_1, parametrosSQL_1);
+        querySQL_1 = "INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, estado, fecha_nacimiento, telefono, fecha_creado, estadoCivil) VALUES (?,?,?,?,?,?,?,?,?,?,NOW())";
+        Object[] parametrosSQL_1 = {candidato.getNombre(), candidato.getApellidos(), candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getSexo(), candidato.getEstado(), candidato.getFecha_nacimiento(), candidato.getTelefono(), candidato.getFechaCreado(), candidato.getEstadoCivil()};
+       int id_persona = db.queryInsertar(querySQL_1, parametrosSQL_1);
 //        if (useTransaction) {
 //            db.commit();
 //        }
@@ -36,9 +36,9 @@ public class CandidatoService extends BaseService {
 //            originalAutoCommit = db.getAutoCommit();
 //            db.setAutoCommit(false);
 //        }
-        querySQL_2 = "INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial, estado, fecha_creado) VALUES (?,?,?,?,?,?,?,?,NOW())";
-        Object[] parametrosSQL_2 = {id_persona, candidato.getIdUsuario(), candidato.getAptitudes(), candidato.getImagenPerfil(), candidato.getPathCV(), candidato.getPathCertificadoTrabajo(), candidato.getPathAntecedentePolicial(), candidato.getEstado()};
-        int id_candidato = db.queryInsertar(querySQL_2, parametrosSQL_2);
+       querySQL_2 = "INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial, estado, fecha_creado) VALUES (?,?,?,?,?,?,?,?)";
+       Object[] parametrosSQL_2 = {id_persona, candidato.getIdUsuario(), candidato.getAptitudes(), candidato.getImagenPerfil(), candidato.getPathCV(), candidato.getPathCertificadoTrabajo(), candidato.getPathAntecedentePolicial(), candidato.getEstado()};
+       int id_candidato = db.queryInsertar(querySQL_2, parametrosSQL_2);
 
         return id_candidato;
 
@@ -50,7 +50,7 @@ public class CandidatoService extends BaseService {
     }
 
     public DefaultTableModel tablaCandidatos(DefaultTableModel modelo, Object[] data) {
-        querySQL_1 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.fecha_nacimiento, p.telefono, c.id_usuario, c.aptitudes, c.imagen_perfil, c.path_curriculum_vitae, c.path_certificado_trabajo, c.path_antecendente_policial, c.fecha_creado FROM personas p JOIN candidatos c ON p.id_persona = c.id_persona;";
+        querySQL_1 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.fecha_nacimiento, p.telefono, p.estadoCivil, c.id_usuario, c.aptitudes, c.imagen_perfil, c.path_curriculum_vitae, c.path_certificado_trabajo, c.path_antecendente_policial, c.fecha_creado FROM personas p JOIN candidatos c ON p.id_persona = c.id_persona;";
         Object[] parametrosSQL_1 = {};
         ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
@@ -72,6 +72,7 @@ public class CandidatoService extends BaseService {
                 data[13] = rs.getString("path_certificado_trabajo");
                 data[14] = rs.getString("path_antecendente_policial");
                 data[15] = rs.getDate("fecha_creado");
+                data[16] = rs.getString("estadoCivil");
                 modelo.addRow(data);
             }
         } catch (SQLException ex) {
@@ -85,7 +86,7 @@ public class CandidatoService extends BaseService {
 
     public List<Candidato> listarCandidatos() {
         List<Candidato> candidatos = new ArrayList<>();
-        querySQL_1 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.edad, p.telefono, c.id_usuario, c.aptitudes, c.imagen_perfil, c.path_curriculum_vitae, c.path_certificado_trabajo, c.path_antecendente_policial, c.fecha_creado FROM personas p JOIN candidatos c ON p.id_persona = c.id_persona;";
+        querySQL_1 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.fecha_nacimiento, p.telefono, p.estadoCivil, c.id_usuario, c.aptitudes, c.imagen_perfil, c.path_curriculum_vitae, c.path_certificado_trabajo, c.path_antecendente_policial, c.fecha_creado FROM personas p JOIN candidatos c ON p.id_persona = c.id_persona;";
         Object[] parametrosSQL_1 = {};
         ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
@@ -108,6 +109,7 @@ public class CandidatoService extends BaseService {
                 candidato.setPathCertificadoTrabajo(rs.getString("path_certificado_trabajo"));
                 candidato.setPathAntecedentePolicial(rs.getString("path_antecendente_policial"));
                 candidato.setFechaCreado(rs.getString("fecha_creado"));
+                candidato.setEstadoCivil(rs.getString("estadoCivil"));
                 candidatos.add(candidato);
             }
         } catch (SQLException ex) {
