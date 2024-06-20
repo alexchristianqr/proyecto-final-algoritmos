@@ -17,7 +17,7 @@ public class ExportService {
     }
 
     private static void prepareFile(PreparedStatement stmt, String filename, String fileExtension) throws IOException, InterruptedException, ExecutionException {
-        String basePath = "D:\\Apps\\src\\src-utp\\proyecto-final-algoritmos\\src\\exports\\";
+        String basePath = "C:\\Users\\benja\\Desktop\\REPORTES\\";
         File fileDownload = new File(basePath + filename + fileExtension);
         exportFile(stmt, fileDownload);
     }

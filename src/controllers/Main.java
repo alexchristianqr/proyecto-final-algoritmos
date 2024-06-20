@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 import models.Candidato;
+import models.Empleo;
 import models.Postulacion;
 import models.Reclutador;
 import models.Usuario;
+import services.ReporteService;
 import views.Login;
 
 public class Main {
@@ -28,11 +30,14 @@ public class Main {
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
-        testRegistrarUsuario();
-        //testRegistrarCandidato();
         //testRegistrarUsuario();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
+        //testRegistrarEmpleo();
+        //testRegistrarUsuario();
+        //testRegistrarCandidato();
+        //testRegistrarReclutador();
+        //testReporte();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
@@ -118,12 +123,29 @@ public class Main {
 
         System.out.println("Candidato creado exitosamente.");
     }
-    
+
+    public static void testRegistrarEmpleo() {
+        EmpleoController empleoController = new EmpleoController();
+        Empleo empleo = new Empleo();
+
+        // Setea los atributos del empleo
+        empleo.setIdReclutador(1); // Asume un ID de reclutador, ajustar según sea necesario
+        empleo.setTitulo("Desarrollador Java");
+        empleo.setEmpresa("Tech Solutions");
+        empleo.setSueldo("4500.00");
+        empleo.setModalidad("remoto");
+        empleo.setDescripcion("Responsable del desarrollo de aplicaciones Java");
+        empleo.setEstado("activo");
+
+        empleoController.registrarEmpleo(empleo);
+
+        System.out.println("Empleo registrado exitosamente.");
+    }
+
     public static void testRegistrarReclutador() {
         ReclutadorController reclutadorController = new ReclutadorController();
         Reclutador reclutador = new Reclutador();
 
-        
         reclutador.setNombre("Michael");
         reclutador.setApellidos("Quiroz");
         reclutador.setTipoDocumento(1);
@@ -137,5 +159,13 @@ public class Main {
         reclutadorController.crearReclutador(reclutador);
 
         System.out.println("Reclutador creado exitosamente.");
+    }
+
+    public static void testReporte() throws IOException {
+        try {
+            ReporteService.ReporteEdad();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
