@@ -4,7 +4,9 @@
  */
 package views;
 
+import controllers.UsuarioController;
 import core.forms.BaseJdialog;
+import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import java.util.Arrays;
@@ -16,6 +18,8 @@ public class Login extends javax.swing.JFrame {
     ViewMenuCandidato viewMenuCandidato;
     ViewMenuReclutador viewMenuReclutador;
     RegistroUsuario registroUsuario = new RegistroUsuario();
+
+    UsuarioController usuarioController = new UsuarioController();
 
     /**
      * Creates new form DialogLogin
@@ -157,9 +161,20 @@ public class Login extends javax.swing.JFrame {
             // throw new Exception("Prueba error");
             btnLogin.setEnabled(false);
             String username = txtUsername.getText().toLowerCase();
-            char[] password = txtPwd.getPassword();
+            char[] passwordArray = txtPwd.getPassword();
 
-            if (username.equalsIgnoreCase("candidato") && isPasswordCorrect(password, "candidato")) {
+            // Convertir char[] a String
+            String password = new String(passwordArray);
+
+            /*boolean success = usuarioController.login("candidato", username, password);
+            System.out.println("Ingreso: " + success);
+            System.out.println("psw: " + password);*/
+
+            ResponseService<String> response = usuarioController.login("reclutador", username, password);
+            System.out.println("Success: " + response.isSuccess());
+            System.out.println("Tipo de usuario: " + response.getResult());
+
+            if (response.isSuccess() && response.getResult().equalsIgnoreCase("candidato")) {
                 viewMenuCandidato = new ViewMenuCandidato(); // Crear objeto del JFrame principal
                 viewMenuCandidato.setVisible(true);// Visualizar frame
                 util.centerOnScreen(viewMenuCandidato, true);
@@ -170,7 +185,7 @@ public class Login extends javax.swing.JFrame {
                 usuario.setNombres("Alex Quispe");
                 UsuarioThreadLocal.set(usuario);
 
-            } else if (username.equalsIgnoreCase("reclutador") && isPasswordCorrect(password, "reclutador")) {
+            } else if (response.isSuccess() && response.getResult().equalsIgnoreCase("reclutador")) {
                 viewMenuReclutador = new ViewMenuReclutador(); // Crear objeto del JFrame principal
                 viewMenuReclutador.setVisible(true);// Visualizar frame
                 util.centerOnScreen(viewMenuReclutador, true);
@@ -187,7 +202,6 @@ public class Login extends javax.swing.JFrame {
                 txtPwd.setText("");
                 txtPwd.requestFocus();
             }
-
         } catch (Exception ex) {
             util.alertMessage();
             btnLogin.setEnabled(true);
