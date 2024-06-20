@@ -8,23 +8,24 @@ public abstract class Persona {
     private String nombre;
     private String apellidos;
     private String sexo;
-    private String fecha_nacimiento;
+    private String fechaNacimiento;
     private String telefono;
     private String estado;// activo|inactivo
     private String fechaCreado;
     private String fechaActualizado;
     private String estadoCivil;
+    private String edad;
 
     public Persona() {
     }
 
-    public Persona(int tipoDocumento, String nroDocumento, String nombre, String apellidos, String sexo, String fecha_nacimiento, String telefono, String estado, String fechaCreado, String fechaActualizado, String estadoCivil, int idPersona) {
+    public Persona(int tipoDocumento, String nroDocumento, String nombre, String apellidos, String sexo, String fechaNacimiento, String telefono, String estado, String fechaCreado, String fechaActualizado, String estadoCivil, int idPersona) {
         this.tipoDocumento = tipoDocumento;
-    this.nroDocumento = nroDocumento;
+        this.nroDocumento = nroDocumento;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.sexo = sexo;
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.estado = estado;
         this.fechaCreado = fechaCreado;
@@ -81,12 +82,20 @@ public abstract class Persona {
         this.sexo = sexo;
     }
 
-    public String getFecha_nacimiento() {
-        return fecha_nacimiento;
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFecha_nacimiento(String fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getEdad() {
+        return edad;
+    }
+
+    public void setEdad(String edad) {
+        this.edad = edad;
     }
 
     public String getTelefono() {

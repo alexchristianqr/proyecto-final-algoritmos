@@ -45,6 +45,7 @@ CREATE TABLE personas
     sexo ENUM('F','M'),
     edad VARCHAR(5),
     telefono VARCHAR(30),
+    fecha_nacimiento VARCHAR(30),
     estado ENUM('activo','inactivo') DEFAULT 'activo',
     fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,

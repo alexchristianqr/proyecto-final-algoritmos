@@ -10,13 +10,12 @@ public class Candidato extends Persona {
     private String pathCV;
     private String pathCertificadoTrabajo;
     private String pathAntecedentePolicial;
-    private String FechaCreado;
 
     public Candidato() {
     }
 
     public Candidato(Candidato candidato) {
-        super(candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getNombre(), candidato.getApellidos(), candidato.getSexo(), candidato.getFecha_nacimiento(), candidato.getTelefono(), candidato.getEstado(), candidato.getFechaCreado(), candidato.getFechaActualizado(), candidato.getEstadoCivil(), candidato.getIdPersona());
+        super(candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getNombre(), candidato.getApellidos(), candidato.getSexo(), candidato.getFechaNacimiento(), candidato.getTelefono(), candidato.getEstado(), candidato.getFechaCreado(), candidato.getFechaActualizado(), candidato.getEstadoCivil(), candidato.getIdPersona());
         this.idUsuario = candidato.getIdUsuario();
         this.aptitudes = candidato.getAptitudes();
         this.imagenPerfil = candidato.getImagenPerfil();
@@ -73,14 +72,6 @@ public class Candidato extends Persona {
 
     public void setPathCV(String pathCV) {
         this.pathCV = pathCV;
-    }
-
-    public String getFechaCreado() {
-        return FechaCreado;
-    }
-
-    public void setFechaCreado(String FechaCreado) {
-        this.FechaCreado = FechaCreado;
     }
 
     public String getPathCertificadoTrabajo() {

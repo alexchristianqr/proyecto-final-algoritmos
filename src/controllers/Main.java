@@ -24,11 +24,8 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
-        Login login = new Login();
-        util.centerOnScreen(login, true);
-        login.setVisible(true);
-
-        testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
+        testViewLogin();
+        //testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
         /*testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");*/
         //testMisPostulaciones();
         //testMisPublicaciones();
@@ -41,6 +38,12 @@ public class Main {
         //testRegistrarCandidato();
         //testRegistrarReclutador();
         //testReporte();
+    }
+
+    public static void testViewLogin() {
+        Login login = new Login();
+        util.centerOnScreen(login, true);
+        login.setVisible(true);
     }
 
     public static void testLogin(String rol, String username, String pwd) {
