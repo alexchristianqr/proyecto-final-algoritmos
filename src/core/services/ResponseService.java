@@ -1,13 +1,7 @@
 package core.services;
 
 public class ResponseService<T> {
-    /*
-    success: true
-    result: "candidato",
-    
-    success: true
-    result: [],
-    */
+
     public boolean success;
     public T result;
 
@@ -26,6 +20,5 @@ public class ResponseService<T> {
     public void setResult(T result) {
         this.result = result;
     }
-    
-    
+
 }

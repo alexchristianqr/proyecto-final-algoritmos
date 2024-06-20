@@ -18,10 +18,10 @@ public class UsuarioController extends BaseController<Usuario, UsuarioService> {
     public ResponseService<String> login(String rol, String username, String pwd) {
         ResponseService<String> response = new ResponseService<>();
         boolean success = authService.login(rol, username, pwd);
-        
+
         response.setSuccess(success);
         response.setResult(rol);
-        
+
         return response;
     }
 
