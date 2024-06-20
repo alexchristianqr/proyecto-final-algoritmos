@@ -10,9 +10,9 @@ package views;
  */
 public class ViewMenuReclutador extends javax.swing.JFrame {
 
-    /**
-     * Creates new form viewMenuReclutador
-     */
+    
+    Login login = new Login();
+    
     public ViewMenuReclutador() {
         initComponents();
     }
@@ -291,7 +291,8 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-    System.exit(0);
+    this.setVisible(false);
+    login.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**

@@ -24,11 +24,12 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
-        /*DialogLogin dialogLogin = new DialogLogin();
-        util.centerOnScreen(dialogLogin, true);
-        dialogLogin.setVisible(true);*/
+        Login login = new Login();
+        util.centerOnScreen(login, true);
+        login.setVisible(true);
 
         testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
+        /*testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");*/
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
