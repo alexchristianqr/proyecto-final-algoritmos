@@ -9,7 +9,9 @@ import java.util.concurrent.ExecutionException;
 import models.Candidato;
 import models.Empleo;
 import models.Postulacion;
+import models.Reclutador;
 import models.Usuario;
+import services.ReporteService;
 import views.Login;
 
 public class Main {
@@ -31,6 +33,10 @@ public class Main {
         //testRegistrarUsuario();
         //testRegistrarCandidato();
         testRegistrarEmpleo();
+        //testRegistrarUsuario();
+        //testRegistrarCandidato();
+        //testRegistrarReclutador();
+        testReporte();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
@@ -116,7 +122,7 @@ public class Main {
 
         System.out.println("Candidato creado exitosamente.");
     }
-    
+
         public static void testRegistrarEmpleo() {
         EmpleoController empleoController = new EmpleoController();
         Empleo empleo = new Empleo();
@@ -133,5 +139,31 @@ public class Main {
         empleoController.registrarEmpleo(empleo);
 
         System.out.println("Empleo registrado exitosamente.");
+    public static void testRegistrarReclutador() {
+        ReclutadorController reclutadorController = new ReclutadorController();
+        Reclutador reclutador = new Reclutador();
+
+        
+        reclutador.setNombre("Michael");
+        reclutador.setApellidos("Quiroz");
+        reclutador.setTipoDocumento(1);
+        reclutador.setNroDocumento("591648762");
+        reclutador.setSexo("M");
+        reclutador.setEdad("24");
+        reclutador.setTelefono("515620158");
+        reclutador.setEstado("activo");
+        reclutador.setIdUsuario(1);
+
+        reclutadorController.crearReclutador(reclutador);
+
+        System.out.println("Reclutador creado exitosamente.");
+    }
+    
+     public static void testReporte() throws IOException{
+        try{
+            ReporteService.ReporteEdad();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

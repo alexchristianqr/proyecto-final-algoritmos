@@ -45,7 +45,8 @@ public class CandidatoService extends BaseService {
 
     public DefaultTableModel tablaCandidatos(DefaultTableModel modelo, Object[] data) {
         querySQL_1 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.edad, p.telefono, c.id_usuario, c.aptitudes, c.imagen_perfil, c.path_curriculum_vitae, c.path_certificado_trabajo, c.path_antecendente_policial, c.fecha_creado FROM personas p JOIN candidatos c ON p.id_persona = c.id_persona;";
-        ResultSet rs = db.queryConsultar(querySQL_1);
+        Object[] parametrosSQL_1 = {};
+        ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
         try {
             while (rs.next()) {
@@ -78,8 +79,9 @@ public class CandidatoService extends BaseService {
 
     public List<Candidato> listarCandidatos() {
         List<Candidato> candidatos = new ArrayList<>();
-        querySQL_2 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.edad, p.telefono, c.id_usuario, c.aptitudes, c.imagen_perfil, c.path_curriculum_vitae, c.path_certificado_trabajo, c.path_antecendente_policial, c.fecha_creado FROM personas p JOIN candidatos c ON p.id_persona = c.id_persona;";
-        ResultSet rs = db.queryConsultar(querySQL_2);
+        querySQL_1 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.edad, p.telefono, c.id_usuario, c.aptitudes, c.imagen_perfil, c.path_curriculum_vitae, c.path_certificado_trabajo, c.path_antecendente_policial, c.fecha_creado FROM personas p JOIN candidatos c ON p.id_persona = c.id_persona;";
+        Object[] parametrosSQL_1 = {};
+        ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
         try {
             while (rs.next()) {
@@ -109,21 +111,5 @@ public class CandidatoService extends BaseService {
         db.cerrarConsulta();
 
         return candidatos;
-    }
-
-    private void rollbackIfNeeded(boolean useTransaction) {
-        if (useTransaction) {
-
-            db.rollback();
-
-        }
-    }
-
-    private void resetAutoCommitIfNeeded(boolean useTransaction) {
-        if (useTransaction) {
-
-            db.setAutoCommit(originalAutoCommit);
-
-        }
     }
 }
