@@ -12,8 +12,9 @@ public class AuthService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public void login(String rol, String username, String pwd) {
+    public boolean login(String rol, String username, String pwd) {
 
+        boolean response = false;
         Object[] parametrosSQL_1 = new Object[2];
 
         switch (rol) {
@@ -39,16 +40,18 @@ public class AuthService extends BaseService {
             while (rs.next()) {
                 usuario.setIdUsuario(rs.getInt("id"));
 
-                    switch (rol) {
-                        case "candidato" -> {
-                            usuario.setIdCandidato(rs.getInt("id_candidato"));
-                        }
-                        case "reclutador" -> {
-                            usuario.setIdReclutador(rs.getInt("id_reclutador"));
-                        }
-                        default ->
-                            throw new AssertionError();
+                switch (rol) {
+                    case "candidato" -> {
+                        usuario.setIdCandidato(rs.getInt("id_candidato"));
+                        response = true;
                     }
+                    case "reclutador" -> {
+                        usuario.setIdReclutador(rs.getInt("id_reclutador"));
+                        response = true;
+                    }
+                    default ->
+                        throw new AssertionError();
+                }
 
                 usuario.setNombres(rs.getString("nombres"));
                 usuario.setApellidos(rs.getString("apellidos"));
@@ -64,11 +67,13 @@ public class AuthService extends BaseService {
 
             System.out.println();
 
+            db.cerrarConsulta();
+
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
 
-        db.cerrarConsulta();
+        return response;
     }
 
     public void logout(String id_usuario) {

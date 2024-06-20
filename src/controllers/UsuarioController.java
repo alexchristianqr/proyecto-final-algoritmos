@@ -14,8 +14,8 @@ public class UsuarioController extends BaseController<Usuario, UsuarioService> {
         authService = new AuthService();
     }
 
-    public void login(String rol, String username, String pwd) {
-        authService.login(rol, username, pwd);
+    public boolean login(String rol, String username, String pwd) {
+        return authService.login(rol, username, pwd);
     }
 
     public void registrarUsuario(Usuario usuario) {

@@ -27,10 +27,11 @@ public class Main {
         util.centerOnScreen(dialogLogin, true);
         dialogLogin.setVisible(true);*/
 
+        testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
-        testRegistrarUsuario();
+        //testRegistrarUsuario();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
         //testRegistrarEmpleo();
@@ -42,7 +43,8 @@ public class Main {
 
     public static void testLogin(String rol, String username, String pwd) {
         UsuarioController usuarioController = new UsuarioController();
-        usuarioController.login(rol, username, pwd);
+        boolean success = usuarioController.login(rol, username, pwd);
+        System.out.println("Ingreso: " + success);
     }
 
     public static void testMisPostulaciones() {
