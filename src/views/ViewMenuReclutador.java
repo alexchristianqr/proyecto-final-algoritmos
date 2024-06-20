@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
-/**
- *
- * @author Usuario
- */
+import core.utils.Util;
+
 public class ViewMenuReclutador extends javax.swing.JFrame {
 
-    
+    Util util = new Util();
     Login login = new Login();
-    
+
     public ViewMenuReclutador() {
         initComponents();
     }
@@ -291,8 +285,9 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-    this.setVisible(false);
-    login.setVisible(true);
+        this.setVisible(false);
+        util.centerOnScreen(login, true);
+        login.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
