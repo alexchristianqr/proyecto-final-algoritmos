@@ -10,6 +10,7 @@ import models.Candidato;
 import models.Postulacion;
 import models.Reclutador;
 import models.Usuario;
+import services.ReporteService;
 import views.Login;
 
 public class Main {
@@ -28,11 +29,12 @@ public class Main {
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
-        testRegistrarUsuario();
+        //testRegistrarUsuario();
         //testRegistrarCandidato();
         //testRegistrarUsuario();
         //testRegistrarCandidato();
-        testRegistrarReclutador();
+        //testRegistrarReclutador();
+        testReporte();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
@@ -137,5 +139,13 @@ public class Main {
         reclutadorController.crearReclutador(reclutador);
 
         System.out.println("Reclutador creado exitosamente.");
+    }
+    
+     public static void testReporte() throws IOException{
+        try{
+            ReporteService.ReporteEdad();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
