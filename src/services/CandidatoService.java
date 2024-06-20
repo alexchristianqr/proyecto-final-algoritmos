@@ -21,6 +21,7 @@ public class CandidatoService extends BaseService {
 
     public void crearCandidato(Candidato candidato, boolean useTransaction) {
 
+<<<<<<< Updated upstream
         if (useTransaction) {
             //a
             originalAutoCommit = db.getAutoCommit();
@@ -29,6 +30,14 @@ public class CandidatoService extends BaseService {
         }
         querySQL_1 = "INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, estado, edad, telefono, fecha_creado) VALUES (?,?,?,?,?,?,?,?,NOW())";
         Object[] parametrosSQL_1 = {candidato.getNombre(), candidato.getApellidos(), candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getSexo(), candidato.getEstado(), candidato.getEdad(), candidato.getTelefono()};
+=======
+//        if (useTransaction) {
+//            originalAutoCommit = db.getAutoCommit();
+//            db.setAutoCommit(false);
+//        }
+        querySQL_1 = "INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, estado, fecha_nacimiento, telefono, fecha_creado) VALUES (?,?,?,?,?,?,?,?,NOW())";
+        Object[] parametrosSQL_1 = {candidato.getNombre(), candidato.getApellidos(), candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getSexo(), candidato.getEstado(), candidato.getFecha_nacimiento(), candidato.getTelefono()};
+>>>>>>> Stashed changes
         int id_persona = db.queryInsertar(querySQL_1, parametrosSQL_1);
 
         querySQL_2 = "INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial, estado, fecha_creado) VALUES (?,?,?,?,?,?,?,?,NOW())";
@@ -44,8 +53,14 @@ public class CandidatoService extends BaseService {
     }
 
     public DefaultTableModel tablaCandidatos(DefaultTableModel modelo, Object[] data) {
+<<<<<<< Updated upstream
         querySQL_1 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.edad, p.telefono, c.id_usuario, c.aptitudes, c.imagen_perfil, c.path_curriculum_vitae, c.path_certificado_trabajo, c.path_antecendente_policial, c.fecha_creado FROM personas p JOIN candidatos c ON p.id_persona = c.id_persona;";
         ResultSet rs = db.queryConsultar(querySQL_1);
+=======
+        querySQL_1 = "SELECT p.id_persona, p.nombre, p.apellido, p.tipo_documento, p.nrodocumento, p.sexo, p.estado, p.fecha_nacimiento, p.telefono, c.id_usuario, c.aptitudes, c.imagen_perfil, c.path_curriculum_vitae, c.path_certificado_trabajo, c.path_antecendente_policial, c.fecha_creado FROM personas p JOIN candidatos c ON p.id_persona = c.id_persona;";
+        Object[] parametrosSQL_1 = {};
+        ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+>>>>>>> Stashed changes
 
         try {
             while (rs.next()) {
@@ -56,7 +71,7 @@ public class CandidatoService extends BaseService {
                 data[4] = rs.getString("nrodocumento");
                 data[5] = rs.getString("sexo");
                 data[6] = rs.getString("estado");
-                data[7] = rs.getInt("edad");
+                data[7] = rs.getString("fecha_nacimiento");
                 data[8] = rs.getString("telefono");
                 data[9] = rs.getInt("id_usuario");
                 data[10] = rs.getString("aptitudes");
@@ -91,7 +106,7 @@ public class CandidatoService extends BaseService {
                 candidato.setNroDocumento(rs.getString("nrodocumento"));
                 candidato.setSexo(rs.getString("sexo"));
                 candidato.setEstado(rs.getString("estado"));
-                candidato.setEdad(rs.getString("edad"));
+                candidato.setFecha_nacimiento(rs.getString("fecha_nacimiento"));
                 candidato.setTelefono(rs.getString("telefono"));
                 candidato.setIdUsuario(rs.getInt("id_usuario"));
                 candidato.setAptitudes(rs.getString("aptitudes"));

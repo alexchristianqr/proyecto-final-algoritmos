@@ -28,7 +28,17 @@ public class Main {
         //testMisPublicaciones();
         //testReporteUsuarios();
         //testRegistrarUsuario();
+<<<<<<< Updated upstream
         testRegistrarCandidato();
+=======
+        //testRegistrarCandidato();
+        //testRegistrarReclutador();
+        //testRegistrarEmpleo();
+        //testRegistrarUsuario();
+        testRegistrarCandidato();
+        //testRegistrarReclutador();
+        //testReporte();
+>>>>>>> Stashed changes
     }
 
     public static void testLogin(String rol, String username, String pwd) {
@@ -95,13 +105,13 @@ public class Main {
         Candidato candidato = new Candidato();
 
         // Setea los atributos del candidato
-        candidato.setNombre("John");
-        candidato.setApellidos("Doe");
+        candidato.setNombre("zen");
+        candidato.setApellidos("fann");
         candidato.setTipoDocumento(1);
-        candidato.setNroDocumento("23456789");
+        candidato.setNroDocumento("23456798");
         candidato.setSexo("M");
-        candidato.setEdad("20");
-        candidato.setTelefono("123456789");
+        candidato.setFecha_nacimiento("06-21-24");
+        candidato.setTelefono("223456789");
         candidato.setEstado("activo");
         candidato.setIdUsuario(1);
         candidato.setAptitudes("Java, SQL");
