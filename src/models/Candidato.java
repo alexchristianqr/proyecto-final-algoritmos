@@ -16,8 +16,7 @@ public class Candidato extends Persona {
     }
 
     public Candidato(Candidato candidato) {
-        super(candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getNombre(), candidato.getApellidos(), candidato.getSexo(), candidato.getEdad(), candidato.getTelefono(), candidato.getEstado(), candidato.getFechaCreado(), candidato.getFechaActualizado(), candidato.getIdPersona());
-
+        super(candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getNombre(), candidato.getApellidos(), candidato.getSexo(), candidato.getFecha_nacimiento(), candidato.getTelefono(), candidato.getEstado(), candidato.getFechaCreado(), candidato.getFechaActualizado(), candidato.getIdPersona());
         this.idUsuario = candidato.getIdUsuario();
         this.aptitudes = candidato.getAptitudes();
         this.imagenPerfil = candidato.getImagenPerfil();
