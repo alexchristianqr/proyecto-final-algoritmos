@@ -30,7 +30,7 @@ public class Main {
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
-        //testRegistrarUsuario();
+        testRegistrarUsuario();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
         //testRegistrarEmpleo();
@@ -91,11 +91,18 @@ public class Main {
     public static void testRegistrarUsuario() {
         UsuarioController usuarioController = new UsuarioController();
         Usuario usuario = new Usuario();
+        // Candidato
         usuario.setNombres("Martin");
         usuario.setApellidos("Torres");
         usuario.setUsername("martin.torres@gmail.com");
         usuario.setPassword("candidato2024");
         usuario.setRol("candidato");
+        // Reclutador
+        usuario.setNombres("Deysi");
+        usuario.setApellidos("Barrios");
+        usuario.setUsername("deysi.barrios@gmail.com");
+        usuario.setPassword("reclutador2024");
+        usuario.setRol("reclutador");
         usuarioController.registrarUsuario(usuario);
     }
 

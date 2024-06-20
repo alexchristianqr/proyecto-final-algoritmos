@@ -1,9 +1,6 @@
 package services;
 
 import core.services.MysqlDBService;
-import core.utils.UsuarioThreadLocal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import models.Candidato;
 import models.Reclutador;
 import models.Usuario;
@@ -24,10 +21,6 @@ public class UsuarioService extends BaseService {
 
             String rol = usuario.getRol();
 
-            // Guarda el estado original de auto-commit y desactiva el auto-commit
-            originalAutoCommit = db.getAutoCommit();
-            db.setAutoCommit(false);
-
             // Insertar usuario
             querySQL_1 = "INSERT INTO usuarios (nombres, apellidos, rol, username, pwd) VALUES (?,?,?,?,?)";
             Object[] parametrosSQL_1 = {usuario.getNombres(), usuario.getApellidos(), rol, usuario.getUsername(), usuario.getPassword()};
@@ -43,31 +36,32 @@ public class UsuarioService extends BaseService {
                         candidato.setNombre(usuario.getNombres());
                         candidato.setApellidos(usuario.getApellidos());
                         candidato.setEstado("activo");
-                        candidatoService.crearCandidato(candidato, true);
+                        candidatoService.crearCandidato(candidato);
+                        break;
                     }
                     case "reclutador" -> {
-                        /*ReclutadorService reclutadorService = new ReclutadorService();
+                        // Insertar reclutador
+                        ReclutadorService reclutadorService = new ReclutadorService();
                         Reclutador reclutador = new Reclutador();
+                        reclutador.setIdUsuario(id_usuario);
                         reclutador.setNombre(usuario.getNombres());
                         reclutador.setApellidos(usuario.getApellidos());
-                        reclutadorService.crearReclutador(reclutador);*/
+                        reclutadorService.crearReclutador(reclutador);
+                        break;
                     }
                     default ->
                         throw new AssertionError();
                 }
-                
-                db.commit();// Confirmar transacción SQL
-                
+
+                // db.commit();// Confirmar transacción SQL
             } else {
                 throw new RuntimeException("No se pudo insertar el usuario en la base de datos.");
             }
         } catch (RuntimeException e) {
-            
-            db.rollback();// Revertir transacción SQL
-            
+            // db.rollback();// Revertir transacción SQL
             throw new RuntimeException("Error al registrar el usuario: " + e.getMessage(), e);
         } finally {
-            db.setAutoCommit(originalAutoCommit); // Restaura el auto-commit
+            // db.setAutoCommit(originalAutoCommit); // Restaura el auto-commit
             db.cerrarConsulta();
         }
     }
