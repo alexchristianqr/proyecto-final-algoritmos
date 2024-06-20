@@ -24,13 +24,13 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
-        testViewLogin();
+        //testViewLogin();
         //testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
         /*testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");*/
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
-        //testRegistrarUsuario();
+        testRegistrarUsuario();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
         //testRegistrarEmpleo();
@@ -100,18 +100,24 @@ public class Main {
         UsuarioController usuarioController = new UsuarioController();
         Usuario usuario = new Usuario();
         // Candidato
-        usuario.setNombres("Martin");
+        /*usuario.setNombres("Martin");
         usuario.setApellidos("Torres");
         usuario.setUsername("martin.torres@gmail.com");
         usuario.setPassword("candidato2024");
         usuario.setRol("candidato");
+        ResponseService<String> response = usuarioController.registrarUsuario(usuario);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getResult());*/
+
         // Reclutador
         usuario.setNombres("Deysi");
         usuario.setApellidos("Barrios");
         usuario.setUsername("deysi.barrios@gmail.com");
         usuario.setPassword("reclutador2024");
         usuario.setRol("reclutador");
-        usuarioController.registrarUsuario(usuario);
+        ResponseService<String> response = usuarioController.registrarUsuario(usuario);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getResult());
     }
 
     public static void testRegistrarCandidato() {

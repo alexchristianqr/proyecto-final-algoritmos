@@ -11,7 +11,9 @@ public class UsuarioService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public void registrarUsuario(Usuario usuario) {
+    public boolean registrarUsuario(Usuario usuario) {
+        boolean response = false;
+        
         try {
 
             // Validaciones de entrada
@@ -37,6 +39,8 @@ public class UsuarioService extends BaseService {
                         candidato.setApellidos(usuario.getApellidos());
                         candidato.setEstado("activo");
                         candidatoService.crearCandidato(candidato);
+                        
+                        response = true;
                         break;
                     }
                     case "reclutador" -> {
@@ -47,6 +51,8 @@ public class UsuarioService extends BaseService {
                         reclutador.setNombre(usuario.getNombres());
                         reclutador.setApellidos(usuario.getApellidos());
                         reclutadorService.crearReclutador(reclutador);
+                        
+                        response = true;
                         break;
                     }
                     default ->
@@ -64,5 +70,7 @@ public class UsuarioService extends BaseService {
             // db.setAutoCommit(originalAutoCommit); // Restaura el auto-commit
             db.cerrarConsulta();
         }
+        
+        return response;
     }
 }
