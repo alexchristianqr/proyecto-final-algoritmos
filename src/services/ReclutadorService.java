@@ -99,6 +99,27 @@ public class ReclutadorService extends BaseService {
 
         return reclutadors;
     }
+    
+    //Metodo eliminar reclutador
+    
+    public void eliminarReclutador(int idPersona){      
+        try {
+            querySQL_1 = "DELETE FROM reclutadores WHERE id_persona = ?";
+            Object[] parametrosSQL_1 = {idPersona};
+            db.queryEliminar(querySQL_1, parametrosSQL_1);
+            
+            querySQL_2 = "DELETE FROM personas WHERE id = ?";
+            Object[] parametrosSQL_2 = {idPersona};
+            db.queryEliminar(querySQL_2, parametrosSQL_2);
+            
+        } catch (Exception ex) {
+            throw new RuntimeException("Error al eliminar el reclutador y la persona", ex);
+        }finally{
+            db.cerrarConsulta();
+        }
+    }
+
+
     /*public void crearReclutador(Reclutador reclutador) {
         querySQL_1 = "INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, estado, edad, telefono, fecha_creado) VALUES (?,?,?,?,?,?,?,?,NOW())";
         Object[] parametrosSQL_1 = {reclutador.getNombre(), reclutador.getApellidos(),

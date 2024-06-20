@@ -14,4 +14,8 @@ public class ReclutadorController extends BaseController<Reclutador, ReclutadorS
     public void crearReclutador(Reclutador reclutador) {
         service.crearReclutador(reclutador);
     }
+    
+    public void eliminarReclutador(int idPersona){
+        service.eliminarReclutador(idPersona);
+    }
 }
