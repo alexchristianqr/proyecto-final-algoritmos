@@ -2,6 +2,7 @@ package controllers;
 
 import core.services.ExportService;
 import core.services.MysqlDBService;
+import core.services.ResponseService;
 import core.utils.Util;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ public class Main {
         util.centerOnScreen(dialogLogin, true);
         dialogLogin.setVisible(true);*/
 
-        testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+        testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
@@ -43,8 +44,9 @@ public class Main {
 
     public static void testLogin(String rol, String username, String pwd) {
         UsuarioController usuarioController = new UsuarioController();
-        boolean success = usuarioController.login(rol, username, pwd);
-        System.out.println("Ingreso: " + success);
+        ResponseService<String> response = usuarioController.login(rol, username, pwd);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Tipo de usuario: " + response.getResult());
     }
 
     public static void testMisPostulaciones() {
