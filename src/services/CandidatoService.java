@@ -22,10 +22,8 @@ public class CandidatoService extends BaseService {
     public void crearCandidato(Candidato candidato, boolean useTransaction) {
 
         if (useTransaction) {
-            //a
             originalAutoCommit = db.getAutoCommit();
             db.setAutoCommit(false);
-            //a
         }
         querySQL_1 = "INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, estado, edad, telefono, fecha_creado) VALUES (?,?,?,?,?,?,?,?,NOW())";
         Object[] parametrosSQL_1 = {candidato.getNombre(), candidato.getApellidos(), candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getSexo(), candidato.getEstado(), candidato.getEdad(), candidato.getTelefono()};
@@ -36,7 +34,8 @@ public class CandidatoService extends BaseService {
         db.queryInsertar(querySQL_2, parametrosSQL_2);
 
         db.cerrarConsulta();
-        //nuevo
+        
+        // Nuevo
         if (useTransaction) {
             db.commit();
         }

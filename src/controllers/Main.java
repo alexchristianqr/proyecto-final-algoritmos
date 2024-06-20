@@ -32,7 +32,7 @@ public class Main {
         //testRegistrarCandidato();
         //testRegistrarUsuario();
         //testRegistrarCandidato();
-        testRegistrarReclutador();
+        //testRegistrarReclutador();
     }
 
     public static void testLogin(String rol, String username, String pwd) {

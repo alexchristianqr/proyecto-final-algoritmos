@@ -31,18 +31,19 @@ public class UsuarioService extends BaseService {
             // Insertar usuario
             querySQL_1 = "INSERT INTO usuarios (nombres, apellidos, rol, username, pwd) VALUES (?,?,?,?,?)";
             Object[] parametrosSQL_1 = {usuario.getNombres(), usuario.getApellidos(), rol, usuario.getUsername(), usuario.getPassword()};
-            int inserted = db.queryInsertar(querySQL_1, parametrosSQL_1);
+            int id_usuario = db.queryInsertar(querySQL_1, parametrosSQL_1);
 
-            if (inserted > 0) {
+            if (id_usuario > 0) {
                 switch (rol) {
                     case "candidato" -> {
                         // Insertar candidato
-                        /*CandidatoService candidatoService = new CandidatoService();
+                        CandidatoService candidatoService = new CandidatoService();
                         Candidato candidato = new Candidato();
+                        candidato.setIdUsuario(id_usuario);
                         candidato.setNombre(usuario.getNombres());
                         candidato.setApellidos(usuario.getApellidos());
                         candidato.setEstado("activo");
-                        candidatoService.crearCandidato(candidato, true);*/
+                        candidatoService.crearCandidato(candidato, true);
                     }
                     case "reclutador" -> {
                         /*ReclutadorService reclutadorService = new ReclutadorService();
