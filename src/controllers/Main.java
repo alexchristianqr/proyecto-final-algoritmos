@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 import models.Candidato;
+import models.Empleo;
 import models.Postulacion;
 import models.Usuario;
 import views.Login;
@@ -28,7 +29,8 @@ public class Main {
         //testMisPublicaciones();
         //testReporteUsuarios();
         //testRegistrarUsuario();
-        testRegistrarCandidato();
+        //testRegistrarCandidato();
+        testRegistrarEmpleo();
     }
 
     public static void testLogin(String rol, String username, String pwd) {
@@ -113,5 +115,23 @@ public class Main {
         candidatoController.crearCandidato(candidato);
 
         System.out.println("Candidato creado exitosamente.");
+    }
+    
+        public static void testRegistrarEmpleo() {
+        EmpleoController empleoController = new EmpleoController();
+        Empleo empleo = new Empleo();
+        
+        // Setea los atributos del empleo
+        empleo.setIdReclutador(1); // Asume un ID de reclutador, ajustar según sea necesario
+        empleo.setTitulo("Desarrollador Java");
+        empleo.setEmpresa("Tech Solutions");
+        empleo.setSueldo("4500.00");
+        empleo.setModalidad("remoto");
+        empleo.setDescripcion("Responsable del desarrollo de aplicaciones Java");
+        empleo.setEstado("activo");
+
+        empleoController.registrarEmpleo(empleo);
+
+        System.out.println("Empleo registrado exitosamente.");
     }
 }
