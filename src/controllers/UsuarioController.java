@@ -20,6 +20,7 @@ public class UsuarioController extends BaseController<Usuario, UsuarioService> {
         boolean success = authService.login(rol, username, pwd);
 
         response.setSuccess(success);
+        response.setMessage("usuario autenticado");
         response.setResult(rol);
 
         return response;
@@ -30,12 +31,18 @@ public class UsuarioController extends BaseController<Usuario, UsuarioService> {
         boolean success = usuarioService.registrarUsuario(usuario);
 
         response.setSuccess(success);
-        response.setResult("usuario registrado existosamente");
+        response.setMessage("usuario registrado existosamente");
 
         return response;
     }
 
-    public void logout(String id_usuario) {
-        authService.logout(id_usuario);
+    public ResponseService<Boolean> logout() {
+        ResponseService<Boolean> response = new ResponseService<>();
+        boolean success = authService.logout();
+
+        response.setSuccess(success);
+        response.setMessage("usuario no autenticado");
+
+        return response;
     }
 }
