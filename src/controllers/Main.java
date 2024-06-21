@@ -30,10 +30,10 @@ public class Main {
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
-        testRegistrarUsuario();
+        //testRegistrarUsuario();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
-        //testRegistrarEmpleo();
+        testRegistrarEmpleo();
         //testRegistrarUsuario();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
@@ -50,7 +50,7 @@ public class Main {
         UsuarioController usuarioController = new UsuarioController();
         ResponseService<String> response = usuarioController.login(rol, username, pwd);
         System.out.println("Success: " + response.isSuccess());
-        System.out.println("Tipo de usuario: " + response.getResult());
+        System.out.println("Resultado: " + response.getResult());
     }
 
     public static void testMisPostulaciones() {
@@ -107,7 +107,7 @@ public class Main {
         usuario.setRol("candidato");
         ResponseService<String> response = usuarioController.registrarUsuario(usuario);
         System.out.println("Success: " + response.isSuccess());
-        System.out.println("Mensaje: " + response.getResult());*/
+        System.out.println("Resultado: " + response.getResult());*/
 
         // Reclutador
         usuario.setNombres("Deysi");
@@ -117,7 +117,7 @@ public class Main {
         usuario.setRol("reclutador");
         ResponseService<String> response = usuarioController.registrarUsuario(usuario);
         System.out.println("Success: " + response.isSuccess());
-        System.out.println("Mensaje: " + response.getResult());
+        System.out.println("Resultado: " + response.getResult());
     }
 
     public static void testRegistrarCandidato() {
@@ -158,9 +158,10 @@ public class Main {
         empleo.setDescripcion("Responsable del desarrollo de aplicaciones Java");
         empleo.setEstado("activo");
 
-        empleoController.registrarEmpleo(empleo);
+        ResponseService<String> response = empleoController.registrarEmpleo(empleo);
 
-        System.out.println("Empleo registrado exitosamente.");
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Resultado: " + response.getResult());
     }
 
     public static void testRegistrarReclutador() {

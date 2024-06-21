@@ -1,5 +1,6 @@
 package controllers;
 
+import core.services.ResponseService;
 import models.Empleo;
 import services.EmpleoService;
 
@@ -10,8 +11,15 @@ public class EmpleoController extends BaseController<Empleo, EmpleoService> {
         service = new EmpleoService();
     }
 
-    public void registrarEmpleo(Empleo empleo) {
-        service.crearEmpleo(empleo);
+    public ResponseService<String> registrarEmpleo(Empleo empleo) {
+        ResponseService<String> response = new ResponseService<>();
+
+        boolean success = service.crearEmpleo(empleo);
+
+        response.setSuccess(success);
+        response.setResult("empleo registrado exitosamente");
+
+        return response;
     }
 
     public void listarPublicaciones() {
