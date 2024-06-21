@@ -84,6 +84,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
         jLabel18.setText("Nombres");
 
         jLabel19.setText("Apellidos");
@@ -197,6 +201,16 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                         .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel22)
+                                        .addGap(59, 59, 59)
+                                        .addComponent(jButton10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel23)
+                                        .addGap(46, 46, 46)
+                                        .addComponent(jButton11)
+                                        .addGap(80, 80, 80))
+                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -226,26 +240,16 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                                         .addGap(58, 58, 58)))
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jLabel27)
-                                                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel22)
-                                        .addGap(59, 59, 59)
-                                        .addComponent(jButton10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel23)
-                                        .addGap(46, 46, 46)
-                                        .addComponent(jButton11)
-                                        .addGap(80, 80, 80))
-                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel28)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(36, 36, 36)
-                                        .addComponent(jLabel29)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel28)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(36, 36, 36)
+                                                .addComponent(jLabel29)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addGap(4, 4, 4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -426,6 +430,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Empleos", jPanel3);
+
+        jMenuBar1.setBorder(null);
 
         jMenu1.setText("Cerrar Sesión");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
