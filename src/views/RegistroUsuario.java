@@ -4,7 +4,10 @@
  */
 package views;
 
+import controllers.UsuarioController;
+import core.services.ResponseService;
 import javax.swing.JOptionPane;
+import models.Usuario;
 
 /**
  *
@@ -12,14 +15,12 @@ import javax.swing.JOptionPane;
  */
 public class RegistroUsuario extends javax.swing.JFrame {
 
-    /*   
-Login login = new Login();
-     */
     /**
      * Creates new form RegistroUsuario
      */
     public RegistroUsuario() {
         initComponents();
+        ResponseService<String> response = new ResponseService<>();
     }
 
     /**
@@ -61,7 +62,7 @@ Login login = new Login();
             }
         });
 
-        Tipodecuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Candidato", "Reclutador" }));
+        Tipodecuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "candidato", "reclutador" }));
 
         jButton2.setText("Regresar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -164,14 +165,26 @@ Login login = new Login();
                                 JOptionPane.showMessageDialog(null, "La contraseña debe tener entre 8 y 16 caracteres");
                             } else {
                                 try {
-                                    JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
-                                    /*
-                                        String consulta = "insert into usuarios(nombre,apellido,email,clave,dni_carnet,num_doc,telefono,tipo_usuario)VALUES('" + nombre + "','" + apellido + "','" + email + "','" + pass + "','" + doc + "','" + num_doc + "','" + telefono + "','usuario')";
-                                        java.sql.PreparedStatement ps = cn.prepareStatement(consulta);
-                                        ps.executeUpdate();
-                                        limpiar();
-                                        JOptionPane.showMessageDialog(null, "DATOS GUARDADOS CORRECTAMENTE");
-                                     */
+
+                                    UsuarioController usuarioController = new UsuarioController();
+                                    Usuario usuario = new Usuario();
+                                    // Reclutador
+                                    usuario.setNombres(nombre);
+                                    usuario.setApellidos(apellidos);
+                                    usuario.setUsername(email);
+                                    usuario.setPassword(contraseña);
+                                    usuario.setRol(cuenta);
+
+                                    ResponseService<String> response = usuarioController.registrarUsuario(usuario);
+
+                                    if (response.isSuccess()) {
+                                        JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+                                        System.out.println("Success: " + response.isSuccess());
+                                        System.out.println("Mensaje: " + response.getResult());
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "REGISTRO FALLIDO, REVISAR DATOS INGRESADOR");
+                                    }
+
                                 } catch (Exception e) {
                                     JOptionPane.showMessageDialog(null, "NO SE PUDO GUARDAR TU USUARIO" + e);
                                 }
