@@ -34,8 +34,8 @@ public class AuthService extends BaseService {
             ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
             Usuario usuario = new Usuario();
 
-            // Eliminar usuario en sesión local
-            UsuarioThreadLocal.remove();
+//            // Eliminar usuario en sesión local
+//            UsuarioThreadLocal.remove();
 
             while (rs.next()) {
                 usuario.setIdUsuario(rs.getInt("id"));
@@ -80,9 +80,13 @@ public class AuthService extends BaseService {
         boolean success = false;
 
         try {
+            var usuario = UsuarioThreadLocal.get();
+            
             // Eliminar usuario en sesión local
-            UsuarioThreadLocal.remove();
-            success = true;
+            if (usuario != null) {
+                UsuarioThreadLocal.remove();
+                success = true;
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

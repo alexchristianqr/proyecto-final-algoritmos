@@ -20,7 +20,7 @@ public class UsuarioController extends BaseController<Usuario, UsuarioService> {
         boolean success = authService.login(rol, username, pwd);
 
         response.setSuccess(success);
-        response.setMessage("usuario autenticado");
+        response.setMessage("usuario logueado");
         response.setResult(rol);
 
         return response;
@@ -41,7 +41,7 @@ public class UsuarioController extends BaseController<Usuario, UsuarioService> {
         boolean success = authService.logout();
 
         response.setSuccess(success);
-        response.setMessage("usuario no autenticado");
+        response.setMessage("usuario deslogueado");
 
         return response;
     }

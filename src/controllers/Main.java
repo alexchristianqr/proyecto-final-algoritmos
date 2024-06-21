@@ -26,7 +26,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         testViewLogin();
         //testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
-        /*testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");*/
+        //testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+        //testLogout();
         //testMisPostulaciones();
         //testMisPublicaciones();
         //testReporteUsuarios();
@@ -50,7 +51,14 @@ public class Main {
         UsuarioController usuarioController = new UsuarioController();
         ResponseService<String> response = usuarioController.login(rol, username, pwd);
         System.out.println("Success: " + response.isSuccess());
-        System.out.println("Resultado: " + response.getResult());
+        System.out.println("Mensaje: " + response.getResult());
+    }
+
+    public static void testLogout() {
+        UsuarioController usuarioController = new UsuarioController();
+        ResponseService<Boolean> response = usuarioController.logout();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
     }
 
     public static void testMisPostulaciones() {
