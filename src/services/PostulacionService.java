@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import models.Candidato;
 import models.Postulacion;
 
 public class PostulacionService extends BaseService {
@@ -69,25 +70,24 @@ public class PostulacionService extends BaseService {
 
     public List listarPostulaciones(String[] columnNames, String estado) {
 
-        List<Postulacion> lista = new ArrayList<>();
-        Object[] parametrosSQL_1 = new Object[2];
-
-        querySQL_1 = "SELECT e.id, e.titulo, e.empresa, e.sueldo, e.modalidad, po.estado, CONCAT(pe.nombre, ' ', pe.apellido) AS 'candidato', po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato JOIN personas pe ON pe.id = c.id_persona WHERE po.id_candidato = ? ";
-        parametrosSQL_1[0] = auth.getIdCandidato();
-
-        if (estado != null) {
-            querySQL_1 += " AND po.estado = ? ";
-            parametrosSQL_1[1] = estado;
-        }
-
-        ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+        List<Object[]> lista = new ArrayList<>();
 
         try {
+            Object[] parametrosSQL_1 = new Object[2];
+
+            querySQL_1 = "SELECT e.id, e.titulo, e.empresa, e.sueldo, e.modalidad, po.estado, CONCAT(pe.nombre, ' ', pe.apellido) AS 'candidato', po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato JOIN personas pe ON pe.id = c.id_persona WHERE po.id_candidato = ? ";
+            parametrosSQL_1[0] = auth.getIdCandidato();
+
+            if (estado != null) {
+                querySQL_1 += " AND po.estado = ? ";
+                parametrosSQL_1[1] = estado;
+            }
+
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+
             System.out.println("\n");
-            List<Object[]> dataContent = new ArrayList<>();
 
             while (rs.next()) {
-
                 // Nuevo
                 Object[] data = new Object[columnNames.length];
 
@@ -102,11 +102,11 @@ public class PostulacionService extends BaseService {
                 data[7] = rs.getString("fecha_creado");
 
                 // Agregar el arreglo de datos a la lista de contenido de datos
-                dataContent.add(data);
+                lista.add(data);
             }
 
             // Imprimir la tabla utilizando la lista de contenido de datos
-            util.imprimirTabla(columnNames, dataContent.toArray(Object[][]::new));
+            util.imprimirTabla(columnNames, lista.toArray(Object[][]::new));
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

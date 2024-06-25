@@ -6,6 +6,7 @@ import core.services.ResponseService;
 import core.utils.Util;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import models.Candidato;
 import models.Empleo;
@@ -76,7 +77,14 @@ public class Main {
         postulacionController.postularEmpleo(postulacion);
 
         // MOSTRAR POSTULACIONES
-        postulacionController.listarPostulaciones("postulado");
+        ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones("postulado");
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Resultado: " + response.getResult());
+        /*response.getResult().forEach((item) -> {
+            System.out.println("es: " + item[0]);
+            System.out.println("es: " + item[1]);
+        });*/
+
     }
 
     public static void testMisPublicaciones() {
@@ -107,15 +115,14 @@ public class Main {
     public static void testRegistrarUsuario() {
         UsuarioController usuarioController = new UsuarioController();
         Usuario usuario = new Usuario();
-        // Candidato
-        /*usuario.setNombres("Martin");
+        // Candidato:
+        /*
+        usuario.setNombres("Martin");
         usuario.setApellidos("Torres");
         usuario.setUsername("martin.torres@gmail.com");
         usuario.setPassword("candidato2024");
         usuario.setRol("candidato");
-        ResponseService<String> response = usuarioController.registrarUsuario(usuario);
-        System.out.println("Success: " + response.isSuccess());
-        System.out.println("Resultado: " + response.getResult());*/
+         */
 
         // Reclutador
         usuario.setNombres("Deysi");
@@ -123,6 +130,7 @@ public class Main {
         usuario.setUsername("deysi.barrios@gmail.com");
         usuario.setPassword("reclutador2024");
         usuario.setRol("reclutador");
+
         ResponseService<String> response = usuarioController.registrarUsuario(usuario);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Resultado: " + response.getResult());

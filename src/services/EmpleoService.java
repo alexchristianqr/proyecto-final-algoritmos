@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import models.Empleo;
-import models.Postulacion;
 
 public class EmpleoService extends BaseService {
 
@@ -32,22 +31,21 @@ public class EmpleoService extends BaseService {
         return response;
     }
 
-    public List obtenerEmpleosPorReclutador(String[] columnNames) {
+    public List listarEmpleosPorReclutador(String[] columnNames) {
 
-        List<Postulacion> lista = new ArrayList<>();
-        Object[] parametrosSQL_1 = new Object[1];
-
-        querySQL_1 = "SELECT e.id, CONCAT(pe.nombre,' ', pe.apellido) AS 'reclutador', e.titulo, e.empresa, e.sueldo, e.modalidad, COUNT(po.id) AS 'total_candidatos_postulados', e.fecha_creado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador JOIN personas pe ON pe.id = r.id_persona LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado') WHERE e.id_reclutador = ? GROUP BY e.id ";
-        parametrosSQL_1[0] = auth.getIdReclutador();
-
-        ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+        List<Object[]> lista = new ArrayList<>();
 
         try {
+            Object[] parametrosSQL_1 = new Object[1];
+
+            querySQL_1 = "SELECT e.id, CONCAT(pe.nombre,' ', pe.apellido) AS 'reclutador', e.titulo, e.empresa, e.sueldo, e.modalidad, COUNT(po.id) AS 'total_candidatos_postulados', e.fecha_creado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador JOIN personas pe ON pe.id = r.id_persona LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado') WHERE e.id_reclutador = ? GROUP BY e.id ";
+            parametrosSQL_1[0] = auth.getIdReclutador();
+
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+
             System.out.println("\n");
-            List<Object[]> dataContent = new ArrayList<>();
 
             while (rs.next()) {
-
                 // Nuevo
                 Object[] data = new Object[columnNames.length];
 
@@ -62,11 +60,11 @@ public class EmpleoService extends BaseService {
                 data[7] = rs.getString("fecha_creado");
 
                 // Agregar el arreglo de datos a la lista de contenido de datos
-                dataContent.add(data);
+                lista.add(data);
             }
 
             // Imprimir la tabla utilizando la lista de contenido de datos
-            util.imprimirTabla(columnNames, dataContent.toArray(Object[][]::new));
+            util.imprimirTabla(columnNames, lista.toArray(Object[][]::new));
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

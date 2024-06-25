@@ -1,5 +1,8 @@
 package controllers;
 
+import core.services.ResponseService;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import models.Postulacion;
 import services.PostulacionService;
@@ -28,8 +31,16 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
         return modelo;
     }
 
-    public void listarPostulaciones(String estado) {
+    public ResponseService<List<Object[]>> listarPostulaciones(String estado) {
+        ResponseService<List<Object[]>> response = new ResponseService<>();
+
         String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Estado", "Candidato", "Fecha creado"};
-        service.listarPostulaciones(columnNames, estado);
+        List<Object[]> resultado = service.listarPostulaciones(columnNames, estado);
+
+        response.setSuccess(true);
+        response.setMessage("listado de postulaciones");
+        response.setResult(resultado);
+
+        return response;
     }
 }

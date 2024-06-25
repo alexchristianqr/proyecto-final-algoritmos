@@ -104,6 +104,36 @@ CREATE TABLE candidatos_experiencias_laborales
     FOREIGN KEY (id_experiencia_laboral) REFERENCES experiencias_laborales(id)
 );
 
+-- # crear tabla estudios academicos
+CREATE TABLE estudios_academicos
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    titulo VARCHAR(250) NOT NULL,
+    descripcion TEXT NOT NULL,
+    fecha_inicio VARCHAR(50) NOT NULL,
+    fecha_fin VARCHAR(50) NOT NULL,
+    grado ENUM('secundaria','tecnico','universitario','maestria','doctorado') DEFAULT 'secundaria',
+    estado ENUM('activo','inactivo') DEFAULT 'activo',
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    fecha_actualizado DATETIME,
+    fecha_eliminado DATETIME,
+    PRIMARY KEY (id)
+);
+CREATE INDEX IX_1 ON estudios_academicos (titulo);
+
+ -- # crear tabla relación candidatos y estudios academicos
+CREATE TABLE candidatos_estudios_academicos
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    id_candidato INT NOT NULL,
+    id_estudio_academico INT NOT NULL,
+    orden INT NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (id_candidato, id_estudio_academico),
+    FOREIGN KEY (id_candidato) REFERENCES candidatos(id),
+    FOREIGN KEY (id_estudio_academico) REFERENCES estudios_academicos(id)
+);
+
 -- # crear tabla reclutadores
 CREATE TABLE reclutadores
 (
@@ -154,7 +184,6 @@ CREATE TABLE postulaciones
     FOREIGN KEY (id_empleo) REFERENCES empleos(id)
 );
 CREATE INDEX IX_1 ON postulaciones (fecha_creado);
-
 
 CREATE TABLE blacklist
 (
@@ -213,6 +242,14 @@ VALUES ('Desarrollador Backend (NodeJs - AWS)', 'Diseñar, desarrollar e impleme
 
 -- candidatos_experiencias_laborales
 INSERT INTO candidatos_experiencias_laborales (id_candidato, id_experiencia_laboral, orden) 
+VALUES (1,1,1);
+
+-- estudios_academicos
+INSERT INTO estudios_academicos (titulo, descripcion, fecha_inicio, fecha_fin, grado, estado) 
+VALUES ('Saco Oliveros', 'Colegio de primaria y secundaria', '01/2010', '06/2015', 'secundaria', 'activo');
+
+-- candidatos_estudios_academicos
+INSERT INTO candidatos_estudios_academicos (id_candidato, id_estudio_academico, orden) 
 VALUES (1,1,1);
 
 -- empleos
