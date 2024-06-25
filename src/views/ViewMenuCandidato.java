@@ -81,6 +81,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaCertificados = new javax.swing.JTable();
         QuitarAptitud = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jTextField13 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
@@ -104,9 +106,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel18.setText("Nombres");
+        jLabel18.setText("Nombre(s)");
 
-        jLabel19.setText("Apellidos");
+        jLabel19.setText("Apellido(s)");
 
         jLabel20.setText("Email");
 
@@ -326,6 +328,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         QuitarAptitud.setForeground(new java.awt.Color(255, 255, 255));
         QuitarAptitud.setText("QUITAR");
 
+        jLabel5.setText("Empresa");
+
+        jTextField2.setBackground(new java.awt.Color(226, 226, 226));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -413,19 +419,31 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel3))
-                                        .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(Experiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(ExperienciaFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(ExperienciaFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(73, 73, 73)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jLabel2)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(ExperienciaFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLabel3))
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jLabel5)
+                                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                                .addGap(18, 18, 18))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jLabel1)
+                                                        .addGap(37, 37, 37)
+                                                        .addComponent(Experiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(73, 73, 73)))
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(AgregarExperiencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(QuitarExperiencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                            .addComponent(QuitarExperiencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(ExperienciaFechaFin, javax.swing.GroupLayout.Alignment.TRAILING))))))
                         .addGap(39, 39, 39))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(398, 398, 398)
@@ -496,14 +514,17 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                             .addComponent(Experiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(AgregarExperiencia))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(ExperienciaFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(QuitarExperiencia))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(QuitarExperiencia)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(ExperienciaFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(ExperienciaFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ExperienciaFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
@@ -530,8 +551,14 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
+        jTextField13.setBackground(new java.awt.Color(229, 229, 229));
+
+        jButton8.setBackground(new java.awt.Color(102, 102, 102));
+        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
         jButton8.setText("BUSCAR");
 
+        jTable1.setBackground(new java.awt.Color(229, 229, 229));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"a", null},
@@ -574,8 +601,14 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
+        jTextField15.setBackground(new java.awt.Color(229, 229, 229));
+
+        jButton9.setBackground(new java.awt.Color(102, 102, 102));
+        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
         jButton9.setText("BUSCAR");
 
+        jTable3.setBackground(new java.awt.Color(229, 229, 229));
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"a", null, null, null},
@@ -590,6 +623,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(jTable3);
 
+        jTextArea4.setBackground(new java.awt.Color(229, 229, 229));
         jTextArea4.setColumns(20);
         jTextArea4.setRows(5);
         jScrollPane7.setViewportView(jTextArea4);
@@ -696,7 +730,19 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nombres = Nombres.getText();
         String apellidos = Apellidos.getText();
+        String email = Email.getText();
         String celular = Celular.getText();
+        String dni = DNI.getText();
+        String fecha_nac = FechaNacimiento.getText();
+        String género = Genero.getSelectedItem().toString();
+        String estado_civil = EstadoCivil.getSelectedItem().toString();
+        String estudios = Estudios.getSelectedItem().toString();
+        String fecha_ini = EstudiosFechaInicio.getText();
+        String fecha_fin = EstudiosFechaFin.getText();
+        String experiencia = Experiencia.getText();
+        String fecha_ini1 = ExperienciaFechaInicio.getText();
+        String fecha_fin1 = ExperienciaFechaFin.getText();
+        String aptitudes = Aptitudes.getText();
         try {
             CandidatoController candidatoController = new CandidatoController();
             Candidato candidato = new Candidato();
@@ -803,6 +849,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -823,5 +870,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField15;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
