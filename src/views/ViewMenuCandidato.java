@@ -2,6 +2,7 @@ package views;
 
 import controllers.CandidatoController;
 import core.services.ResponseService;
+import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import javax.swing.JOptionPane;
 import models.Candidato;
@@ -10,11 +11,18 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
     Util util = new Util();
     Login login = new Login();
+    ResponseService<String> response = new ResponseService<>();
 
     public ViewMenuCandidato() {
         initComponents();
-        ResponseService<String> response = new ResponseService<>();
+        mostrarDatosBasicos();
+    }
 
+    public void mostrarDatosBasicos() {
+
+        txtNombres.setText(UsuarioThreadLocal.get().getNombres());
+        txtApellidos.setText(UsuarioThreadLocal.get().getApellidos());
+        txtEmail.setText(UsuarioThreadLocal.get().getUsername());
     }
 
     /**
@@ -32,9 +40,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        Nombres = new javax.swing.JTextField();
-        Apellidos = new javax.swing.JTextField();
-        Email = new javax.swing.JTextField();
+        txtNombres = new javax.swing.JTextField();
+        txtApellidos = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         Celular = new javax.swing.JTextField();
         Genero = new javax.swing.JComboBox<>();
         jLabel24 = new javax.swing.JLabel();
@@ -114,11 +122,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jLabel21.setText("Celular");
 
-        Nombres.setBackground(new java.awt.Color(229, 229, 229));
+        txtNombres.setBackground(new java.awt.Color(229, 229, 229));
 
-        Apellidos.setBackground(new java.awt.Color(229, 229, 229));
+        txtApellidos.setBackground(new java.awt.Color(229, 229, 229));
 
-        Email.setBackground(new java.awt.Color(229, 229, 229));
+        txtEmail.setBackground(new java.awt.Color(229, 229, 229));
 
         Celular.setBackground(new java.awt.Color(229, 229, 229));
 
@@ -349,12 +357,12 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(DNI)
-                                    .addComponent(Nombres, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                                    .addComponent(txtNombres, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
                                 .addGap(48, 48, 48)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel25)
                                     .addComponent(FechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Apellidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtApellidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel24))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -396,7 +404,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabel20))
                             .addComponent(jLabel26)
-                            .addComponent(Email)
+                            .addComponent(txtEmail)
                             .addComponent(Genero, 0, 140, Short.MAX_VALUE))
                         .addGap(72, 72, 72)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -462,8 +470,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addComponent(jLabel19))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(Nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -477,7 +485,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel20)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jLabel26)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -728,9 +736,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        String nombres = Nombres.getText();
-        String apellidos = Apellidos.getText();
-        String email = Email.getText();
+        String nombres = txtNombres.getText();
+        String apellidos = txtApellidos.getText();
+        String email = txtEmail.getText();
         String celular = Celular.getText();
         String dni = DNI.getText();
         String fecha_nac = FechaNacimiento.getText();
@@ -746,11 +754,12 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         try {
             CandidatoController candidatoController = new CandidatoController();
             Candidato candidato = new Candidato();
+
             // Candidato
             candidato.setNombre(nombres);
             candidato.setApellidos(apellidos);
             candidato.setTelefono(celular);
-            
+
             candidatoController.crearCandidato(candidato);
             System.out.println("Candidato creado exitosamente.");
 
@@ -803,12 +812,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JButton AgregarCurriculum;
     private javax.swing.JButton AgregarEstudios;
     private javax.swing.JButton AgregarExperiencia;
-    private javax.swing.JTextField Apellidos;
     private javax.swing.JTextField Aptitudes;
     private javax.swing.JTextField Celular;
     private javax.swing.JLabel CurriculumArchivo;
     private javax.swing.JTextField DNI;
-    private javax.swing.JTextField Email;
     private javax.swing.JComboBox<String> EstadoCivil;
     private javax.swing.JComboBox<String> Estudios;
     private javax.swing.JTextField EstudiosFechaFin;
@@ -818,7 +825,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JTextField ExperienciaFechaInicio;
     private javax.swing.JTextField FechaNacimiento;
     private javax.swing.JComboBox<String> Genero;
-    private javax.swing.JTextField Nombres;
     private javax.swing.JButton QuitarAptitud;
     private javax.swing.JButton QuitarCertificado;
     private javax.swing.JButton QuitarCurriculum;
@@ -871,5 +877,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNombres;
     // End of variables declaration//GEN-END:variables
 }

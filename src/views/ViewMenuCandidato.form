@@ -103,13 +103,13 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="DNI" max="32767" attributes="0"/>
-                                          <Component id="Nombres" pref="160" max="32767" attributes="0"/>
+                                          <Component id="txtNombres" pref="160" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="48" pref="48" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="FechaNacimiento" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
-                                          <Component id="Apellidos" alignment="1" min="-2" pref="159" max="-2" attributes="0"/>
+                                          <Component id="txtApellidos" alignment="1" min="-2" pref="159" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -167,7 +167,7 @@
                                       <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Email" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Genero" alignment="0" pref="140" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
@@ -256,8 +256,8 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="Nombres" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="Apellidos" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtNombres" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtApellidos" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -276,7 +276,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="Email" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -386,21 +386,21 @@
                 <Property name="text" type="java.lang.String" value="Celular"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="Nombres">
+            <Component class="javax.swing.JTextField" name="txtNombres">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="Apellidos">
+            <Component class="javax.swing.JTextField" name="txtApellidos">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="Email">
+            <Component class="javax.swing.JTextField" name="txtEmail">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
