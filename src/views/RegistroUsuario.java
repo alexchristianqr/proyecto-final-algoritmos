@@ -189,7 +189,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
             if (cuenta.equalsIgnoreCase("Seleccionar")) {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN TIPO DE CUENTA");
             } else {
-
                 if (email.length() < 16 || email.length() > 50 || !email.contains("@") || !email.endsWith(".com")) {
                     JOptionPane.showMessageDialog(null, "El email debe tener entre 16 y 50 caracteres, contener el símbolo '@' y terminar con '.com'");
                 } else {
@@ -203,7 +202,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "La contraseña debe tener entre 8 y 16 caracteres");
                             } else {
                                 try {
-
                                     UsuarioController usuarioController = new UsuarioController();
                                     Usuario usuario = new Usuario();
                                     // Reclutador
@@ -222,7 +220,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
                                     } else {
                                         JOptionPane.showMessageDialog(null, "REGISTRO FALLIDO, REVISAR DATOS INGRESADOR");
                                     }
-
                                 } catch (Exception e) {
                                     JOptionPane.showMessageDialog(null, "NO SE PUDO GUARDAR TU USUARIO" + e);
                                 }

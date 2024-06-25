@@ -192,7 +192,7 @@ public class Login extends javax.swing.JFrame {
             System.out.println("Ingreso: " + success);
             System.out.println("psw: " + password);*/
 
-            ResponseService<String> response = usuarioController.login("reclutador", username, password);
+            ResponseService<String> response = usuarioController.login("candidato", username, password);
             System.out.println("Success: " + response.isSuccess());
             System.out.println("Tipo de usuario: " + response.getResult());
 
