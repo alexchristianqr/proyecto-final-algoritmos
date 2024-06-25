@@ -3,6 +3,7 @@ package core.services;
 public class ResponseService<T> {
 
     public boolean success;
+    public String message;
     public T result;
 
     public boolean isSuccess() {
@@ -13,8 +14,16 @@ public class ResponseService<T> {
         this.success = success;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public T getResult() {
-        return result;
+        return (T) result;
     }
 
     public void setResult(T result) {

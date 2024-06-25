@@ -12,7 +12,7 @@ public class UsuarioService extends BaseService {
     }
 
     public boolean registrarUsuario(Usuario usuario) {
-        boolean response = false;
+        boolean success = false;
         
         try {
 
@@ -40,7 +40,7 @@ public class UsuarioService extends BaseService {
                         candidato.setEstado("activo");
                         candidatoService.crearCandidato(candidato);
                         
-                        response = true;
+                        success = true;
                         break;
                     }
                     case "reclutador" -> {
@@ -52,7 +52,7 @@ public class UsuarioService extends BaseService {
                         reclutador.setApellidos(usuario.getApellidos());
                         reclutadorService.crearReclutador(reclutador);
                         
-                        response = true;
+                        success = true;
                         break;
                     }
                     default ->
@@ -71,6 +71,6 @@ public class UsuarioService extends BaseService {
             db.cerrarConsulta();
         }
         
-        return response;
+        return success;
     }
 }

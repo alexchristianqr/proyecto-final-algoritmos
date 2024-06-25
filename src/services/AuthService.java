@@ -14,28 +14,28 @@ public class AuthService extends BaseService {
 
     public boolean login(String rol, String username, String pwd) {
 
-        boolean response = false;
-        Object[] parametrosSQL_1 = new Object[2];
-
-        switch (rol) {
-            case "candidato" ->
-                querySQL_1 = "SELECT u.*, c.id AS 'id_candidato' FROM usuarios u JOIN candidatos c ON c.id_usuario = u.id AND c.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
-            case "reclutador" ->
-                querySQL_1 = "SELECT u.*, r.id AS 'id_reclutador' FROM usuarios u JOIN reclutadores r ON r.id_usuario = u.id AND r.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
-            default ->
-                throw new AssertionError();
-        }
-
-        parametrosSQL_1[0] = username;
-        parametrosSQL_1[1] = pwd;
-
-        ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
-        Usuario usuario = new Usuario();
+        boolean success = false;
 
         try {
+            Object[] parametrosSQL_1 = new Object[2];
 
-            // Eliminar usuario en sesión local
-            UsuarioThreadLocal.unset();
+            switch (rol) {
+                case "candidato" ->
+                    querySQL_1 = "SELECT u.*, c.id AS 'id_candidato' FROM usuarios u JOIN candidatos c ON c.id_usuario = u.id AND c.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
+                case "reclutador" ->
+                    querySQL_1 = "SELECT u.*, r.id AS 'id_reclutador' FROM usuarios u JOIN reclutadores r ON r.id_usuario = u.id AND r.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
+                default ->
+                    throw new AssertionError();
+            }
+
+            parametrosSQL_1[0] = username;
+            parametrosSQL_1[1] = pwd;
+
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+            Usuario usuario = new Usuario();
+
+//            // Eliminar usuario en sesión local
+//            UsuarioThreadLocal.remove();
 
             while (rs.next()) {
                 usuario.setIdUsuario(rs.getInt("id"));
@@ -43,11 +43,11 @@ public class AuthService extends BaseService {
                 switch (rol) {
                     case "candidato" -> {
                         usuario.setIdCandidato(rs.getInt("id_candidato"));
-                        response = true;
+                        success = true;
                     }
                     case "reclutador" -> {
                         usuario.setIdReclutador(rs.getInt("id_reclutador"));
-                        response = true;
+                        success = true;
                     }
                     default ->
                         throw new AssertionError();
@@ -73,10 +73,24 @@ public class AuthService extends BaseService {
             throw new RuntimeException(ex);
         }
 
-        return response;
+        return success;
     }
 
-    public void logout(String id_usuario) {
-        System.out.println("El ID usuario es: " + id_usuario);
+    public boolean logout() {
+        boolean success = false;
+
+        try {
+            var usuario = UsuarioThreadLocal.get();
+            
+            // Eliminar usuario en sesión local
+            if (usuario != null) {
+                UsuarioThreadLocal.remove();
+                success = true;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return success;
     }
 }
