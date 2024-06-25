@@ -52,7 +52,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Apellidos");
+        jLabel2.setText("Apellido(s)");
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/profile-user_64572.png"))); // NOI18N
 
@@ -78,7 +78,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         Registrar.setBackground(new java.awt.Color(102, 102, 102));
         Registrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Registrar.setForeground(new java.awt.Color(255, 255, 255));
-        Registrar.setText("Registar");
+        Registrar.setText("Registrar");
         Registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RegistrarActionPerformed(evt);
@@ -91,6 +91,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_1286853.png"))); // NOI18N
         jButton2.setText("Regresar");
+        jButton2.setBorder(null);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -98,7 +99,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Nombre(s)");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Tipo de cuenta:");
