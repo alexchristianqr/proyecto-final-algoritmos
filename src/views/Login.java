@@ -181,56 +181,47 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         try {
-            // throw new Exception("Prueba error");
-            btnLogin.setEnabled(false);
-            String username = txtUsername.getText().toLowerCase();
-            char[] passwordArray = txtPwd.getPassword();
+    btnLogin.setEnabled(false);
+    String username = txtUsername.getText().toLowerCase();
+    char[] passwordArray = txtPwd.getPassword();
+    String password = new String(passwordArray);
 
-            // Convertir char[] a String
-            String password = new String(passwordArray);
+    // Consultar la base de datos para validar el usuario y la contraseña
+    ResponseService<Usuario> response = usuarioController.login(username, password);
+    System.out.println("Success: " + response.isSuccess());
 
-            /*boolean success = usuarioController.login("candidato", username, password);
-            System.out.println("Ingreso: " + success);
-            System.out.println("psw: " + password);*/
+    if (response.isSuccess()) {
+        Usuario usuario = response.getResult();
+        String userRole = usuario.getRol(); // Obtener el rol del usuario
+        System.out.println("Tipo de usuario: " + userRole);
 
-            ResponseService<String> response = usuarioController.login("candidato", username, password);
-            System.out.println("Success: " + response.isSuccess());
-            System.out.println("Tipo de usuario: " + response.getResult());
-
-            if (response.isSuccess() && response.getResult().equalsIgnoreCase("candidato")) {
-                viewMenuCandidato = new ViewMenuCandidato(); // Crear objeto del JFrame principal
-                viewMenuCandidato.setVisible(true);// Visualizar frame
-                util.centerOnScreen(viewMenuCandidato, true);
-                dispose();
-
-                Usuario usuario = new Usuario();
-                usuario.setIdUsuario(1);
-                usuario.setNombres("Alex Quispe");
-                UsuarioThreadLocal.set(usuario);
-
-            } else if (response.isSuccess() && response.getResult().equalsIgnoreCase("reclutador")) {
-                viewMenuReclutador = new ViewMenuReclutador(); // Crear objeto del JFrame principal
-                viewMenuReclutador.setVisible(true);// Visualizar frame
-                util.centerOnScreen(viewMenuReclutador, true);
-                dispose();
-
-                Usuario usuario = new Usuario();
-                usuario.setIdUsuario(1);
-                usuario.setNombres("Alex Quispe");
-                UsuarioThreadLocal.set(usuario);
-
-            } else {
-                util.alertMessage("Usuario o contraseña inválida. Intentalo nuevamente.");
-                btnLogin.setEnabled(true);
-                txtPwd.setText("");
-                txtPwd.requestFocus();
-            }
-        } catch (Exception ex) {
-            util.alertMessage();
-            btnLogin.setEnabled(true);
-            txtPwd.setText("");
-            txtPwd.requestFocus();
+        if ("candidato".equals(userRole)) {
+            viewMenuCandidato = new ViewMenuCandidato(); // Crear objeto del JFrame principal
+            viewMenuCandidato.setVisible(true); // Visualizar frame
+            util.centerOnScreen(viewMenuCandidato, true);
+            dispose();
+        } else if ("reclutador".equals(userRole)) {
+            viewMenuReclutador = new ViewMenuReclutador(); // Crear objeto del JFrame principal
+            viewMenuReclutador.setVisible(true); // Visualizar frame
+            util.centerOnScreen(viewMenuReclutador, true);
+            dispose();
         }
+
+        // Guardar el usuario en el ThreadLocal
+        UsuarioThreadLocal.set(usuario);
+
+    } else {
+        util.alertMessage("Usuario o contraseña inválida. Inténtalo nuevamente.");
+        btnLogin.setEnabled(true);
+        txtPwd.setText("");
+        txtPwd.requestFocus();
+    }
+} catch (Exception ex) {
+    util.alertMessage("Ocurrió un error. Por favor, inténtalo nuevamente.");
+    btnLogin.setEnabled(true);
+    txtPwd.setText("");
+    txtPwd.requestFocus();
+}
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed

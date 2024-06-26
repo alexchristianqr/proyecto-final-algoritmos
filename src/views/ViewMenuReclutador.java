@@ -1,6 +1,12 @@
 package views;
 
+import controllers.CandidatoController;
+import controllers.ReclutadorController;
+import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
+import javax.swing.JOptionPane;
+import models.Candidato;
+import models.Reclutador;
 
 public class ViewMenuReclutador extends javax.swing.JFrame {
 
@@ -9,6 +15,14 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
     public ViewMenuReclutador() {
         initComponents();
+        mostrarDatosBasicos();
+    }
+
+    public void mostrarDatosBasicos() {
+
+        txtNombres.setText(UsuarioThreadLocal.get().getNombres());
+        txtApellidos.setText(UsuarioThreadLocal.get().getApellidos());
+        txtEmail.setText(UsuarioThreadLocal.get().getUsername());
     }
 
     /**
@@ -23,16 +37,16 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtNombres = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txtApellidos = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtDNI = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        txtCelular = new javax.swing.JTextField();
+        btnGuardarReclutador = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -64,28 +78,33 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
         jLabel6.setText("Nombre(s)");
 
-        jTextField5.setBackground(new java.awt.Color(229, 229, 229));
+        txtEmail.setBackground(new java.awt.Color(229, 229, 229));
 
         jLabel7.setText("Apellido(s)");
 
-        jTextField6.setBackground(new java.awt.Color(229, 229, 229));
+        txtNombres.setBackground(new java.awt.Color(229, 229, 229));
 
         jLabel8.setText("DNI:");
 
-        jTextField7.setBackground(new java.awt.Color(229, 229, 229));
+        txtApellidos.setBackground(new java.awt.Color(229, 229, 229));
 
         jLabel9.setText("Correo");
 
-        jTextField8.setBackground(new java.awt.Color(229, 229, 229));
+        txtDNI.setBackground(new java.awt.Color(229, 229, 229));
 
         jLabel10.setText("Celular");
 
-        jTextField9.setBackground(new java.awt.Color(229, 229, 229));
+        txtCelular.setBackground(new java.awt.Color(229, 229, 229));
 
-        jButton2.setBackground(new java.awt.Color(102, 102, 102));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("GUARDAR");
+        btnGuardarReclutador.setBackground(new java.awt.Color(102, 102, 102));
+        btnGuardarReclutador.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGuardarReclutador.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardarReclutador.setText("GUARDAR");
+        btnGuardarReclutador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarReclutadorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -98,23 +117,23 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel10)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel9)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(15, 15, 15))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnGuardarReclutador)
                         .addGap(267, 267, 267))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,22 +145,22 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
-                .addComponent(jButton2)
+                .addComponent(btnGuardarReclutador)
                 .addContainerGap(206, Short.MAX_VALUE))
         );
 
@@ -338,6 +357,31 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void btnGuardarReclutadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarReclutadorActionPerformed
+        String nombres = txtNombres.getText();
+        String apellidos = txtApellidos.getText();
+        String celular = txtCelular.getText();
+        String dni = txtDNI.getText();
+        try {
+            ReclutadorController reclutadorController = new ReclutadorController();
+            Reclutador reclutador = new Reclutador();
+
+            // Reclutador
+            reclutador.setNombre(nombres);
+            reclutador.setApellidos(apellidos);
+
+            reclutador.setTelefono(celular);
+            reclutador.setNroDocumento(dni);
+
+            reclutadorController.crearReclutador(reclutador);
+            System.out.println("Reclutador creado exitosamente.");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "NO SE PUDO GUARDAR TU USUARIO" + e);
+        }
+
+    }//GEN-LAST:event_btnGuardarReclutadorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -375,8 +419,8 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardarReclutador;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -405,10 +449,10 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtCelular;
+    private javax.swing.JTextField txtDNI;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNombres;
     // End of variables declaration//GEN-END:variables
 }
