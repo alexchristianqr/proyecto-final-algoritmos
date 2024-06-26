@@ -15,30 +15,52 @@ public class PostulacionService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public void crearPostulacion(Postulacion postulacion) {
-        querySQL_1 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado) VALUES (?,?,?,NOW())";
-        Object[] parametrosSQL_1 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
-        db.queryInsertar(querySQL_1, parametrosSQL_1);
-        db.cerrarConsulta();
-    }
+    public boolean crearPostulacion(Postulacion postulacion) {
+        boolean success = false;
 
-    public void postular(Postulacion postulacion) {
-        querySQL_1 = "UPDATE postulaciones p JOIN empleos e ON e.id = p.id_empleo AND e.estado = 'activo' SET p.estado = ? WHERE p.id = ?; ";
-        Object[] parametrosSQL_1 = {postulacion.getEstado(), postulacion.getIdPostulacion()};
-        db.queryActualizar(querySQL_1, parametrosSQL_1);
-        db.cerrarConsulta();
-    }
+        try {
+            if (postulacion.getEstado().isEmpty() || postulacion.getEstado().isBlank()) {
+                util.alertMessage("[estado] es requerido");
+            }
+            
+            querySQL_1 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado) VALUES (?,?,?)";
+            Object[] parametrosSQL_1 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
+            int creado = db.queryInsertar(querySQL_1, parametrosSQL_1);
 
-    public void actualizarPostulacion(Postulacion postulacion, String columna) {
+            if (creado > 0) {
+                db.cerrarConsulta();
+                success = true;
+            }
 
-        if (columna == null) {
-            util.alertMessage("El campo columna es necesario");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        querySQL_1 = String.format("UPDATE postulaciones p JOIN empleos e ON e.id = p.id_empleo AND e.estado = 'activo' SET p.%s = ? WHERE p.id = ?; ", columna);
-        Object[] parametrosSQL_1 = {postulacion.getEstado(), postulacion.getIdPostulacion()};
-        db.queryActualizar(querySQL_1, parametrosSQL_1);
-        db.cerrarConsulta();
+        return success;
+    }
+
+    public boolean actualizarPostulacion(Postulacion postulacion, String columna) {
+        boolean success = false;
+
+        try {
+            if (columna == null) {
+                util.alertMessage("El campo columna es necesario");
+            }
+
+            querySQL_1 = String.format("UPDATE postulaciones p JOIN empleos e ON e.id = p.id_empleo AND e.estado = 'activo' SET p.%s = ? WHERE p.id = ?; ", columna);
+            Object[] parametrosSQL_1 = {postulacion.getEstado(), postulacion.getIdPostulacion()};
+            int actualizado = db.queryActualizar(querySQL_1, parametrosSQL_1);
+
+            if (actualizado > 0) {
+                db.cerrarConsulta();
+                success = true;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return success;
     }
 
     public DefaultTableModel tablaPostulaciones(DefaultTableModel modelo, Object[] data, String estado) {

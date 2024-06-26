@@ -14,12 +14,32 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
         service = new PostulacionService();
     }
 
-    public void crearPostulacion(Postulacion postulacion) {
-        service.crearPostulacion(postulacion);
+    public ResponseService<Boolean> crearPostulacion(Postulacion postulacion) {
+        ResponseService<Boolean> response = new ResponseService<>();
+
+        boolean success = service.crearPostulacion(postulacion);
+
+        response.setSuccess(success);
+        response.setMessage("postulación actualizada");
+        response.setResult(null);
+
+        return response;
     }
 
-    public void postularEmpleo(Postulacion postulacion) {
-        service.postular(postulacion);
+    public ResponseService<Boolean> actualizarPostulacion(Postulacion postulacion) {
+        return this.actualizarPostulacion(postulacion, "estado");
+    }
+
+    public ResponseService<Boolean> actualizarPostulacion(Postulacion postulacion, String columna) {
+        ResponseService<Boolean> response = new ResponseService<>();
+
+        boolean success = service.actualizarPostulacion(postulacion, columna);
+
+        response.setSuccess(success);
+        response.setMessage("postulación actualizada");
+        response.setResult(null);
+
+        return response;
     }
 
     public DefaultTableModel tablaPostulaciones(String estado) {

@@ -22,6 +22,7 @@ public class Main {
     public static final String ANSI_BOLD = "\033[1m";
     public static final String ANSI_RESET = "\033[0m";
     public static Util util = new Util();
+    public List<Object[]> ListaModelo;
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
@@ -29,8 +30,10 @@ public class Main {
         //testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
         //testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
         //testLogout();
-        //testMisPostulaciones();
-        //testMisPublicaciones();
+        //testListarPostulaciones();
+        //testActualizarPostulacion();
+        //testCrearPostulacion();
+        //testListarEmpleos();
         //testReporteUsuarios();
         //testRegistrarUsuario();
         //testRegistrarCandidato();
@@ -50,48 +53,80 @@ public class Main {
 
     public static void testLogin(String rol, String username, String pwd) {
         UsuarioController usuarioController = new UsuarioController();
+        
         ResponseService<String> response = usuarioController.login(rol, username, pwd);
+        
         System.out.println("Success: " + response.isSuccess());
-        System.out.println("Mensaje: " + response.getResult());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
     }
 
     public static void testLogout() {
         UsuarioController usuarioController = new UsuarioController();
+
         ResponseService<Boolean> response = usuarioController.logout();
+
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
     }
 
-    public static void testMisPostulaciones() {
-
+    public static void testCrearPostulacion() {
         // INICIO DE SESION DE USUARIO CANDIDATO
         testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
-        // testLogin("candidato", "dante.inigo@gmail.com", "candidato2024");
 
         PostulacionController postulacionController = new PostulacionController();
 
-        // POSTULAR A UN EMPLEO
+        // CREAR INSTANCIA
         Postulacion postulacion = new Postulacion();
-        postulacion.setIdPostulacion(1);
+        postulacion.setIdCandidato(1);
+        postulacion.setIdEmpleo(1);
         postulacion.setEstado("postulado");
-        postulacionController.postularEmpleo(postulacion);
+
+        // ACCION POSTULAR A UN EMPLEO
+        ResponseService<Boolean> response = postulacionController.crearPostulacion(postulacion);
+
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+    
+    public static void testActualizarPostulacion() {
+        // INICIO DE SESION DE USUARIO CANDIDATO
+        testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+
+        PostulacionController postulacionController = new PostulacionController();
+
+        // CREAR INSTANCIA
+        Postulacion postulacion = new Postulacion();
+        postulacion.setIdPostulacion(6);
+        postulacion.setEstado("contratado");
+
+        // ACCION ACTUALIZAR POSTULACION POR EL CAMPO "ESTADO"
+        ResponseService<Boolean> response = postulacionController.actualizarPostulacion(postulacion, "estado");
+
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testListarPostulaciones() {
+        // INICIO DE SESION DE USUARIO CANDIDATO
+        testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+
+        PostulacionController postulacionController = new PostulacionController();
 
         // MOSTRAR POSTULACIONES
         ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones("postulado");
         System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
-        /*response.getResult().forEach((item) -> {
-            System.out.println("es: " + item[0]);
-            System.out.println("es: " + item[1]);
-        });*/
-
     }
 
-    public static void testMisPublicaciones() {
+    public static void testListarEmpleos() {
 
         // INICIO DE SESION DE USUARIO RECLUTADOR
         testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
-        // testLogin("reclutador", "susan.torres@utp.edu.pe", "reclutador2024");
 
         EmpleoController empleoController = new EmpleoController();
 
