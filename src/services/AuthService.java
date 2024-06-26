@@ -72,8 +72,6 @@ public class AuthService extends BaseService {
             // Actualizar nuevo usuario en sesión local
             UsuarioThreadLocal.set(usuario);
 
-            System.out.println();
-
             db.cerrarConsulta();
 
         } catch (SQLException ex) {

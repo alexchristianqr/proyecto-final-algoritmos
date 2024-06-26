@@ -8,6 +8,11 @@ SELECT * FROM candidatos;
 SELECT * FROM reclutadores;
 
 SELECT 
+u.rol
+FROM usuarios u
+WHERE u.username = 'alex.quispe@gmail.com' AND u.pwd = 'candidato2024' AND u.estado = 'activo' LIMIT 1;
+
+SELECT 
 u.*,
 c.id AS 'id_candidato'
 FROM usuarios u

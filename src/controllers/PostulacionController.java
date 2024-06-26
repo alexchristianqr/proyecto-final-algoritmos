@@ -14,10 +14,10 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
         service = new PostulacionService();
     }
 
-    public ResponseService<Boolean> crearPostulacion(Postulacion postulacion) {
+    public ResponseService<Boolean> registrarPostulacion(Postulacion postulacion) {
         ResponseService<Boolean> response = new ResponseService<>();
 
-        boolean success = service.crearPostulacion(postulacion);
+        boolean success = service.registrarPostulacion(postulacion);
 
         response.setSuccess(success);
         response.setMessage("postulación actualizada");

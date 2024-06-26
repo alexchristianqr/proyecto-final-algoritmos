@@ -14,7 +14,7 @@ public class CandidatoService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public int crearCandidato(Candidato candidato) {
+    public int registrarCandidato(Candidato candidato) {
         querySQL_1 = "INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, estado, fecha_nacimiento, telefono) VALUES (?,?,?,?,?,?,?,?)";
         Object[] parametrosSQL_1 = {candidato.getNombre(), candidato.getApellidos(), candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getSexo(), candidato.getEstado(), candidato.getFechaNacimiento(), candidato.getTelefono()};
         int id_persona = db.queryInsertar(querySQL_1, parametrosSQL_1);

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import models.Candidato;
 import models.Empleo;
+import models.EstudioAcademico;
 import models.Postulacion;
 import models.Reclutador;
 import models.Usuario;
@@ -32,7 +33,7 @@ public class Main {
         //testLogout();
         //testListarPostulaciones();
         //testActualizarPostulacion();
-        //testCrearPostulacion();
+        //testRegistrarPostulacion();
         //testListarEmpleos();
         //testReporteUsuarios();
         //testRegistrarUsuario();
@@ -43,6 +44,7 @@ public class Main {
         //testRegistrarCandidato();
         //testRegistrarReclutador();
         //testReporte();
+        //testRegistrarEstudioAcademico();
     }
 
     public static void testViewLogin() {
@@ -71,7 +73,7 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
-    public static void testCrearPostulacion() {
+    public static void testRegistrarPostulacion() {
         // INICIO DE SESION DE USUARIO CANDIDATO
         testLogin("alex.quispe@gmail.com", "candidato2024");
 
@@ -84,7 +86,7 @@ public class Main {
         postulacion.setEstado("postulado");
 
         // ACCION POSTULAR A UN EMPLEO
-        ResponseService<Boolean> response = postulacionController.crearPostulacion(postulacion);
+        ResponseService<Boolean> response = postulacionController.registrarPostulacion(postulacion);
 
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -150,6 +152,7 @@ public class Main {
     public static void testRegistrarUsuario() {
         UsuarioController usuarioController = new UsuarioController();
         Usuario usuario = new Usuario();
+
         // Candidato:
         /*
         usuario.setNombres("Martin");
@@ -158,7 +161,6 @@ public class Main {
         usuario.setPassword("candidato2024");
         usuario.setRol("candidato");
          */
-
         // Reclutador
         usuario.setNombres("Deysi");
         usuario.setApellidos("Barrios");
@@ -168,14 +170,15 @@ public class Main {
 
         ResponseService<String> response = usuarioController.registrarUsuario(usuario);
         System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
 
     public static void testRegistrarCandidato() {
         CandidatoController candidatoController = new CandidatoController();
-        Candidato candidato = new Candidato();
 
         // Setea los atributos del candidato
+        Candidato candidato = new Candidato();
         candidato.setNombre("John");
         candidato.setApellidos("Doe");
         candidato.setTipoDocumento(1);
@@ -191,7 +194,7 @@ public class Main {
         candidato.setPathCertificadoTrabajo("certificado_trabajo.pdf");
         candidato.setPathAntecedentePolicial("antecedente_policial.pdf");
 
-        candidatoController.crearCandidato(candidato);
+        candidatoController.registrarCandidato(candidato);
 
         System.out.println("Candidato creado exitosamente.");
     }
@@ -240,5 +243,23 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void testRegistrarEstudioAcademico() {
+        CandidatoController candidatoController = new CandidatoController();
+
+        EstudioAcademico estudioAcademico = new EstudioAcademico();
+        estudioAcademico.setIdCandidato(1);
+        estudioAcademico.setTitulo("IDAT");
+        estudioAcademico.setDescripcion("InstitutoTecnologico Superior");
+        estudioAcademico.setFechaInicio("01/2010");
+        estudioAcademico.setFechaFin("06/2013");
+        estudioAcademico.setGrado("tecnico");
+        estudioAcademico.setOrden(1);
+
+        ResponseService<Boolean> response = candidatoController.registrarEstudioAcademico(estudioAcademico);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
     }
 }

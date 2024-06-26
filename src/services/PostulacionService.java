@@ -15,7 +15,7 @@ public class PostulacionService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public boolean crearPostulacion(Postulacion postulacion) {
+    public boolean registrarPostulacion(Postulacion postulacion) {
         boolean success = false;
 
         try {

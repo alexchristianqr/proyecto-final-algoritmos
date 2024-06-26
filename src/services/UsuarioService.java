@@ -38,7 +38,7 @@ public class UsuarioService extends BaseService {
                         candidato.setNombre(usuario.getNombres());
                         candidato.setApellidos(usuario.getApellidos());
                         candidato.setEstado("activo");
-                        candidatoService.crearCandidato(candidato);
+                        candidatoService.registrarCandidato(candidato);
                         
                         success = true;
                         break;
