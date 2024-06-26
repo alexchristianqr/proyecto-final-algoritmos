@@ -27,8 +27,8 @@ public class Main {
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
         testViewLogin();
-        //testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
-        //testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+        //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
+        //testLogin("alex.quispe@gmail.com", "candidato2024");
         //testLogout();
         //testListarPostulaciones();
         //testActualizarPostulacion();
@@ -51,11 +51,11 @@ public class Main {
         login.setVisible(true);
     }
 
-    public static void testLogin(String rol, String username, String pwd) {
+    public static void testLogin(String username, String pwd) {
         UsuarioController usuarioController = new UsuarioController();
-        
-        ResponseService<String> response = usuarioController.login(rol, username, pwd);
-        
+
+        ResponseService<Usuario> response = usuarioController.login(username, pwd);
+
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -73,7 +73,7 @@ public class Main {
 
     public static void testCrearPostulacion() {
         // INICIO DE SESION DE USUARIO CANDIDATO
-        testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+        testLogin("alex.quispe@gmail.com", "candidato2024");
 
         PostulacionController postulacionController = new PostulacionController();
 
@@ -90,10 +90,10 @@ public class Main {
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-    
+
     public static void testActualizarPostulacion() {
         // INICIO DE SESION DE USUARIO CANDIDATO
-        testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+        testLogin("alex.quispe@gmail.com", "candidato2024");
 
         PostulacionController postulacionController = new PostulacionController();
 
@@ -112,7 +112,7 @@ public class Main {
 
     public static void testListarPostulaciones() {
         // INICIO DE SESION DE USUARIO CANDIDATO
-        testLogin("candidato", "alex.quispe@gmail.com", "candidato2024");
+        testLogin("alex.quispe@gmail.com", "candidato2024");
 
         PostulacionController postulacionController = new PostulacionController();
 
@@ -126,7 +126,7 @@ public class Main {
     public static void testListarEmpleos() {
 
         // INICIO DE SESION DE USUARIO RECLUTADOR
-        testLogin("reclutador", "maria.gonzales@utp.edu.pe", "reclutador2024");
+        testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
 
         EmpleoController empleoController = new EmpleoController();
 

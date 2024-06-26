@@ -1,6 +1,7 @@
 package controllers;
 
 import core.services.ResponseService;
+import core.utils.UsuarioThreadLocal;
 import models.Usuario;
 import services.AuthService;
 import services.UsuarioService;
@@ -15,13 +16,13 @@ public class UsuarioController extends BaseController<Usuario, UsuarioService> {
         authService = new AuthService();
     }
 
-    public ResponseService<String> login(String rol, String username, String pwd) {
-        ResponseService<String> response = new ResponseService<>();
-        boolean success = authService.login(rol, username, pwd);
+    public ResponseService<Usuario> login(String username, String pwd) {
+        ResponseService<Usuario> response = new ResponseService<>();
+        boolean success = authService.login(username, pwd);
 
         response.setSuccess(success);
-        response.setMessage("usuario logueado");
-        response.setResult(rol);
+        response.setMessage("usuario logueado como: " + UsuarioThreadLocal.get().getRol());
+        response.setResult(UsuarioThreadLocal.get());
 
         return response;
     }

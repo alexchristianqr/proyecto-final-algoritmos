@@ -12,30 +12,37 @@ public class AuthService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public boolean login(String rol, String username, String pwd) {
+    public boolean login(String username, String pwd) {
 
         boolean success = false;
 
         try {
+            ResultSet rs;
             Object[] parametrosSQL_1 = new Object[2];
-
-            switch (rol) {
-                case "candidato" ->
-                    querySQL_1 = "SELECT u.*, c.id AS 'id_candidato' FROM usuarios u JOIN candidatos c ON c.id_usuario = u.id AND c.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
-                case "reclutador" ->
-                    querySQL_1 = "SELECT u.*, r.id AS 'id_reclutador' FROM usuarios u JOIN reclutadores r ON r.id_usuario = u.id AND r.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
-                default ->
-                    throw new AssertionError();
-            }
 
             parametrosSQL_1[0] = username;
             parametrosSQL_1[1] = pwd;
 
-            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
-            Usuario usuario = new Usuario();
+            querySQL_1 = "SELECT u.rol FROM usuarios u WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1;";
+            rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
-//            // Eliminar usuario en sesión local
-//            UsuarioThreadLocal.remove();
+            String rol = "";
+
+            if (rs.next()) {
+                rol = rs.getString("rol");
+            }
+
+            switch (rol) {
+                case "candidato" ->
+                    querySQL_2 = "SELECT u.*, c.id AS 'id_candidato' FROM usuarios u JOIN candidatos c ON c.id_usuario = u.id AND c.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
+                case "reclutador" ->
+                    querySQL_2 = "SELECT u.*, r.id AS 'id_reclutador' FROM usuarios u JOIN reclutadores r ON r.id_usuario = u.id AND r.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
+                default ->
+                    throw new RuntimeException(new Error("rol no permitido"));
+            }
+
+            rs = db.queryConsultar(querySQL_2, parametrosSQL_1);
+            Usuario usuario = new Usuario();
 
             while (rs.next()) {
                 usuario.setIdUsuario(rs.getInt("id"));
@@ -50,7 +57,7 @@ public class AuthService extends BaseService {
                         success = true;
                     }
                     default ->
-                        throw new AssertionError();
+                        throw new RuntimeException(new Error("rol no permitido"));
                 }
 
                 usuario.setNombres(rs.getString("nombres"));
@@ -81,7 +88,7 @@ public class AuthService extends BaseService {
 
         try {
             var usuario = UsuarioThreadLocal.get();
-            
+
             // Eliminar usuario en sesión local
             if (usuario != null) {
                 UsuarioThreadLocal.remove();
