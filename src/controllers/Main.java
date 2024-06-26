@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import models.Candidato;
 import models.Empleo;
 import models.EstudioAcademico;
+import models.ExperienciaLaboral;
 import models.Postulacion;
 import models.Reclutador;
 import models.Usuario;
@@ -45,6 +46,7 @@ public class Main {
         //testRegistrarReclutador();
         //testReporte();
         //testRegistrarEstudioAcademico();
+        //testRegistrarExperienciaLaboral();
     }
 
     public static void testViewLogin() {
@@ -258,6 +260,24 @@ public class Main {
         estudioAcademico.setOrden(1);
 
         ResponseService<Boolean> response = candidatoController.registrarEstudioAcademico(estudioAcademico);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testRegistrarExperienciaLaboral() {
+        CandidatoController candidatoController = new CandidatoController();
+
+        ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
+        experienciaLaboral.setIdCandidato(1);
+        experienciaLaboral.setTitulo("Desarrollador Backend (NodeJs - AWS)");
+        experienciaLaboral.setDescripcion("Diseñar, desarrollar e implementar soluciones backend utilizando Node.js.");
+        experienciaLaboral.setEmpresa("RIMAC");
+        experienciaLaboral.setFechaInicio("01/2023");
+        experienciaLaboral.setFechaFin("05/2024");
+        experienciaLaboral.setOrden(1);
+
+        ResponseService<Boolean> response = candidatoController.registrarExperienciaLaboral(experienciaLaboral);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
