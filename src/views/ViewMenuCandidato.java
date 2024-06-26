@@ -758,7 +758,17 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             // Candidato
             candidato.setNombre(nombres);
             candidato.setApellidos(apellidos);
+            
             candidato.setTelefono(celular);
+            candidato.setNroDocumento(dni);
+            candidato.setFechaNacimiento(fecha_nac);
+            candidato.setSexo(género);
+            candidato.setEstadoCivil(estado_civil);
+            
+
+            
+            candidato.setAptitudes(aptitudes);
+            
 
             candidatoController.crearCandidato(candidato);
             System.out.println("Candidato creado exitosamente.");
