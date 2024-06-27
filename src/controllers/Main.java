@@ -44,11 +44,11 @@ public class Main {
         //testRegistrarEmpleo();
         //testRegistrarUsuario();
         //testRegistrarCandidato();
-        //testRegistrarReclutador();
+        testRegistrarReclutador();
         //testReporte();
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
-        testRegistrarFeedbackPersonalizado();
+        //testRegistrarFeedbackPersonalizado();
     }
 
     public static void testViewLogin() {
@@ -238,19 +238,22 @@ public class Main {
         ReclutadorController reclutadorController = new ReclutadorController();
         Reclutador reclutador = new Reclutador();
 
-        reclutador.setNombre("Michael");
-        reclutador.setApellidos("Quiroz");
+        reclutador.setNombre("Kevin");
+        reclutador.setApellidos("Lucca");
         reclutador.setTipoDocumento(1);
-        reclutador.setNroDocumento("591648762");
+        reclutador.setNroDocumento("78521630");
         reclutador.setSexo("M");
-        reclutador.setEdad("24");
-        reclutador.setTelefono("515620158");
+        reclutador.setEdad("23");
+        reclutador.setTelefono("848514956");
         reclutador.setEstado("activo");
-        reclutador.setIdUsuario(1);
+        //reclutador.setFechaNacimiento("");
+        reclutador.setEstadoCivil("soltero");
+        //reclutador.setIdUsuario(8);
 
-        reclutadorController.crearReclutador(reclutador);
-
-        System.out.println("Reclutador creado exitosamente.");
+        ResponseService<Boolean> response = reclutadorController.registrarReclutador(reclutador);
+        System.out.println("success: "+response.isSuccess());
+        System.out.println("Mensaje: "+response.getMessage());
+        System.out.println("Resultado: "+response.getResult());
     }
 
     public static void testReporte() throws IOException {
@@ -283,12 +286,12 @@ public class Main {
         CandidatoController candidatoController = new CandidatoController();
 
         ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
-        experienciaLaboral.setIdCandidato(1);
-        experienciaLaboral.setTitulo("Desarrollador Backend (NodeJs - AWS)");
+        experienciaLaboral.setIdCandidato(2);
+        experienciaLaboral.setTitulo("Desarrollador Fontend (NodeJs - AWS)");
         experienciaLaboral.setDescripcion("Diseñar, desarrollar e implementar soluciones backend utilizando Node.js.");
-        experienciaLaboral.setEmpresa("RIMAC");
-        experienciaLaboral.setFechaInicio("01/2023");
-        experienciaLaboral.setFechaFin("05/2024");
+        experienciaLaboral.setEmpresa("INTERBANK SAC");
+        experienciaLaboral.setFechaInicio("01/2022");
+        experienciaLaboral.setFechaFin("06/2024");
         experienciaLaboral.setOrden(1);
 
         ResponseService<Boolean> response = candidatoController.registrarExperienciaLaboral(experienciaLaboral);

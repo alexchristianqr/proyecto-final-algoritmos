@@ -50,7 +50,7 @@ public class UsuarioService extends BaseService {
                         reclutador.setIdUsuario(id_usuario);
                         reclutador.setNombre(usuario.getNombres());
                         reclutador.setApellidos(usuario.getApellidos());
-                        reclutadorService.crearReclutador(reclutador);
+                        reclutadorService.registrarReclutador(reclutador);
                         
                         success = true;
                         break;

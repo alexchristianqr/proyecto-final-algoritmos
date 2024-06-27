@@ -1,21 +1,30 @@
 package controllers;
 
 import models.Reclutador;
+import core.services.ResponseService;
+import services.AuthService;
 import services.ReclutadorService;
 
 public class ReclutadorController extends BaseController<Reclutador, ReclutadorService> {
     
-    private ReclutadorService service;
+    private final ReclutadorService reclutadorService;
+    private final AuthService authService;
     
     public ReclutadorController(){
-        this.service = new ReclutadorService();
+        reclutadorService = new ReclutadorService();
+        authService = new AuthService();
     }
-    
-    public void crearReclutador(Reclutador reclutador) {
-        service.crearReclutador(reclutador);
-    }
-    
-    public void eliminarReclutador(int idPersona){
+
+   /* public void eliminarReclutador(int idPersona){
         service.eliminarReclutador(idPersona);
+    }*/
+    public ResponseService<Boolean> registrarReclutador(Reclutador reclutador) {
+        ResponseService<Boolean> response = new ResponseService<>();
+        boolean success = reclutadorService.registrarReclutador(reclutador);
+
+        response.setSuccess(success);
+        response.setMessage("reclutador registrado de manera exitosa");       
+
+        return response;
     }
 }
