@@ -1,9 +1,9 @@
 package controllers;
 
 import core.services.ResponseService;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import models.FeedbackInfo;
 import models.Postulacion;
 import services.PostulacionService;
 
@@ -12,6 +12,18 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
     public PostulacionController() {
         lista.clear();
         service = new PostulacionService();
+    }
+
+    public ResponseService<Boolean> registrarFeedbackPersonalizado(Postulacion postulacion, FeedbackInfo feedbackInfo) {
+        ResponseService<Boolean> response = new ResponseService<>();
+
+        boolean success = service.registrarFeedbackPersonalizado(postulacion,feedbackInfo);
+
+        response.setSuccess(success);
+        response.setMessage("feedback guardado correctamente");
+        response.setResult(null);
+
+        return response;
     }
 
     public ResponseService<Boolean> registrarPostulacion(Postulacion postulacion) {

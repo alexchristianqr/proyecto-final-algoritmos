@@ -1,6 +1,6 @@
 package models;
 
-public class Postulacion extends Empleo{
+public class Postulacion extends Empleo {
 
     private int idPostulacion;
     private int idEmpleo;
@@ -8,6 +8,7 @@ public class Postulacion extends Empleo{
     private int idCandidato;
     private Candidato candidato;
     private int idReclutador;
+    private String feedback;
     private Reclutador reclutador;
     private String estado;// postulado|en_proceso|contratado|cancelado|bloqueado
     private String fechaCreado;
@@ -22,11 +23,52 @@ public class Postulacion extends Empleo{
         this.empleo = postulacion.getEmpleo();
         this.idCandidato = postulacion.getIdCandidato();
         this.candidato = postulacion.getCandidato();
+        this.feedback = postulacion.getFeedback();
         this.idReclutador = postulacion.getIdReclutador();
         this.reclutador = postulacion.getReclutador();
-        this.estado = postulacion.getEstado();// postulado|cancelado|aceptado|rechazado
+        this.estado = postulacion.getEstado();
         this.fechaCreado = postulacion.getFechaCreado();
         this.fechaActualizado = postulacion.getFechaActualizado();
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
+    }
+
+    public String getSueldo() {
+        return sueldo;
+    }
+
+    public void setSueldo(String sueldo) {
+        this.sueldo = sueldo;
+    }
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
     }
 
     public int getIdPostulacion() {

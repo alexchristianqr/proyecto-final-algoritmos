@@ -12,6 +12,7 @@ import models.Candidato;
 import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
+import models.FeedbackInfo;
 import models.Postulacion;
 import models.Reclutador;
 import models.Usuario;
@@ -28,7 +29,7 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
-        testViewLogin();
+        //testViewLogin();
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
         //testLogin("alex.quispe@gmail.com", "candidato2024");
         //testLogout();
@@ -47,6 +48,7 @@ public class Main {
         //testReporte();
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
+        testRegistrarFeedbackPersonalizado();
     }
 
     public static void testViewLogin() {
@@ -95,19 +97,31 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
-    public static void testActualizarPostulacion() {
-        // INICIO DE SESION DE USUARIO CANDIDATO
+    public static void testRegistrarFeedbackPersonalizado() {
+        // INICIO DE SESION
         testLogin("alex.quispe@gmail.com", "candidato2024");
 
         PostulacionController postulacionController = new PostulacionController();
 
         // CREAR INSTANCIA
         Postulacion postulacion = new Postulacion();
-        postulacion.setIdPostulacion(6);
-        postulacion.setEstado("contratado");
+        postulacion.setIdPostulacion(1);
+
+        // CREAR INSTANCIA
+        FeedbackInfo feedbackInfo = new FeedbackInfo();
+        feedbackInfo.setPuesto("Desarrollador de Software");
+        feedbackInfo.setNombreCandidato("Juan Pérez");
+        feedbackInfo.setFortalezas("Trabajo en equipo, creatividad");
+        feedbackInfo.setMejoras("Gestión del tiempo");
+        feedbackInfo.setAdicional("Gran disposición para aprender");
+        feedbackInfo.setNombreReclutador("María Gómez");
+        feedbackInfo.setPuestoReclutador("Gerente de Recursos Humanos");
+        feedbackInfo.setEmpresaReclutador("Tech Solutions");
+        feedbackInfo.setEmailReclutador("maria.gomez@techsolutions.com");
+        feedbackInfo.setTelefonoReclutador("123-456-7890");
 
         // ACCION ACTUALIZAR POSTULACION POR EL CAMPO "ESTADO"
-        ResponseService<Boolean> response = postulacionController.actualizarPostulacion(postulacion, "estado");
+        ResponseService<Boolean> response = postulacionController.registrarFeedbackPersonalizado(postulacion, feedbackInfo);
 
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
