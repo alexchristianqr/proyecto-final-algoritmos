@@ -2,6 +2,7 @@ package views;
 
 import controllers.CandidatoController;
 import controllers.ReclutadorController;
+import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import javax.swing.JOptionPane;
@@ -369,11 +370,10 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
             // Reclutador
             reclutador.setNombre(nombres);
             reclutador.setApellidos(apellidos);
-
             reclutador.setTelefono(celular);
             reclutador.setNroDocumento(dni);
 
-            reclutadorController.crearReclutador(reclutador);
+            ResponseService<Boolean> response = reclutadorController.registrarReclutador(reclutador);
             System.out.println("Reclutador creado exitosamente.");
 
         } catch (Exception e) {

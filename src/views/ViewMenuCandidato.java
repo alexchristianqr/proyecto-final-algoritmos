@@ -569,12 +569,12 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jTable1.setBackground(new java.awt.Color(229, 229, 229));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"a", null},
-                {"b", null},
-                {"c", null}
+                {"a", null, null},
+                {"b", null, null},
+                {"c", null, null}
             },
             new String [] {
-                "Título", "Estado"
+                "Título", "Estado", "Feedback"
             }
         ));
         jScrollPane4.setViewportView(jTable1);
@@ -754,6 +754,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         try {
             CandidatoController candidatoController = new CandidatoController();
             Candidato candidato = new Candidato();
+            
+            
 
             // Candidato
             candidato.setNombre(nombres);
@@ -765,12 +767,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             candidato.setSexo(género);
             candidato.setEstadoCivil(estado_civil);
             
-
             
             candidato.setAptitudes(aptitudes);
             
 
-            candidatoController.crearCandidato(candidato);
+            candidatoController.registrarCandidato(candidato);
             System.out.println("Candidato creado exitosamente.");
 
         } catch (Exception e) {
