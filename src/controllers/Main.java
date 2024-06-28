@@ -25,7 +25,6 @@ public class Main {
     public static final String ANSI_BOLD = "\033[1m";
     public static final String ANSI_RESET = "\033[0m";
     public static Util util = new Util();
-    public List<Object[]> ListaModelo;
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
@@ -44,7 +43,7 @@ public class Main {
         //testRegistrarEmpleo();
         //testRegistrarUsuario();
         //testRegistrarCandidato();
-        testRegistrarReclutador();
+        //testRegistrarReclutador();
         //testReporte();
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
@@ -55,6 +54,32 @@ public class Main {
         Login login = new Login();
         util.centerOnScreen(login, true);
         login.setVisible(true);
+    }
+
+    /* USUARIOS */
+    public static void testRegistrarUsuario() {
+        UsuarioController usuarioController = new UsuarioController();
+        Usuario usuario = new Usuario();
+
+        // Candidato:
+        /*
+        usuario.setNombres("Martin");
+        usuario.setApellidos("Torres");
+        usuario.setUsername("martin.torres@gmail.com");
+        usuario.setPassword("candidato2024");
+        usuario.setRol("candidato");
+         */
+        // Reclutador
+        usuario.setNombres("Deysi");
+        usuario.setApellidos("Barrios");
+        usuario.setUsername("deysi.barrios@gmail.com");
+        usuario.setPassword("reclutador2024");
+        usuario.setRol("reclutador");
+
+        ResponseService<String> response = usuarioController.registrarUsuario(usuario);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
     }
 
     public static void testLogin(String username, String pwd) {
@@ -77,6 +102,8 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
+
+    /* POSTULACION */
     public static void testRegistrarPostulacion() {
         // INICIO DE SESION DE USUARIO CANDIDATO
         testLogin("alex.quispe@gmail.com", "candidato2024");
@@ -141,6 +168,8 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
+
+    /* EMPLEOS */
     public static void testListarEmpleos() {
 
         // INICIO DE SESION DE USUARIO RECLUTADOR
@@ -150,69 +179,6 @@ public class Main {
 
         // MOSTRAR EMPLEOS
         empleoController.listarPublicaciones();
-    }
-
-    public static void testReporteUsuarios() throws IOException {
-        try {
-            String sql = "select * from usuarios";
-
-            MysqlDBService db = new MysqlDBService();
-            db.stmt = db.conn.prepareStatement(sql);
-
-            ExportService.exportToExcel(db.stmt, "reporte_de_usuarios_01");
-
-        } catch (InterruptedException | SQLException | ExecutionException e) {
-        }
-    }
-
-    public static void testRegistrarUsuario() {
-        UsuarioController usuarioController = new UsuarioController();
-        Usuario usuario = new Usuario();
-
-        // Candidato:
-        /*
-        usuario.setNombres("Martin");
-        usuario.setApellidos("Torres");
-        usuario.setUsername("martin.torres@gmail.com");
-        usuario.setPassword("candidato2024");
-        usuario.setRol("candidato");
-         */
-        // Reclutador
-        usuario.setNombres("Deysi");
-        usuario.setApellidos("Barrios");
-        usuario.setUsername("deysi.barrios@gmail.com");
-        usuario.setPassword("reclutador2024");
-        usuario.setRol("reclutador");
-
-        ResponseService<String> response = usuarioController.registrarUsuario(usuario);
-        System.out.println("Success: " + response.isSuccess());
-        System.out.println("Mensaje: " + response.getMessage());
-        System.out.println("Resultado: " + response.getResult());
-    }
-
-    public static void testRegistrarCandidato() {
-        CandidatoController candidatoController = new CandidatoController();
-
-        // Setea los atributos del candidato
-        Candidato candidato = new Candidato();
-        candidato.setNombre("John");
-        candidato.setApellidos("Doe");
-        candidato.setTipoDocumento(1);
-        candidato.setNroDocumento("23456789");
-        candidato.setSexo("M");
-        candidato.setEdad("20");
-        candidato.setTelefono("123456789");
-        candidato.setEstado("activo");
-        candidato.setIdUsuario(1);
-        candidato.setAptitudes("Java, SQL");
-        candidato.setImagenPerfil("profile.jpg");
-        candidato.setPathCV("cv.pdf");
-        candidato.setPathCertificadoTrabajo("certificado_trabajo.pdf");
-        candidato.setPathAntecedentePolicial("antecedente_policial.pdf");
-
-        candidatoController.registrarCandidato(candidato);
-
-        System.out.println("Candidato creado exitosamente.");
     }
 
     public static void testRegistrarEmpleo() {
@@ -234,34 +200,54 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
+
+    /* RECLUTADOR */
     public static void testRegistrarReclutador() {
         ReclutadorController reclutadorController = new ReclutadorController();
-        Reclutador reclutador = new Reclutador();
 
+        Reclutador reclutador = new Reclutador();
+        reclutador.setIdUsuario(1);
         reclutador.setNombre("Kevin");
         reclutador.setApellidos("Lucca");
         reclutador.setTipoDocumento(1);
-        reclutador.setNroDocumento("78521630");
+        reclutador.setNroDocumento("99988644");
         reclutador.setSexo("M");
         reclutador.setEdad("23");
-        reclutador.setTelefono("848514956");
+        reclutador.setTelefono("999865774");
         reclutador.setEstado("activo");
-        //reclutador.setFechaNacimiento("");
         reclutador.setEstadoCivil("soltero");
-        //reclutador.setIdUsuario(8);
 
         ResponseService<Boolean> response = reclutadorController.registrarReclutador(reclutador);
-        System.out.println("success: "+response.isSuccess());
-        System.out.println("Mensaje: "+response.getMessage());
-        System.out.println("Resultado: "+response.getResult());
+        System.out.println("success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
     }
 
-    public static void testReporte() throws IOException {
-        try {
-            ReporteService.ReporteEdad();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    /* CANDIDATO */
+    public static void testRegistrarCandidato() {
+        CandidatoController candidatoController = new CandidatoController();
+
+        Candidato candidato = new Candidato();
+        candidato.setIdUsuario(1);
+        candidato.setNombre("John");
+        candidato.setApellidos("Doe");
+        candidato.setTipoDocumento(1);
+        candidato.setNroDocumento("23456789");
+        candidato.setSexo("M");
+        candidato.setEdad("20");
+        candidato.setTelefono("123456789");
+        candidato.setEstado("activo");
+        candidato.setAptitudes("Java, SQL");
+        candidato.setImagenPerfil("profile.jpg");
+        candidato.setPathCV("cv.pdf");
+        candidato.setPathCertificadoTrabajo("certificado_trabajo.pdf");
+        candidato.setPathAntecedentePolicial("antecedente_policial.pdf");
+
+        ResponseService<Boolean> response = candidatoController.registrarCandidato(candidato);
+        System.out.println("success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
     }
 
     public static void testRegistrarEstudioAcademico() {
@@ -298,5 +284,28 @@ public class Main {
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
+    }
+
+
+    /* REPORTE */
+    public static void testReporteUsuarios() throws IOException {
+        try {
+            String sql = "select * from usuarios";
+
+            MysqlDBService db = new MysqlDBService();
+            db.stmt = db.conn.prepareStatement(sql);
+
+            ExportService.exportToExcel(db.stmt, "reporte_de_usuarios_01");
+
+        } catch (InterruptedException | SQLException | ExecutionException e) {
+        }
+    }
+
+    public static void testReporte() throws IOException {
+        try {
+            ReporteService.ReporteEdad();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

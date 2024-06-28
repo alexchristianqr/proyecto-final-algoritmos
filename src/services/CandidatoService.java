@@ -14,16 +14,30 @@ public class CandidatoService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public int registrarCandidato(Candidato candidato) {
-        querySQL_1 = "INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, estado, fecha_nacimiento, telefono) VALUES (?,?,?,?,?,?,?,?)";
-        Object[] parametrosSQL_1 = {candidato.getNombre(), candidato.getApellidos(), candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getSexo(), candidato.getEstado(), candidato.getFechaNacimiento(), candidato.getTelefono()};
-        int id_persona = db.queryInsertar(querySQL_1, parametrosSQL_1);
+    public boolean registrarCandidato(Candidato candidato) {
+        boolean success = false;
 
-        querySQL_2 = "INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial, estado) VALUES (?,?,?,?,?,?,?,?)";
-        Object[] parametrosSQL_2 = {id_persona, candidato.getIdUsuario(), candidato.getAptitudes(), candidato.getImagenPerfil(), candidato.getPathCV(), candidato.getPathCertificadoTrabajo(), candidato.getPathAntecedentePolicial(), candidato.getEstado()};
-        int id_candidato = db.queryInsertar(querySQL_2, parametrosSQL_2);
+        try {
+            querySQL_1 = "INSERT INTO personas (nombre, apellido, tipo_documento, nrodocumento, sexo, estado, fecha_nacimiento, telefono) VALUES (?,?,?,?,?,?,?,?)";
+            Object[] parametrosSQL_1 = {candidato.getNombre(), candidato.getApellidos(), candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getSexo(), candidato.getEstado(), candidato.getFechaNacimiento(), candidato.getTelefono()};
+            int id_persona = db.queryInsertar(querySQL_1, parametrosSQL_1);
 
-        return id_candidato;
+            querySQL_2 = "INSERT INTO candidatos (id_persona, id_usuario, aptitudes, imagen_perfil, path_curriculum_vitae, path_certificado_trabajo, path_antecendente_policial) VALUES (?,?,?,?,?,?,?)";
+            Object[] parametrosSQL_2 = {id_persona, candidato.getIdUsuario(), candidato.getAptitudes(), candidato.getImagenPerfil(), candidato.getPathCV(), candidato.getPathCertificadoTrabajo(), candidato.getPathAntecedentePolicial()};
+            int id_candidato = db.queryInsertar(querySQL_2, parametrosSQL_2);
+
+            if (id_candidato > 0) {
+                success = true;
+            } else {
+                throw new RuntimeException("No se pudo insertar en la base de datos.");
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error al registrar el usuario: " + e.getMessage(), e);
+        } finally {
+            db.cerrarConsulta();
+        }
+
+        return success;
     }
 
     public DefaultTableModel tablaCandidatos(DefaultTableModel modelo, Object[] data) {
@@ -90,7 +104,7 @@ public class CandidatoService extends BaseService {
                 candidatos.add(candidato);
             }
         } catch (SQLException ex) {
-            throw new RuntimeException("Error al listar los candidatos", ex);
+            throw new RuntimeException("Error al listar candidatos", ex);
         }
 
         db.cerrarConsulta();

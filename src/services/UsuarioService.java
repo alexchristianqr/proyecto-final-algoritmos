@@ -13,7 +13,7 @@ public class UsuarioService extends BaseService {
 
     public boolean registrarUsuario(Usuario usuario) {
         boolean success = false;
-        
+
         try {
 
             // Validaciones de entrada
@@ -39,7 +39,7 @@ public class UsuarioService extends BaseService {
                         candidato.setApellidos(usuario.getApellidos());
                         candidato.setEstado("activo");
                         candidatoService.registrarCandidato(candidato);
-                        
+
                         success = true;
                         break;
                     }
@@ -51,26 +51,22 @@ public class UsuarioService extends BaseService {
                         reclutador.setNombre(usuario.getNombres());
                         reclutador.setApellidos(usuario.getApellidos());
                         reclutadorService.registrarReclutador(reclutador);
-                        
+
                         success = true;
                         break;
                     }
                     default ->
                         throw new AssertionError();
                 }
-
-                // db.commit();// Confirmar transacción SQL
             } else {
                 throw new RuntimeException("No se pudo insertar el usuario en la base de datos.");
             }
         } catch (RuntimeException e) {
-            // db.rollback();// Revertir transacción SQL
             throw new RuntimeException("Error al registrar el usuario: " + e.getMessage(), e);
         } finally {
-            // db.setAutoCommit(originalAutoCommit); // Restaura el auto-commit
             db.cerrarConsulta();
         }
-        
+
         return success;
     }
 }

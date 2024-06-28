@@ -1,20 +1,18 @@
 package controllers;
 
 import core.services.ResponseService;
-import core.utils.UsuarioThreadLocal;
 import models.Candidato;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
-import models.Usuario;
 import services.CandidatoService;
 import services.EstudioAcademicoService;
 import services.ExperienciaLaboralService;
 
 public class CandidatoController extends BaseController<Candidato, CandidatoService> {
 
-    private CandidatoService candidatoService;
-    private EstudioAcademicoService estudioAcademicoService;
-    private ExperienciaLaboralService experienciaLaboralService;
+    private final CandidatoService candidatoService;
+    private final EstudioAcademicoService estudioAcademicoService;
+    private final ExperienciaLaboralService experienciaLaboralService;
 
     public CandidatoController() {
         candidatoService = new CandidatoService();
@@ -22,8 +20,16 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
         experienciaLaboralService = new ExperienciaLaboralService();
     }
 
-    public void registrarCandidato(Candidato candidato) {
-        candidatoService.registrarCandidato(candidato);
+    public ResponseService<Boolean> registrarCandidato(Candidato candidato) {
+        ResponseService<Boolean> response = new ResponseService<>();
+
+        boolean success = candidatoService.registrarCandidato(candidato);
+
+        response.setSuccess(success);
+        response.setMessage("candidato registrado correctamente");
+        response.setResult(null);
+
+        return response;
     }
 
     public ResponseService<Boolean> registrarEstudioAcademico(EstudioAcademico estudioAcademico) {
