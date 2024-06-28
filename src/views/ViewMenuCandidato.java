@@ -4,7 +4,9 @@ import controllers.CandidatoController;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import models.Candidato;
 import models.EstudioAcademico;
 
@@ -12,18 +14,40 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
     Util util = new Util();
     Login login = new Login();
-    ResponseService<String> response = new ResponseService<>();
+    CandidatoController candidatoController = new CandidatoController();
 
     public ViewMenuCandidato() {
         initComponents();
         mostrarDatosBasicos();
+        listarEstudiosAcademicos();
     }
 
-    public void mostrarDatosBasicos() {
+    final public void mostrarDatosBasicos() {
 
         txtNombres.setText(UsuarioThreadLocal.get().getNombres());
         txtApellidos.setText(UsuarioThreadLocal.get().getApellidos());
         txtEmail.setText(UsuarioThreadLocal.get().getUsername());
+    }
+
+    final public void listarEstudiosAcademicos() {
+        EstudioAcademico estudioAcademico = new EstudioAcademico();
+        estudioAcademico.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
+
+        final ResponseService<List<Object[]>> response = candidatoController.listarEstudiosAcademicos(estudioAcademico);
+
+        if (response.isSuccess()) {
+            List<Object[]> items = response.getResult();
+
+            DefaultTableModel modelo = (DefaultTableModel) tblListaEstudiosAcademicos.getModel();
+            modelo.setRowCount(0);
+
+            // Agregar los datos al modelo
+            for (Object[] item : items) {
+                modelo.addRow(item);
+            }
+        } else {
+            util.alertMessage("Error al obtener estudios academicos", true);
+        }
     }
 
     /**
@@ -59,7 +83,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         EstudiosFechaInicio = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
         EstudiosFechaFin = new javax.swing.JTextField();
-        AgregarEstudios = new javax.swing.JButton();
+        btnRegistrarEstudioAcademico = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         Experiencia = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -82,7 +106,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         AgregarCertificado = new javax.swing.JButton();
         QuitarCertificado = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        TablaEstudios = new javax.swing.JTable();
+        tblListaEstudiosAcademicos = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         TablaExperiencia = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -170,13 +194,13 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         EstudiosFechaFin.setBackground(new java.awt.Color(229, 229, 229));
 
-        AgregarEstudios.setBackground(new java.awt.Color(102, 102, 102));
-        AgregarEstudios.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        AgregarEstudios.setForeground(new java.awt.Color(255, 255, 255));
-        AgregarEstudios.setText("AGREGAR");
-        AgregarEstudios.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrarEstudioAcademico.setBackground(new java.awt.Color(102, 102, 102));
+        btnRegistrarEstudioAcademico.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRegistrarEstudioAcademico.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrarEstudioAcademico.setText("AGREGAR");
+        btnRegistrarEstudioAcademico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AgregarEstudiosActionPerformed(evt);
+                btnRegistrarEstudioAcademicoActionPerformed(evt);
             }
         });
 
@@ -294,8 +318,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         QuitarCertificado.setForeground(new java.awt.Color(255, 255, 255));
         QuitarCertificado.setText("QUITAR");
 
-        TablaEstudios.setBackground(new java.awt.Color(229, 229, 229));
-        TablaEstudios.setModel(new javax.swing.table.DefaultTableModel(
+        tblListaEstudiosAcademicos.setBackground(new java.awt.Color(229, 229, 229));
+        tblListaEstudiosAcademicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -306,7 +330,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 "Título", "Descripción", "Fecha Inicio", "Fecha Final", "Grado"
             }
         ));
-        jScrollPane3.setViewportView(TablaEstudios);
+        jScrollPane3.setViewportView(tblListaEstudiosAcademicos);
 
         TablaExperiencia.setBackground(new java.awt.Color(229, 229, 229));
         TablaExperiencia.setModel(new javax.swing.table.DefaultTableModel(
@@ -431,7 +455,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(AgregarEstudios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRegistrarEstudioAcademico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(QuitarEstudios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(EstudiosFechaFin)))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
@@ -561,7 +585,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                             .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel28)
                             .addComponent(Estudios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AgregarEstudios))
+                            .addComponent(btnRegistrarEstudioAcademico))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(QuitarEstudios)
@@ -843,26 +867,34 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void AgregarEstudiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarEstudiosActionPerformed
-        EstudioAcademico estudioAcademico = new EstudioAcademico();
-        CandidatoController candidatoController = new CandidatoController();
-        
+    private void btnRegistrarEstudioAcademicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEstudioAcademicoActionPerformed
+
         String titulo = txtTitulo.getText();
         String grado = Estudios.getSelectedItem().toString();
         String descripcion = txtDescripcion.getText();
         String fecha_ini = EstudiosFechaInicio.getText();
         String fecha_fin = EstudiosFechaFin.getText();
 
+        EstudioAcademico estudioAcademico = new EstudioAcademico();
+        estudioAcademico.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
         estudioAcademico.setTitulo(titulo);
         estudioAcademico.setGrado(grado);
         estudioAcademico.setDescripcion(descripcion);
         estudioAcademico.setFechaInicio(fecha_ini);
         estudioAcademico.setFechaFin(fecha_fin);
+
         ResponseService<Boolean> response = candidatoController.registrarEstudioAcademico(estudioAcademico);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
-    }//GEN-LAST:event_AgregarEstudiosActionPerformed
+
+        if (response.isSuccess()) {
+            util.alertMessage(response.getMessage());
+            listarEstudiosAcademicos();
+        } else {
+            util.alertMessage("Error al registrar", true);
+        }
+    }//GEN-LAST:event_btnRegistrarEstudioAcademicoActionPerformed
 
     private void AgregarExperienciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarExperienciaActionPerformed
         // TODO add your handling code here:
@@ -908,7 +940,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JButton AgregarAptitud;
     private javax.swing.JButton AgregarCertificado;
     private javax.swing.JButton AgregarCurriculum;
-    private javax.swing.JButton AgregarEstudios;
     private javax.swing.JButton AgregarExperiencia;
     private javax.swing.JTextField Aptitudes;
     private javax.swing.JTextField Celular;
@@ -930,8 +961,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JButton QuitarExperiencia;
     private javax.swing.JTable TablaAptitudes;
     private javax.swing.JTable TablaCertificados;
-    private javax.swing.JTable TablaEstudios;
     private javax.swing.JTable TablaExperiencia;
+    private javax.swing.JButton btnRegistrarEstudioAcademico;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton8;
@@ -981,6 +1012,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tblListaEstudiosAcademicos;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtEmail;

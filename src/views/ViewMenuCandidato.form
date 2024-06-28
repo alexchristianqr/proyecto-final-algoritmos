@@ -153,7 +153,7 @@
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="AgregarEstudios" max="32767" attributes="0"/>
+                                          <Component id="btnRegistrarEstudioAcademico" max="32767" attributes="0"/>
                                           <Component id="QuitarEstudios" max="32767" attributes="0"/>
                                           <Component id="EstudiosFechaFin" alignment="0" max="32767" attributes="0"/>
                                       </Group>
@@ -320,7 +320,7 @@
                                   <Component id="txtTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="Estudios" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="AgregarEstudios" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnRegistrarEstudioAcademico" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -566,7 +566,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="AgregarEstudios">
+            <Component class="javax.swing.JButton" name="btnRegistrarEstudioAcademico">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="66" type="rgb"/>
@@ -580,7 +580,7 @@
                 <Property name="text" type="java.lang.String" value="AGREGAR"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AgregarEstudiosActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarEstudioAcademicoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -827,7 +827,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="TablaEstudios">
+                <Component class="javax.swing.JTable" name="tblListaEstudiosAcademicos">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e5" green="e5" red="e5" type="rgb"/>

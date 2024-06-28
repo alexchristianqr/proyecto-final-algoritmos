@@ -28,7 +28,7 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
-        //testViewLogin();
+        testViewLogin();
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
         //testLogin("alex.quispe@gmail.com", "candidato2024");
         //testLogout();
@@ -48,6 +48,7 @@ public class Main {
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
         //testRegistrarFeedbackPersonalizado();
+        //testListarEstudiosAcademicos();
     }
 
     public static void testViewLogin() {
@@ -263,6 +264,18 @@ public class Main {
         estudioAcademico.setOrden(1);
 
         ResponseService<Boolean> response = candidatoController.registrarEstudioAcademico(estudioAcademico);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+    
+    public static void testListarEstudiosAcademicos() {
+        CandidatoController candidatoController = new CandidatoController();
+
+        EstudioAcademico estudioAcademico = new EstudioAcademico();
+        estudioAcademico.setIdCandidato(1);
+
+        ResponseService<List<Object[]>> response = candidatoController.listarEstudiosAcademicos(estudioAcademico);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());

@@ -1,6 +1,7 @@
 package controllers;
 
 import core.services.ResponseService;
+import java.util.List;
 import models.Candidato;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
@@ -52,6 +53,19 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
         response.setSuccess(success);
         response.setMessage("experiencia laboral registrado correctamente");
         response.setResult(null);
+
+        return response;
+    }
+
+    public ResponseService<List<Object[]>> listarEstudiosAcademicos(EstudioAcademico estudioAcademico) {
+        ResponseService<List<Object[]>> response = new ResponseService<>();
+
+        String[] columnNames = {"Codigo", "Titulo", "Descripcion", "Fecha inicio", "Fecha fin", "Grado", "Estado", "Fecha creado"};
+        List<Object[]> resultado = estudioAcademicoService.listarEstudiosAcademicos(columnNames, estudioAcademico);
+
+        response.setSuccess(true);
+        response.setMessage("listado de postulaciones");
+        response.setResult(resultado);
 
         return response;
     }

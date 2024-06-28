@@ -29,6 +29,15 @@ WHERE u.username = 'maria.gonzales@utp.edu.pe' AND u.pwd = 'reclutador2024' AND 
 -- actualizar
 UPDATE usuarios SET usuarios.pwd = 'candidato2024v2' WHERE usuarios.id = 1 AND usuarios.username = 'alex.quispe@gmail.com';
 
+-- -------------------
+-- ESTUDIOS ACADEMICOS
+-- -------------------
+
+SELECT ea.* 
+FROM estudios_academicos ea
+JOIN candidatos_estudios_academicos cea ON cea.id_estudio_academico = ea.id
+WHERE cea.id_candidato = 1;
+
 -- ---------
 -- CANDIDATO
 -- ---------

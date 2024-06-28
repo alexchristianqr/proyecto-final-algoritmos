@@ -1,7 +1,11 @@
 package services;
 
 import core.services.MysqlDBService;
+import java.util.ArrayList;
+import java.util.List;
 import models.EstudioAcademico;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class EstudioAcademicoService extends BaseService {
 
@@ -31,6 +35,54 @@ public class EstudioAcademicoService extends BaseService {
         }
 
         return success;
+    }
+
+    public List listarEstudiosAcademicos(String[] columnNames, EstudioAcademico estudioAcademico) {
+
+        List<Object[]> lista = new ArrayList<>();
+
+        try {
+            Object[] parametrosSQL_1 = new Object[1];
+
+            querySQL_1 = "SELECT ea.* FROM estudios_academicos ea JOIN candidatos_estudios_academicos cea ON cea.id_estudio_academico = ea.id where cea.id_candidato = ?;";
+            parametrosSQL_1[0] = estudioAcademico.getIdCandidato();
+
+//            if (estado != null) {
+//                querySQL_1 += " AND po.estado = ? ";
+//                parametrosSQL_1[1] = estado;
+//            }
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+
+            System.out.println("\n");
+
+            while (rs.next()) {
+                // Nuevo
+                Object[] data = new Object[columnNames.length];
+
+                // Llenar el arreglo de datos con los valores del ResultSet
+                data[0] = rs.getInt("id");
+                data[1] = rs.getString("titulo");
+                data[2] = rs.getString("descripcion");
+                data[3] = rs.getString("fecha_inicio");
+                data[4] = rs.getString("fecha_fin");
+                data[5] = rs.getString("grado");
+                data[6] = rs.getString("estado");
+                data[7] = rs.getString("fecha_creado");
+
+                // Agregar el arreglo de datos a la lista de contenido de datos
+                lista.add(data);
+            }
+
+            // Imprimir la tabla utilizando la lista de contenido de datos
+            util.imprimirTabla(columnNames, lista.toArray(Object[][]::new));
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            db.cerrarConsulta();
+        }
+
+        return lista;
     }
 
 }

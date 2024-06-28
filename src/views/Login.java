@@ -26,6 +26,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        txtUsername.setText("alex.quispe@gmail.com");
+        txtPwd.setText("candidato2024");
     }
 
     private char[] pwdToArray(String pwd) {
@@ -78,11 +80,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         txtUsername.setBackground(new java.awt.Color(229, 229, 229));
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
-            }
-        });
 
         txtPwd.setBackground(new java.awt.Color(229, 229, 229));
 
@@ -174,54 +171,50 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         try {
-    btnLogin.setEnabled(false);
-    String username = txtUsername.getText().toLowerCase();
-    char[] passwordArray = txtPwd.getPassword();
-    String password = new String(passwordArray);
+            btnLogin.setEnabled(false);
+            String username = txtUsername.getText().toLowerCase();
+            char[] passwordArray = txtPwd.getPassword();
+            String password = new String(passwordArray);
 
-    // Consultar la base de datos para validar el usuario y la contraseña
-    ResponseService<Usuario> response = usuarioController.login(username, password);
-    System.out.println("Success: " + response.isSuccess());
+            // Consultar la base de datos para validar el usuario y la contraseña
+            ResponseService<Usuario> response = usuarioController.login(username, password);
+            System.out.println("Success: " + response.isSuccess());
 
-    if (response.isSuccess()) {
-        Usuario usuario = response.getResult();
-        String userRole = usuario.getRol(); // Obtener el rol del usuario
-        System.out.println("Tipo de usuario: " + userRole);
+            if (response.isSuccess()) {
+                Usuario usuario = response.getResult();
+                String userRole = usuario.getRol(); // Obtener el rol del usuario
+                System.out.println("Tipo de usuario: " + userRole);
 
-        if ("candidato".equals(userRole)) {
-            viewMenuCandidato = new ViewMenuCandidato(); // Crear objeto del JFrame principal
-            viewMenuCandidato.setVisible(true); // Visualizar frame
-            util.centerOnScreen(viewMenuCandidato, true);
-            dispose();
-        } else if ("reclutador".equals(userRole)) {
-            viewMenuReclutador = new ViewMenuReclutador(); // Crear objeto del JFrame principal
-            viewMenuReclutador.setVisible(true); // Visualizar frame
-            util.centerOnScreen(viewMenuReclutador, true);
-            dispose();
+                if ("candidato".equals(userRole)) {
+                    viewMenuCandidato = new ViewMenuCandidato(); // Crear objeto del JFrame principal
+                    viewMenuCandidato.setVisible(true); // Visualizar frame
+                    util.centerOnScreen(viewMenuCandidato, true);
+                    dispose();
+                } else if ("reclutador".equals(userRole)) {
+                    viewMenuReclutador = new ViewMenuReclutador(); // Crear objeto del JFrame principal
+                    viewMenuReclutador.setVisible(true); // Visualizar frame
+                    util.centerOnScreen(viewMenuReclutador, true);
+                    dispose();
+                }
+
+                // Guardar el usuario en el ThreadLocal
+                UsuarioThreadLocal.set(usuario);
+
+            } else {
+                util.alertMessage("Usuario o contraseña inválida. Inténtalo nuevamente.");
+                btnLogin.setEnabled(true);
+                txtPwd.setText("");
+                txtPwd.requestFocus();
+            }
+        } catch (Exception ex) {
+            util.alertMessage("Ocurrió un error. Por favor, inténtalo nuevamente.");
+            btnLogin.setEnabled(true);
+            txtPwd.setText("");
+            txtPwd.requestFocus();
         }
-
-        // Guardar el usuario en el ThreadLocal
-        UsuarioThreadLocal.set(usuario);
-
-    } else {
-        util.alertMessage("Usuario o contraseña inválida. Inténtalo nuevamente.");
-        btnLogin.setEnabled(true);
-        txtPwd.setText("");
-        txtPwd.requestFocus();
-    }
-} catch (Exception ex) {
-    util.alertMessage("Ocurrió un error. Por favor, inténtalo nuevamente.");
-    btnLogin.setEnabled(true);
-    txtPwd.setText("");
-    txtPwd.requestFocus();
-}
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed

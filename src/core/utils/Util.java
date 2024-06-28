@@ -12,26 +12,32 @@ public class Util {
     public static final String ANSI_RESET = "\033[0m";
 
     // Mostrar mensaje de alerta
-    public void alertMessage() {
-        JOptionPane.showMessageDialog(null, "Ha ocurrido un problema", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-    }
-
+//    public void alertMessage() {
+//        JOptionPane.showMessageDialog(null, "Ha ocurrido un problema", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+//    }
     public void alertMessage(String message) {
-        JOptionPane.showMessageDialog(null, message, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+        this.alertMessage(message, false);
     }
 
-    public void alertMessage(String message, String titleMessage) {
-        JOptionPane.showMessageDialog(null, message, titleMessage, JOptionPane.ERROR_MESSAGE);
+    public void alertMessage(String message, boolean isError) {
+        if (isError) {
+            JOptionPane.showMessageDialog(null, message, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
-    public void alertMessage(String message, String titleMessage, Component component) {
-        JOptionPane.showMessageDialog(component, message, titleMessage, JOptionPane.ERROR_MESSAGE);
-    }
-
-    public void alertMessage(String message, String titleMessage, Component component, int jop) {
-        JOptionPane.showMessageDialog(component, message, titleMessage, jop);
-    }
-
+//    public void alertMessage(String message, String titleMessage) {
+//        JOptionPane.showMessageDialog(null, message, titleMessage, JOptionPane.ERROR_MESSAGE);
+//    }
+//
+//    public void alertMessage(String message, String titleMessage, Component component) {
+//        JOptionPane.showMessageDialog(component, message, titleMessage, JOptionPane.ERROR_MESSAGE);
+//    }
+//
+//    public void alertMessage(String message, String titleMessage, Component component, int jop) {
+//        JOptionPane.showMessageDialog(component, message, titleMessage, jop);
+//    }
     // Centrar vista en la pantalla
     public void centerOnScreen(final Component viewComponent, final boolean absolute) {
         final int width = viewComponent.getWidth();
