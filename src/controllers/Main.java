@@ -49,6 +49,7 @@ public class Main {
         //testRegistrarExperienciaLaboral();
         //testRegistrarFeedbackPersonalizado();
         //testListarEstudiosAcademicos();
+        //testListarExperienciasLaborales();
     }
 
     public static void testViewLogin() {
@@ -298,7 +299,18 @@ public class Main {
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
+    
+    public static void testListarExperienciasLaborales() {
+        CandidatoController candidatoController = new CandidatoController();
 
+        ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
+        experienciaLaboral.setIdCandidato(1);
+
+        ResponseService<List<Object[]>> response = candidatoController.listarExperienciasLaborales(experienciaLaboral);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
 
     /* REPORTE */
     public static void testReporteUsuarios() throws IOException {

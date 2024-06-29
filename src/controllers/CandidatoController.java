@@ -60,11 +60,24 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
     public ResponseService<List<Object[]>> listarEstudiosAcademicos(EstudioAcademico estudioAcademico) {
         ResponseService<List<Object[]>> response = new ResponseService<>();
 
-        String[] columnNames = {"Codigo", "Titulo", "Descripcion", "Fecha inicio", "Fecha fin", "Grado", "Estado", "Fecha creado"};
+        String[] columnNames = {"Titulo", "Descripcion", "Fecha inicio", "Fecha fin", "Grado"};
         List<Object[]> resultado = estudioAcademicoService.listarEstudiosAcademicos(columnNames, estudioAcademico);
 
         response.setSuccess(true);
-        response.setMessage("listado de postulaciones");
+        response.setMessage("listado de estudios academicos");
+        response.setResult(resultado);
+
+        return response;
+    }
+
+    public ResponseService<List<Object[]>> listarExperienciasLaborales(ExperienciaLaboral experienciaLaboral) {
+        ResponseService<List<Object[]>> response = new ResponseService<>();
+
+        String[] columnNames = {"Titulo", "Descripcion", "Fecha inicio", "Fecha fin", "Grado"};
+        List<Object[]> resultado = experienciaLaboralService.listarExperienciasLaborales(columnNames, experienciaLaboral);
+
+        response.setSuccess(true);
+        response.setMessage("listado de experiencias laborales");
         response.setResult(resultado);
 
         return response;

@@ -60,14 +60,11 @@ public class EstudioAcademicoService extends BaseService {
                 Object[] data = new Object[columnNames.length];
 
                 // Llenar el arreglo de datos con los valores del ResultSet
-                data[0] = rs.getInt("id");
-                data[1] = rs.getString("titulo");
-                data[2] = rs.getString("descripcion");
-                data[3] = rs.getString("fecha_inicio");
-                data[4] = rs.getString("fecha_fin");
-                data[5] = rs.getString("grado");
-                data[6] = rs.getString("estado");
-                data[7] = rs.getString("fecha_creado");
+                data[0] = rs.getString("titulo");
+                data[1] = rs.getString("descripcion");
+                data[2] = rs.getString("fecha_inicio");
+                data[3] = rs.getString("fecha_fin");
+                data[4] = rs.getString("grado");
 
                 // Agregar el arreglo de datos a la lista de contenido de datos
                 lista.add(data);
