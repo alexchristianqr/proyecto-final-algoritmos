@@ -57,7 +57,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnCrearEmpleo = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -185,10 +185,15 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
         jTextField4.setBackground(new java.awt.Color(229, 229, 229));
 
-        jButton1.setBackground(new java.awt.Color(102, 102, 102));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("CREAR");
+        btnCrearEmpleo.setBackground(new java.awt.Color(102, 102, 102));
+        btnCrearEmpleo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCrearEmpleo.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrearEmpleo.setText("CREAR");
+        btnCrearEmpleo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearEmpleoActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Descripción:");
 
@@ -222,7 +227,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(300, 300, 300)
-                        .addComponent(jButton1)))
+                        .addComponent(btnCrearEmpleo)))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -249,7 +254,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
-                .addComponent(jButton1)
+                .addComponent(btnCrearEmpleo)
                 .addContainerGap(55, Short.MAX_VALUE))
         );
 
@@ -382,6 +387,10 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnGuardarReclutadorActionPerformed
 
+    private void btnCrearEmpleoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearEmpleoActionPerformed
+    
+    }//GEN-LAST:event_btnCrearEmpleoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -419,8 +428,8 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCrearEmpleo;
     private javax.swing.JButton btnGuardarReclutador;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

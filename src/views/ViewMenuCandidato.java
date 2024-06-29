@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Candidato;
 import models.EstudioAcademico;
+import models.ExperienciaLaboral;
 
 public class ViewMenuCandidato extends javax.swing.JFrame {
 
@@ -20,6 +21,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         initComponents();
         mostrarDatosBasicos();
         listarEstudiosAcademicos();
+        listarExperienciaLaboral();
     }
 
     final public void mostrarDatosBasicos() {
@@ -39,6 +41,27 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             List<Object[]> items = response.getResult();
 
             DefaultTableModel modelo = (DefaultTableModel) tblListaEstudiosAcademicos.getModel();
+            modelo.setRowCount(0);
+
+            // Agregar los datos al modelo
+            for (Object[] item : items) {
+                modelo.addRow(item);
+            }
+        } else {
+            util.alertMessage("Error al obtener estudios academicos", true);
+        }
+    }
+    
+        final public void listarExperienciaLaboral() {
+        ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
+        experienciaLaboral.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
+
+        final ResponseService<List<Object[]>> response = candidatoController.listarExperienciasLaborales(experienciaLaboral);
+
+        if (response.isSuccess()) {
+            List<Object[]> items = response.getResult();
+
+            DefaultTableModel modelo = (DefaultTableModel) TablaExperiencia.getModel();
             modelo.setRowCount(0);
 
             // Agregar los datos al modelo
@@ -109,13 +132,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         tblListaEstudiosAcademicos = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         TablaExperiencia = new javax.swing.JTable();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        TablaAptitudes = new javax.swing.JTable();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TablaCertificados = new javax.swing.JTable();
         QuitarAptitud = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtDescripcionEL = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         txtDescripcion = new javax.swing.JTextField();
@@ -123,7 +142,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtEmpresa = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaAptitudes = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jTextField13 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
@@ -239,6 +260,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         AgregarAptitud.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         AgregarAptitud.setForeground(new java.awt.Color(255, 255, 255));
         AgregarAptitud.setText("AGREGAR");
+        AgregarAptitud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarAptitudActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(102, 102, 102));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -351,34 +377,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         ));
         jScrollPane6.setViewportView(TablaExperiencia);
 
-        TablaAptitudes.setBackground(new java.awt.Color(229, 229, 229));
-        TablaAptitudes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Aptitudes"
-            }
-        ));
-        jScrollPane8.setViewportView(TablaAptitudes);
-
-        TablaCertificados.setBackground(new java.awt.Color(229, 229, 229));
-        TablaCertificados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Certificados"
-            }
-        ));
-        jScrollPane1.setViewportView(TablaCertificados);
-
         QuitarAptitud.setBackground(new java.awt.Color(102, 102, 102));
         QuitarAptitud.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         QuitarAptitud.setForeground(new java.awt.Color(255, 255, 255));
@@ -386,7 +384,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jLabel5.setText("Descripción");
 
-        jTextField2.setBackground(new java.awt.Color(226, 226, 226));
+        txtDescripcionEL.setBackground(new java.awt.Color(226, 226, 226));
 
         jLabel6.setText("Título");
 
@@ -409,17 +407,18 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jLabel10.setText("Empresa");
 
-        jTextField1.setBackground(new java.awt.Color(226, 226, 226));
+        txtEmpresa.setBackground(new java.awt.Color(226, 226, 226));
+
+        txtAreaAptitudes.setBackground(new java.awt.Color(229, 229, 229));
+        txtAreaAptitudes.setColumns(20);
+        txtAreaAptitudes.setRows(5);
+        jScrollPane2.setViewportView(txtAreaAptitudes);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(395, 395, 395)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,8 +432,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addComponent(QuitarAptitud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel18)
                                 .addGap(159, 159, 159)
@@ -449,7 +447,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                     .addComponent(FechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtApellidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -459,13 +457,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                     .addComponent(jLabel28)
                                     .addComponent(jLabel6))
                                 .addGap(46, 46, 46)
-                                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel29)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel29)
-                            .addComponent(jLabel30))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(EstudiosFechaInicio)
                             .addComponent(EstudiosFechaFin))
                         .addGap(1, 1, 1))
@@ -480,8 +476,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addComponent(QuitarEstudios, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(Estudios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(104, 104, 104)
+                                .addComponent(jLabel30)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtDescripcion))))
+                            .addComponent(txtDescripcion)))
+                    .addComponent(jScrollPane2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -522,30 +521,31 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                                    .addComponent(txtEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
                                     .addComponent(Experiencia))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGap(12, 12, 12)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ExperienciaFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ExperienciaFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jTextField2)))
+                                        .addGap(10, 10, 10)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(ExperienciaFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                                    .addComponent(ExperienciaFechaInicio)))
+                            .addComponent(txtDescripcionEL)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 20, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addGap(262, 262, 262))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(AgregarExperiencia)
                                 .addGap(18, 18, 18)
-                                .addComponent(QuitarExperiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(QuitarExperiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(61, 61, 61))
         );
         jPanel1Layout.setVerticalGroup(
@@ -599,21 +599,20 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
-                                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel29))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel28)
                                     .addComponent(Estudios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel29)
-                                    .addComponent(EstudiosFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(EstudiosFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel30)
                                     .addComponent(EstudiosFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel10)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -631,10 +630,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addGap(20, 20, 20)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDescripcionEL, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(QuitarExperiencia)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(QuitarExperiencia, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(AgregarExperiencia)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -642,7 +641,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                             .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(QuitarEstudios)
                             .addComponent(btnRegistrarEstudioAcademico))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -658,13 +657,14 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                     .addComponent(AgregarAptitud)
                     .addComponent(Aptitudes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(73, 73, 73))
         );
 
         jTabbedPane1.addTab("Mis Datos", jPanel1);
@@ -703,7 +703,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton8)))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -758,7 +758,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 108, Short.MAX_VALUE)
+                .addGap(0, 149, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -818,7 +818,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 976, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -857,10 +859,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         String género = Genero.getSelectedItem().toString();
         String estado_civil = EstadoCivil.getSelectedItem().toString();
 
-        String experiencia = Experiencia.getText();
-        String fecha_ini1 = ExperienciaFechaInicio.getText();
-        String fecha_fin1 = ExperienciaFechaFin.getText();
-        String aptitudes = Aptitudes.getText();
         try {
             CandidatoController candidatoController = new CandidatoController();
             Candidato candidato = new Candidato();
@@ -875,7 +873,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             candidato.setSexo(género);
             candidato.setEstadoCivil(estado_civil);
 
-            candidato.setAptitudes(aptitudes);
 
             candidatoController.registrarCandidato(candidato);
             System.out.println("Candidato creado exitosamente.");
@@ -917,7 +914,33 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarEstudioAcademicoActionPerformed
 
     private void AgregarExperienciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarExperienciaActionPerformed
-        // TODO add your handling code here:
+        String titulo = Experiencia.getText();
+        String empresa = txtEmpresa.getText();
+        String fecha_ini = ExperienciaFechaInicio.getText();
+        String fecha_fin = ExperienciaFechaFin.getText();
+        String descripcion = txtDescripcionEL.getText();
+        
+        ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
+        experienciaLaboral.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
+        experienciaLaboral.setTitulo(titulo);
+        experienciaLaboral.setEmpresa(empresa);
+        experienciaLaboral.setFechaInicio(fecha_ini);
+        experienciaLaboral.setFechaFin(fecha_fin);
+        experienciaLaboral.setDescripcion(descripcion);
+        
+        ResponseService<Boolean> response = candidatoController.registrarExperienciaLaboral(experienciaLaboral);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+        
+        if (response.isSuccess()) {
+            util.alertMessage(response.getMessage());
+            listarExperienciaLaboral();
+        } else {
+            util.alertMessage("Error al registrar", true);
+        }
+             
+                
     }//GEN-LAST:event_AgregarExperienciaActionPerformed
 
     private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
@@ -927,6 +950,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private void ExperienciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExperienciaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ExperienciaActionPerformed
+
+    private void AgregarAptitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarAptitudActionPerformed
+    
+    }//GEN-LAST:event_AgregarAptitudActionPerformed
 
     /**
      * @param args the command line arguments
@@ -987,8 +1014,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JButton QuitarCurriculum;
     private javax.swing.JButton QuitarEstudios;
     private javax.swing.JButton QuitarExperiencia;
-    private javax.swing.JTable TablaAptitudes;
-    private javax.swing.JTable TablaCertificados;
     private javax.swing.JTable TablaExperiencia;
     private javax.swing.JButton btnRegistrarEstudioAcademico;
     private javax.swing.JButton jButton10;
@@ -1025,25 +1050,25 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable3;
     private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tblListaEstudiosAcademicos;
     private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextArea txtAreaAptitudes;
     private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtDescripcionEL;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
