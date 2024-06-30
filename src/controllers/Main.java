@@ -28,7 +28,7 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
-        testViewLogin();
+        //testViewLogin();
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
         //testLogin("alex.quispe@gmail.com", "candidato2024");
         //testLogout();
@@ -44,7 +44,7 @@ public class Main {
         //testRegistrarUsuario();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
-        //testReporte();
+        testReporte();
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
         //testRegistrarFeedbackPersonalizado();
@@ -328,7 +328,7 @@ public class Main {
 
     public static void testReporte() throws IOException {
         try {
-            ReporteService.ReporteEdad();
+            ReporteService.ReporteExperienciasLaborales();
         } catch (IOException e) {
             e.printStackTrace();
         }
