@@ -3,11 +3,9 @@ package controllers;
 import core.services.ResponseService;
 import java.util.List;
 import models.Candidato;
-import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
 import services.CandidatoService;
-import services.EmpleoService;
 import services.EstudioAcademicoService;
 import services.ExperienciaLaboralService;
 
@@ -81,6 +79,18 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
         response.setSuccess(true);
         response.setMessage("listado de experiencias laborales");
         response.setResult(resultado);
+
+        return response;
+    }
+    
+    public ResponseService<Boolean> actualizarCandidato(Candidato candidato, String columna) {
+        ResponseService<Boolean> response = new ResponseService<>();
+
+        boolean success = candidatoService.actualizarCandidato(candidato, columna);
+
+        response.setSuccess(success);
+        response.setMessage("candidato actualizado correctamente");
+        response.setResult(null);
 
         return response;
     }

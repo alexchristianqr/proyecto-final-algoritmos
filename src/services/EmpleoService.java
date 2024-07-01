@@ -38,7 +38,7 @@ public class EmpleoService extends BaseService {
         try {
             Object[] parametrosSQL_1 = new Object[1];
 
-            querySQL_1 = "SELECT e.titulo, e.empresa, e.sueldo, e.modalidad, e.estado, COUNT(po.id) AS 'total_candidatos_postulados', e.fecha_creado, e.fecha_actualizado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador JOIN personas pe ON pe.id = r.id_persona LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado') WHERE e.id_reclutador = ? GROUP BY e.id;";
+            querySQL_1 = "SELECT e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.estado, COUNT(po.id) AS 'total_candidatos_postulados', e.fecha_creado, e.fecha_actualizado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador JOIN personas pe ON pe.id = r.id_persona LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado') WHERE e.id_reclutador = ? GROUP BY e.id;";
             parametrosSQL_1[0] = empleo.getIdReclutador();
 
             ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
@@ -52,10 +52,11 @@ public class EmpleoService extends BaseService {
                 data[1] = rs.getString("empresa");
                 data[2] = rs.getString("sueldo");
                 data[3] = rs.getString("modalidad");
-                data[4] = rs.getString("estado");
-                data[5] = rs.getInt("total_candidatos_postulados");
-                data[6] = rs.getString("fecha_creado");
-                data[7] = rs.getString("fecha_actualizado");
+                data[4] = rs.getString("descripcion");
+                data[5] = rs.getString("estado");
+                data[6] = rs.getInt("total_candidatos_postulados");
+                data[7] = rs.getString("fecha_creado");
+                data[8] = rs.getString("fecha_actualizado");
 
                 lista.add(data);
             }
