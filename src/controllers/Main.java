@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import models.Candidato;
 import models.Empleo;
+import models.Archivo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
 import models.FeedbackInfo;
@@ -41,6 +42,7 @@ public class Main {
         //testRegistrarCandidato();
         //testRegistrarReclutador();
         //testRegistrarEmpleo();
+        testSubirArchivo();
         //testRegistrarUsuario();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
@@ -201,6 +203,27 @@ public class Main {
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Resultado: " + response.getResult());
     }
+    
+        public static void testSubirArchivo() {
+        ArchivoController archivoController = new ArchivoController();
+        Archivo archivo = new Archivo();
+        
+        archivo.setIdCandidato(1); // Aquí debera pasar el ID del candidato que está logueado.
+        archivo.setNombre("cv.pdf");
+        archivo.setPath("/path/to/cv.pdf");
+        archivo.setTipo("cv");
+        archivo.setFechaSubida("2024-06-29 12:00:00");
+
+        archivoController.subirArchivo(archivo);
+
+        List<Archivo> archivos = archivoController.obtenerArchivosPorCandidato(1);
+        for (Archivo arch : archivos) {
+            System.out.println("Nombre: " + arch.getNombre());
+            System.out.println("Path: " + arch.getPath());
+            System.out.println("Tipo: " + arch.getTipo());
+            System.out.println("Fecha Subida: " + arch.getFechaSubida());
+        }
+    }
 
 
     /* RECLUTADOR */
@@ -330,7 +353,6 @@ public class Main {
         try {
             ReporteService.ReporteEdad();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
