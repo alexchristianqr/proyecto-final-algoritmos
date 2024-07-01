@@ -1,5 +1,6 @@
 package views;
 
+import controllers.EmpleoController;
 import controllers.ReclutadorController;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
@@ -14,12 +15,13 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
     Util util = new Util();
     Login login = new Login();
+    EmpleoController empleoController = new EmpleoController();
     ReclutadorController reclutadorController = new ReclutadorController();
 
     public ViewMenuReclutador() {
         initComponents();
         mostrarDatosBasicos();
-        //listarEmpleo();
+        listarEmpleos();
     }
 
     public void mostrarDatosBasicos() {
@@ -28,12 +30,12 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         txtApellidos.setText(UsuarioThreadLocal.get().getApellidos());
         txtEmail.setText(UsuarioThreadLocal.get().getUsername());
     }
-    
-    final public void listarEmpleo() {
+
+    final public void listarEmpleos() {
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
 
-        final ResponseService<List<Object[]>> response = reclutadorController.listarEmpleo(empleo);
+        final ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo);
 
         if (response.isSuccess()) {
             List<Object[]> items = response.getResult();
@@ -80,18 +82,18 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         txtTitulo = new javax.swing.JTextField();
         txtEmpresa = new javax.swing.JTextField();
         txtSueldo = new javax.swing.JTextField();
-        txtModalidad = new javax.swing.JTextField();
         btnCrearEmpleo = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
+        cbxModalidad = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblListaEmpleo = new javax.swing.JTable();
         jTextField10 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        txtEmpleoDescripcion = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -137,31 +139,30 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(154, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel10)
-                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel9)
-                                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel8)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel10)
+                        .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel9)
+                                .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnGuardarReclutador)
-                        .addGap(267, 267, 267))))
+                        .addGap(252, 252, 252)))
+                .addGap(128, 128, 128))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +189,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                 .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(btnGuardarReclutador)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mis Datos", jPanel1);
@@ -209,8 +210,6 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
         txtSueldo.setBackground(new java.awt.Color(229, 229, 229));
 
-        txtModalidad.setBackground(new java.awt.Color(229, 229, 229));
-
         btnCrearEmpleo.setBackground(new java.awt.Color(102, 102, 102));
         btnCrearEmpleo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCrearEmpleo.setForeground(new java.awt.Color(255, 255, 255));
@@ -228,38 +227,39 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
 
+        cbxModalidad.setBackground(new java.awt.Color(226, 226, 226));
+        cbxModalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "presencial", "remoto" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(164, 164, 164)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(63, 63, 63)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtEmpresa)
-                                    .addComponent(txtSueldo)
-                                    .addComponent(txtModalidad, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
-                                    .addComponent(txtTitulo)))
-                            .addComponent(jLabel5)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(63, 63, 63)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtEmpresa)
+                            .addComponent(txtSueldo)
+                            .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+                            .addComponent(cbxModalidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(300, 300, 300)
+                        .addGap(234, 234, 234)
                         .addComponent(btnCrearEmpleo)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(47, 47, 47)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -274,7 +274,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtModalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxModalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jLabel5)
                 .addGap(27, 27, 27)
@@ -291,15 +291,20 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         tblListaEmpleo.setBackground(new java.awt.Color(229, 229, 229));
         tblListaEmpleo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"a", null, null, null, null},
-                {"b", null, null, null, null},
-                {"c", null, null, null, null},
-                {"d", null, null, null, null}
+                {"a", null, null, null, null, null, null, null, null},
+                {"b", null, null, null, null, null, null, null, null},
+                {"c", null, null, null, null, null, null, null, null},
+                {"d", null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Título", "Empresa", "Sueldo", "Modalidad", "Estado"
+                "Título", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Candidatos", "Creado", "Actualizado"
             }
         ));
+        tblListaEmpleo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblListaEmpleoMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblListaEmpleo);
 
         jTextField10.setBackground(new java.awt.Color(229, 229, 229));
@@ -309,9 +314,10 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("BUSCAR");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
+        txtEmpleoDescripcion.setBackground(new java.awt.Color(226, 226, 226));
+        txtEmpleoDescripcion.setColumns(20);
+        txtEmpleoDescripcion.setRows(5);
+        jScrollPane3.setViewportView(txtEmpleoDescripcion);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -319,14 +325,14 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton3))
-                    .addComponent(jScrollPane3))
-                .addContainerGap(54, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,7 +345,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mis Empleos", jPanel4);
@@ -350,11 +356,11 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 645, Short.MAX_VALUE)
+            .addGap(0, 894, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 565, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Reportes", jPanel3);
@@ -377,14 +383,15 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addComponent(jTabbedPane1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -421,33 +428,51 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarReclutadorActionPerformed
 
     private void btnCrearEmpleoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearEmpleoActionPerformed
-    String titulo = txtTitulo.getText();
-    String empresa = txtEmpresa.getText();
-    String sueldo = txtSueldo.getText();
-    String modalidad = txtModalidad.getText();
-    String descripcion = txtDescripcion.getText();
-    
-    Empleo empleo = new Empleo();
-    empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
-    empleo.setTitulo(titulo);
-    empleo.setEmpresa(empresa);
-    empleo.setSueldo(sueldo);
-    empleo.setModalidad(modalidad);
-    empleo.setDescripcion(descripcion);
-    
-    ResponseService<Boolean> response = reclutadorController.registrarEmpleo(empleo);
+        String titulo = txtTitulo.getText();
+        String empresa = txtEmpresa.getText();
+        String sueldo = txtSueldo.getText();
+        String modalidad = cbxModalidad.getSelectedItem().toString();
+        String descripcion = txtDescripcion.getText();
+
+        Empleo empleo = new Empleo();
+        empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
+        empleo.setTitulo(titulo);
+        empleo.setEmpresa(empresa);
+        empleo.setSueldo(sueldo);
+        empleo.setModalidad(modalidad);
+        empleo.setDescripcion(descripcion);
+
+        ResponseService<Boolean> response = empleoController.registrarEmpleo(empleo);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
-        
+
         if (response.isSuccess()) {
             util.alertMessage(response.getMessage());
-            listarEmpleo();
+            listarEmpleos();
         } else {
             util.alertMessage("Error al registrar", true);
         }
-    
+
     }//GEN-LAST:event_btnCrearEmpleoActionPerformed
+
+    private void tblListaEmpleoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaEmpleoMouseClicked
+        System.out.println("clickeando");
+
+        int fila = tblListaEmpleo.getSelectedRow();
+        System.out.println("La fila es: " + fila);
+
+        if (fila != -1) { // Verifica que se haya seleccionado una fila
+            // Supongamos que deseas obtener el valor de la primera columna (índice 0)
+            Object descripcion = tblListaEmpleo.getValueAt(fila, 4);
+            if (descripcion != null) {
+                txtEmpleoDescripcion.setText(descripcion.toString());
+            } else {
+                txtEmpleoDescripcion.setText("Descripción no disponible");
+            }
+        }
+
+    }//GEN-LAST:event_tblListaEmpleoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -488,6 +513,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearEmpleo;
     private javax.swing.JButton btnGuardarReclutador;
+    private javax.swing.JComboBox<String> cbxModalidad;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -510,7 +536,6 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTable tblListaEmpleo;
     private javax.swing.JTextField txtApellidos;
@@ -518,8 +543,8 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextArea txtEmpleoDescripcion;
     private javax.swing.JTextField txtEmpresa;
-    private javax.swing.JTextField txtModalidad;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtSueldo;
     private javax.swing.JTextField txtTitulo;
