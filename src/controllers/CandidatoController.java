@@ -3,9 +3,11 @@ package controllers;
 import core.services.ResponseService;
 import java.util.List;
 import models.Candidato;
+import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
 import services.CandidatoService;
+import services.EmpleoService;
 import services.EstudioAcademicoService;
 import services.ExperienciaLaboralService;
 

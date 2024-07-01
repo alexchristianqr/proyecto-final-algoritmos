@@ -99,13 +99,14 @@ UPDATE postulaciones SET estado = 'cancelado' WHERE id = 1;
 UPDATE postulaciones SET estado = 'rechazado' WHERE id = 1;
 UPDATE postulaciones SET estado = 'bloqueado' WHERE id = 1;
 
--- -----------------
--- MIS PUBLICACIONES
--- -----------------
+-- -----------
+-- MIS EMPLEOS
+-- -----------
 SELECT * FROM postulaciones;
 SELECT * FROM candidatos;
 SELECT * FROM empleos e WHERE e.id_reclutador = 2;
 
+-- v1
 SELECT 
 e.id,
 e.id_reclutador,
@@ -114,8 +115,27 @@ e.titulo,
 e.empresa,
 e.sueldo,
 e.modalidad,
+e.estado,
 COUNT(po.id) AS 'total_candidatos_postulados',
 e.fecha_creado
+FROM empleos e
+JOIN reclutadores r ON r.id = e.id_reclutador
+JOIN personas pe ON pe.id = r.id_persona 
+LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado')
+WHERE e.id_reclutador = 1
+GROUP BY 
+e.id;
+
+-- v2
+SELECT 
+e.titulo, 
+e.empresa,
+e.sueldo,
+e.modalidad,
+e.estado,
+COUNT(po.id) AS 'total_candidatos_postulados',
+e.fecha_creado,
+e.fecha_actualizado
 FROM empleos e
 JOIN reclutadores r ON r.id = e.id_reclutador
 JOIN personas pe ON pe.id = r.id_persona 
