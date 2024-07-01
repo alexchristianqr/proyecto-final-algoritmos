@@ -12,8 +12,8 @@ public class EmpleoController extends BaseController<Empleo, EmpleoService> {
         service = new EmpleoService();
     }
 
-    public ResponseService<String> registrarEmpleo(Empleo empleo) {
-        ResponseService<String> response = new ResponseService<>();
+    public ResponseService<Boolean> registrarEmpleo(Empleo empleo) {
+        ResponseService<Boolean> response = new ResponseService<>();
 
         boolean success = service.registrarEmpleo(empleo);
 

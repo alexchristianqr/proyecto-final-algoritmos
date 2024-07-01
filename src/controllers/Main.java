@@ -86,7 +86,7 @@ public class Main {
         usuario.setPassword("reclutador2024");
         usuario.setRol("reclutador");
 
-        ResponseService<String> response = usuarioController.registrarUsuario(usuario);
+        ResponseService<Boolean> response = usuarioController.registrarUsuario(usuario);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -205,7 +205,7 @@ public class Main {
         empleo.setDescripcion("Responsable del desarrollo de aplicaciones Java");
         empleo.setEstado("activo");
 
-        ResponseService<String> response = empleoController.registrarEmpleo(empleo);
+        ResponseService<Boolean> response = empleoController.registrarEmpleo(empleo);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());

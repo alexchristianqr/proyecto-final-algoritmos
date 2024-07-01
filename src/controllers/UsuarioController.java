@@ -27,8 +27,8 @@ public class UsuarioController extends BaseController<Usuario, UsuarioService> {
         return response;
     }
 
-    public ResponseService<String> registrarUsuario(Usuario usuario) {
-        ResponseService<String> response = new ResponseService<>();
+    public ResponseService<Boolean> registrarUsuario(Usuario usuario) {
+        ResponseService<Boolean> response = new ResponseService<>();
         boolean success = usuarioService.registrarUsuario(usuario);
 
         response.setSuccess(success);
