@@ -28,14 +28,14 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
-        testViewLogin();
+        //testViewLogin();
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
         //testLogin("alex.quispe@gmail.com", "candidato2024");
         //testLogout();
         //testListarPostulaciones();
         //testActualizarPostulacion();
         //testRegistrarPostulacion();
-        //testListarEmpleos();
+        testListarEmpleos();
         //testReporteUsuarios();
         //testRegistrarUsuario();
         //testRegistrarCandidato();
@@ -173,14 +173,15 @@ public class Main {
 
     /* EMPLEOS */
     public static void testListarEmpleos() {
-
-        // INICIO DE SESION DE USUARIO RECLUTADOR
-        testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
-
         EmpleoController empleoController = new EmpleoController();
+        
+        Empleo empleo = new Empleo();
+        empleo.setIdReclutador(2); // Asume un ID de reclutador, ajustar según sea necesario
 
-        // MOSTRAR EMPLEOS
-        empleoController.listarPublicaciones();
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
     }
 
     public static void testRegistrarEmpleo() {
@@ -197,8 +198,8 @@ public class Main {
         empleo.setEstado("activo");
 
         ResponseService<String> response = empleoController.registrarEmpleo(empleo);
-
         System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
 
@@ -269,7 +270,7 @@ public class Main {
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-    
+
     public static void testListarEstudiosAcademicos() {
         CandidatoController candidatoController = new CandidatoController();
 
@@ -299,7 +300,7 @@ public class Main {
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-    
+
     public static void testListarExperienciasLaborales() {
         CandidatoController candidatoController = new CandidatoController();
 

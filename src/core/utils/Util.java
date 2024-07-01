@@ -52,7 +52,7 @@ public class Util {
         viewComponent.setLocation(x, y);
     }
 
-    // Imprimir tabla en terminal
+// Imprimir tabla en terminal
     public void imprimirTabla(String[] encabezados, Object[][] data) {
         int[] columnWidths = new int[encabezados.length];
 
@@ -60,7 +60,9 @@ public class Util {
         for (int i = 0; i < encabezados.length; i++) {
             columnWidths[i] = encabezados[i].length();
             for (Object[] row : data) {
-                columnWidths[i] = Math.max(columnWidths[i], row[i].toString().length());
+                if (row[i] != null) {
+                    columnWidths[i] = Math.max(columnWidths[i], row[i].toString().length());
+                }
             }
         }
 
@@ -89,7 +91,7 @@ public class Util {
     private void imprimirFila(Object[] row, int[] columnWidths, boolean isHeader) {
         for (int i = 0; i < row.length; i++) {
             System.out.print("| ");
-            String cellContent = row[i].toString();
+            String cellContent = (row[i] != null) ? row[i].toString() : ""; // Manejar valores nulos
             if (isHeader) {
                 cellContent = cellContent.toUpperCase(); // Convertir a mayúsculas
                 System.out.print(ANSI_BOLD + cellContent + ANSI_RESET);

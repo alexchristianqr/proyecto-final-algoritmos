@@ -15,7 +15,7 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
 
     private final CandidatoService candidatoService;
     private final EstudioAcademicoService estudioAcademicoService;
-    private final ExperienciaLaboralService experienciaLaboralService; 
+    private final ExperienciaLaboralService experienciaLaboralService;
 
     public CandidatoController() {
         candidatoService = new CandidatoService();
@@ -58,9 +58,6 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
 
         return response;
     }
-    
-    
-    
 
     public ResponseService<List<Object[]>> listarEstudiosAcademicos(EstudioAcademico estudioAcademico) {
         ResponseService<List<Object[]>> response = new ResponseService<>();

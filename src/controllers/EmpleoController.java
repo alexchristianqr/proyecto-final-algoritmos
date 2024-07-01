@@ -15,7 +15,7 @@ public class EmpleoController extends BaseController<Empleo, EmpleoService> {
     public ResponseService<String> registrarEmpleo(Empleo empleo) {
         ResponseService<String> response = new ResponseService<>();
 
-        boolean success = service.crearEmpleo(empleo);
+        boolean success = service.registrarEmpleo(empleo);
 
         response.setSuccess(success);
         response.setResult("empleo registrado exitosamente");
@@ -23,11 +23,11 @@ public class EmpleoController extends BaseController<Empleo, EmpleoService> {
         return response;
     }
 
-    public ResponseService<List<Object[]>> listarPublicaciones() {
+    public ResponseService<List<Object[]>> listarEmpleos(Empleo empleo) {
         ResponseService<List<Object[]>> response = new ResponseService<>();
 
-        String[] columnNames = {"Codigo", "Reclutador", "Titulo", "Empresa", "Sueldo", "Modalidad", "Total Postulados", "Fecha creado"};
-        List<Object[]> resultado = service.listarEmpleosPorReclutador(columnNames);
+        String[] columnNames = {"Titulo", "Empresa", "Sueldo", "Modalidad", "Estado", "Total Postulados", "Fecha Creado", "Fecha Actualizado"};
+        List<Object[]> resultado = service.listarEmpleos(columnNames, empleo);
 
         response.setSuccess(true);
         response.setMessage("listado de postulaciones");
