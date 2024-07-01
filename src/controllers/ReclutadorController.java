@@ -29,7 +29,7 @@ public class ReclutadorController extends BaseController<Reclutador, ReclutadorS
     public ResponseService<Boolean> registrarEmpleo(Empleo empleo) {
         ResponseService<Boolean> response = new ResponseService<>();
 
-        boolean success = empleoService.crearEmpleo(empleo);
+        boolean success = empleoService.registrarEmpleo(empleo);
 
         response.setSuccess(success);
         response.setMessage("empleo registrado correctamente");
