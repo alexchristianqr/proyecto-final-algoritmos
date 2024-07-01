@@ -681,12 +681,12 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jTable1.setBackground(new java.awt.Color(229, 229, 229));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"a", null, null},
-                {"b", null, null},
-                {"c", null, null}
+                {"a", null, null, null, null, null},
+                {"b", null, null, null, null, null},
+                {"c", null, null, null, null, null}
             },
             new String [] {
-                "Título", "Estado", "Feedback"
+                "Título", "Empresa", "Sueldo", "Modalidad", "Estado", "Feedback"
             }
         ));
         jScrollPane4.setViewportView(jTable1);

@@ -28,6 +28,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         txtUsername.setText("alex.quispe@gmail.com");
         txtPwd.setText("candidato2024");
+        
     }
 
     private char[] pwdToArray(String pwd) {
@@ -184,7 +185,7 @@ public class Login extends javax.swing.JFrame {
             System.out.println("Success: " + response.isSuccess());
 
             if (response.isSuccess()) {
-                Usuario usuario = response.getResult();
+                Usuario usuario = UsuarioThreadLocal.get();
                 String userRole = usuario.getRol(); // Obtener el rol del usuario
                 System.out.println("Tipo de usuario: " + userRole);
 
@@ -201,7 +202,7 @@ public class Login extends javax.swing.JFrame {
                 }
 
                 // Guardar el usuario en el ThreadLocal
-                UsuarioThreadLocal.set(usuario);
+                //UsuarioThreadLocal.set(usuario);
 
             } else {
                 util.alertMessage("Usuario o contraseña inválida. Inténtalo nuevamente.");
@@ -211,9 +212,11 @@ public class Login extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             util.alertMessage("Ocurrió un error. Por favor, inténtalo nuevamente.");
+            
             btnLogin.setEnabled(true);
             txtPwd.setText("");
             txtPwd.requestFocus();
+            throw new RuntimeException(ex);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 

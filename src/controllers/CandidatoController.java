@@ -3,9 +3,11 @@ package controllers;
 import core.services.ResponseService;
 import java.util.List;
 import models.Candidato;
+import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
 import services.CandidatoService;
+import services.EmpleoService;
 import services.EstudioAcademicoService;
 import services.ExperienciaLaboralService;
 
@@ -13,7 +15,7 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
 
     private final CandidatoService candidatoService;
     private final EstudioAcademicoService estudioAcademicoService;
-    private final ExperienciaLaboralService experienciaLaboralService;
+    private final ExperienciaLaboralService experienciaLaboralService; 
 
     public CandidatoController() {
         candidatoService = new CandidatoService();
@@ -56,6 +58,9 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
 
         return response;
     }
+    
+    
+    
 
     public ResponseService<List<Object[]>> listarEstudiosAcademicos(EstudioAcademico estudioAcademico) {
         ResponseService<List<Object[]>> response = new ResponseService<>();
