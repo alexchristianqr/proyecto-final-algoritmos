@@ -29,6 +29,12 @@ WHERE u.username = 'maria.gonzales@utp.edu.pe' AND u.pwd = 'reclutador2024' AND 
 -- actualizar
 UPDATE usuarios SET usuarios.pwd = 'candidato2024v2' WHERE usuarios.id = 1 AND usuarios.username = 'alex.quispe@gmail.com';
 
+-- ---------
+-- CANDIDATO
+-- ---------
+
+UPDATE candidatos c SET c.path_curriculum_vitae = ? WHERE c.id = ? AND c.estado IN ('activo');
+
 -- -------------------
 -- ESTUDIOS ACADEMICOS
 -- -------------------
@@ -258,3 +264,26 @@ WHERE e.id = 1 AND p.estado = 'postulado';
 -- TRANSACCIONES
 SHOW FULL PROCESSLIST;
 SELECT COUNT(*) FROM information_schema.innodb_trx;
+
+
+-- ------------------------------
+-- LISTAR EMPLEOS PARA CANDIDATOS
+-- ------------------------------
+ SELECT
+  e.id AS 'codigo',
+  e.titulo,
+  e.empresa,
+  e.sueldo,
+  e.modalidad,
+  e.descripcion,
+  e.fecha_creado
+FROM
+  empleos e
+  JOIN reclutadores r
+    ON r.id = e.id_reclutador
+    AND e.estado = 'disponible'
+  JOIN personas pe
+    ON pe.id = r.id_persona
+WHERE e.id_reclutador = 1
+ORDER BY e.id DESC;
+

@@ -58,6 +58,7 @@ public class Main {
         /* EMPLEO */
         //testRegistrarEmpleo();
         //testListarEmpleos();
+        testListarEmpleosCandidatos();
         /* USUARIO */
         //testRegistrarUsuario();
         /* REPORTES */
@@ -192,6 +193,15 @@ public class Main {
         empleo.setIdReclutador(2); // Asume un ID de reclutador, ajustar según sea necesario
 
         ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testListarEmpleosCandidatos() {
+        EmpleoController empleoController = new EmpleoController();
+
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());

@@ -212,7 +212,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                                     usuario.setPassword(contraseña);
                                     usuario.setRol(cuenta);
 
-                                    ResponseService<String> response = usuarioController.registrarUsuario(usuario);
+                                    ResponseService<Boolean> response = usuarioController.registrarUsuario(usuario);
 
                                     if (response.isSuccess()) {
                                         JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
