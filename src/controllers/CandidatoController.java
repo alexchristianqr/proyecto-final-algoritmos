@@ -69,4 +69,19 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
 
         return response;
     }
+      
+    public ResponseService<Boolean> cargarPDF(int candidatoId, String filePath) {
+        ResponseService<Boolean> response = new ResponseService<>();
+
+        try {
+            candidatoService.cargarPDF(candidatoId, filePath);
+            response.setSuccess(true);
+            response.setMessage("PDF cargado exitosamente.");
+        } catch (RuntimeException e) {
+            response.setSuccess(false);
+            response.setMessage("Error al cargar el PDF: " + e.getMessage());
+        }
+
+        return response;
+    }
 }

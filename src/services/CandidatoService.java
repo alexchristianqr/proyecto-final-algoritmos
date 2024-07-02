@@ -111,4 +111,22 @@ public class CandidatoService extends BaseService {
 
         return candidatos;
     }
+    
+     public void cargarPDF(int candidatoId, String filePath) {
+        String query = "UPDATE candidatos SET path_curriculum_vitae = ? WHERE id= ?";
+        Object[] parametros = {filePath, candidatoId};
+
+        try {
+            int filasAfectadas = db.queryActualizar(query, parametros);
+            if (filasAfectadas == 0) {
+                throw new RuntimeException("No se encontró el candidato con el ID especificado.");
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error al actualizar el path del PDF: " + e.getMessage(), e);
+        } finally {
+            db.cerrarConsulta();
+        }
+    
+    
+}
 }
