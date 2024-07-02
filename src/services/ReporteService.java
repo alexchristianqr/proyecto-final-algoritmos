@@ -1,15 +1,15 @@
-
 package services;
 
 import core.services.ExportService;
 import core.services.MysqlDBService;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.concurrent.ExecutionException;
 
-public class ReporteService {
-    
-     public static void ReporteUsuarios() throws IOException {
+public class ReporteService extends BaseService {
+
+    public ReporteService() {
+        db = new MysqlDBService();
+    }
+
+    /*public static void ReporteUsuarios() throws IOException {
         try {
             String sql = "select * from usuarios";
 
@@ -20,9 +20,25 @@ public class ReporteService {
 
         } catch (InterruptedException | SQLException | ExecutionException e) {
         }
+    }*/
+    public boolean reporteUsuarios() {
+        boolean success = false;
+
+        try {
+            String sql = "select * from usuarios";
+
+            MysqlDBService db = new MysqlDBService();
+            db.stmt = db.conn.prepareStatement(sql);
+
+            ExportService.exportToExcel(db.stmt, "reporte_de_usuarios_01");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return success;
     }
-     
-    public static void ReportePersonas() throws IOException {
+
+    /*public static void ReportePersonas() throws IOException {
         try {
             String sql = "select * from personas";
 
@@ -33,9 +49,25 @@ public class ReporteService {
 
         } catch (InterruptedException | SQLException | ExecutionException e) {
         }
+    }*/
+    public boolean reportePersonas() {
+        boolean success = false;
+
+        try {
+            String sql = "select * from personas";
+
+            MysqlDBService db = new MysqlDBService();
+            db.stmt = db.conn.prepareStatement(sql);
+
+            ExportService.exportToExcel(db.stmt, "reporte_de_personas_01");
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return success;
     }
-    
-    public static void ReporteEdad() throws IOException {
+
+    /*public static void ReporteEdad() throws IOException {
         try {
             String sql = "SELECT nombre, apellido, sexo, edad FROM personas";
 
@@ -46,9 +78,25 @@ public class ReporteService {
 
         } catch (InterruptedException | SQLException | ExecutionException e) {
         }
+    }*/
+    public boolean reporteEdad() {
+        boolean success = false;
+
+        try {
+            String sql = "SELECT nombre, apellido, sexo, edad FROM personas";
+
+            MysqlDBService db = new MysqlDBService();
+            db.stmt = db.conn.prepareStatement(sql);
+
+            ExportService.exportToExcel(db.stmt, "reporte_de_Edad_01");
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return success;
     }
     
-    public static void ReporteAptitudes() throws IOException {
+    /*public static void ReporteAptitudes() throws IOException {
         try {
             String sql = "SELECT aptitudes FROM candidatos";
 
@@ -59,9 +107,25 @@ public class ReporteService {
 
         } catch (InterruptedException | SQLException | ExecutionException e) {
         }
+    }*/
+    public boolean reporteAptitudes() {
+        boolean success = false;
+
+        try {
+            String sql = "SELECT aptitudes FROM candidatos";
+
+            MysqlDBService db = new MysqlDBService();
+            db.stmt = db.conn.prepareStatement(sql);
+
+            ExportService.exportToExcel(db.stmt, "reporte_de_Aptitudes_01");
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return success;
     }
-    
-    public static void ReporteExperiencias() throws IOException {
+
+    /*public static void ReporteExperiencias() throws IOException {
         try {
             String sql = "SELECT * FROM EXPERIENCIAS_LABORALES";
 
@@ -72,9 +136,25 @@ public class ReporteService {
 
         } catch (InterruptedException | SQLException | ExecutionException e) {
         }
+    }*/
+    public boolean reporteExperiencias() {
+        boolean success = false;
+
+        try {
+            String sql = "SELECT * FROM EXPERIENCIAS_LABORALES";
+
+            MysqlDBService db = new MysqlDBService();
+            db.stmt = db.conn.prepareStatement(sql);
+
+            ExportService.exportToExcel(db.stmt, "reporte_de_Experiencias-Laborales_01");
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return success;
     }
-    
-    public static void ReporteReclutadores() throws IOException {
+
+    /*public static void ReporteReclutadores() throws IOException {
         try {
             String sql = "SELECT p.nombre,p.apellido,r.estado\n" +
                          "FROM reclutadores r\n" +
@@ -87,6 +167,22 @@ public class ReporteService {
 
         } catch (InterruptedException | SQLException | ExecutionException e) {
         }
+    }*/
+    public boolean reporteReclutadores() {
+        boolean success = false;
+
+        try {
+            String sql = "select * from reclutadores";
+
+            MysqlDBService db = new MysqlDBService();
+            db.stmt = db.conn.prepareStatement(sql);
+
+            ExportService.exportToExcel(db.stmt, "reporte_de_Reclutadores_01");
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return success;
     }
     
     public static void ReporteBloqueados() throws IOException {
