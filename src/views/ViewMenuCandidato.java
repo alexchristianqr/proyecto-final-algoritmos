@@ -764,7 +764,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             new String [] {
                 "Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Fecha Creado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblEmpleos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblEmpleosMouseClicked(evt);
