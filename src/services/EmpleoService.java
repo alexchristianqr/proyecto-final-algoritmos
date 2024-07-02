@@ -71,4 +71,42 @@ public class EmpleoService extends BaseService {
 
         return lista;
     }
+
+    public List listarEmpleosCandidatos(String[] columnNames) {
+
+        List<Object[]> lista = new ArrayList<>();
+
+        try {
+            Object[] parametrosSQL_1 = {};
+
+            querySQL_1 = "SELECT e.id AS 'codigo', e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.fecha_creado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador AND e.estado = 'disponible' JOIN personas pe ON pe.id = r.id_persona ORDER BY e.id DESC;";
+
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+
+            System.out.println("\n");
+
+            while (rs.next()) {
+                Object[] data = new Object[columnNames.length];
+
+                data[0] = rs.getString("codigo");
+                data[1] = rs.getString("titulo");
+                data[2] = rs.getString("empresa");
+                data[3] = rs.getString("sueldo");
+                data[4] = rs.getString("modalidad");
+                data[5] = rs.getString("descripcion");
+                data[6] = rs.getString("fecha_creado");
+
+                lista.add(data);
+            }
+
+            util.imprimirTabla(columnNames, lista.toArray(Object[][]::new));
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            db.cerrarConsulta();
+        }
+
+        return lista;
+    }
 }

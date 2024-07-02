@@ -35,4 +35,17 @@ public class EmpleoController extends BaseController<Empleo, EmpleoService> {
 
         return response;
     }
+
+    public ResponseService<List<Object[]>> listarEmpleosCandidatos() {
+        ResponseService<List<Object[]>> response = new ResponseService<>();
+
+        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Fecha Creado"};
+        List<Object[]> resultado = service.listarEmpleosCandidatos(columnNames);
+
+        response.setSuccess(true);
+        response.setMessage("listar empleos para candidatos correctamente");
+        response.setResult(resultado);
+
+        return response;
+    }
 }
