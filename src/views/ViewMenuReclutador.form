@@ -487,20 +487,20 @@
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="9" rowCount="4">
-                        <Column editable="true" title="T&#xed;tulo" type="java.lang.Object">
+                        <Column editable="false" title="T&#xed;tulo" type="java.lang.Object">
                           <Data value=""/>
                           <Data value=""/>
                           <Data value=""/>
                           <Data value=""/>
                         </Column>
-                        <Column editable="true" title="Empresa" type="java.lang.Object"/>
-                        <Column editable="true" title="Sueldo" type="java.lang.Object"/>
-                        <Column editable="true" title="Modalidad" type="java.lang.Object"/>
-                        <Column editable="true" title="Descripcion" type="java.lang.Object"/>
-                        <Column editable="true" title="Estado" type="java.lang.Object"/>
-                        <Column editable="true" title="Candidatos" type="java.lang.Object"/>
-                        <Column editable="true" title="Creado" type="java.lang.Object"/>
-                        <Column editable="true" title="Actualizado" type="java.lang.Object"/>
+                        <Column editable="false" title="Empresa" type="java.lang.Object"/>
+                        <Column editable="false" title="Sueldo" type="java.lang.Object"/>
+                        <Column editable="false" title="Modalidad" type="java.lang.Object"/>
+                        <Column editable="false" title="Descripcion" type="java.lang.Object"/>
+                        <Column editable="false" title="Estado" type="java.lang.Object"/>
+                        <Column editable="false" title="Candidatos" type="java.lang.Object"/>
+                        <Column editable="false" title="Creado" type="java.lang.Object"/>
+                        <Column editable="false" title="Actualizado" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -553,11 +553,12 @@
                       </TableColumnModel>
                     </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                      <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
                     </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblListaEmpleoMouseClicked"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tblListaEmpleoKeyTyped"/>
                   </Events>
                 </Component>
               </SubComponents>
