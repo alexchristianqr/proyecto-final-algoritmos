@@ -42,11 +42,8 @@ public class Main {
         //testRegistrarCandidato();
         //testActualizarCandidato();
         //testRegistrarCandidato();
-<<<<<<< HEAD
         //testRegistrarReclutador();
-        testReporte();
-=======
->>>>>>> 37a19e8cf70674b8d78c2d995481e89162ff77d9
+        //testReporte();
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
         //testRegistrarFeedbackPersonalizado();
@@ -365,7 +362,7 @@ public class Main {
 
     public static void testReporte() throws IOException {
         try {
-            ReporteService.ReporteExperienciasLaborales();
+            ReporteService.ReporteBloqueados();
         } catch (IOException e) {
             e.printStackTrace();
         }
