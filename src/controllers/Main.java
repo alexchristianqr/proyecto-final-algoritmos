@@ -29,27 +29,40 @@ public class Main {
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) throws IOException {
         //testViewLogin();
+
+        /* AUTH */
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
         //testLogin("alex.quispe@gmail.com", "candidato2024");
         //testLogout();
+        /* POSTULACION */
         //testListarPostulaciones();
         //testActualizarPostulacion();
         //testRegistrarPostulacion();
-        testListarEmpleos();
-        //testReporteUsuarios();
-        //testRegistrarUsuario();
+        /* CANDIDATO */
         //testRegistrarCandidato();
-        //testRegistrarReclutador();
-        //testRegistrarEmpleo();
-        //testRegistrarUsuario();
+        //testActualizarCandidato();
         //testRegistrarCandidato();
+<<<<<<< HEAD
         //testRegistrarReclutador();
         testReporte();
+=======
+>>>>>>> 37a19e8cf70674b8d78c2d995481e89162ff77d9
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
         //testRegistrarFeedbackPersonalizado();
         //testListarEstudiosAcademicos();
         //testListarExperienciasLaborales();
+        /* RECLUTADOR */
+        //testRegistrarReclutador();
+        //testRegistrarReclutador();
+        /* EMPLEO */
+        //testRegistrarEmpleo();
+        //testListarEmpleos();
+        /* USUARIO */
+        //testRegistrarUsuario();
+        /* REPORTES */
+        //testReporteUsuarios();
+        //testReporte();
     }
 
     public static void testViewLogin() {
@@ -78,7 +91,7 @@ public class Main {
         usuario.setPassword("reclutador2024");
         usuario.setRol("reclutador");
 
-        ResponseService<String> response = usuarioController.registrarUsuario(usuario);
+        ResponseService<Boolean> response = usuarioController.registrarUsuario(usuario);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -174,7 +187,7 @@ public class Main {
     /* EMPLEOS */
     public static void testListarEmpleos() {
         EmpleoController empleoController = new EmpleoController();
-        
+
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(2); // Asume un ID de reclutador, ajustar según sea necesario
 
@@ -197,7 +210,7 @@ public class Main {
         empleo.setDescripcion("Responsable del desarrollo de aplicaciones Java");
         empleo.setEstado("activo");
 
-        ResponseService<String> response = empleoController.registrarEmpleo(empleo);
+        ResponseService<Boolean> response = empleoController.registrarEmpleo(empleo);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -248,6 +261,19 @@ public class Main {
         candidato.setPathAntecedentePolicial("antecedente_policial.pdf");
 
         ResponseService<Boolean> response = candidatoController.registrarCandidato(candidato);
+        System.out.println("success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testActualizarCandidato() {
+        CandidatoController candidatoController = new CandidatoController();
+
+        Candidato candidato = new Candidato();
+        candidato.setIdCandidato(1);
+        candidato.setPathCV("/cv.pdf");
+
+        ResponseService<Boolean> response = candidatoController.actualizarCandidato(candidato, "path_curriculum_vitae");
         System.out.println("success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());

@@ -111,4 +111,29 @@ public class CandidatoService extends BaseService {
 
         return candidatos;
     }
+
+    public boolean actualizarCandidato(Candidato candidato, String columna) {
+        boolean success = false;
+
+        try {
+            if (columna == null) {
+                util.alertMessage("El campo columna es necesario");
+            }
+
+            querySQL_1 = String.format("UPDATE candidatos c SET c.%s = ? WHERE c.id = ? AND c.estado IN ('activo');", columna);
+            Object[] parametrosSQL_1 = {candidato.getPathCV(), candidato.getIdCandidato()};
+
+            int actualizado = db.queryActualizar(querySQL_1, parametrosSQL_1);
+
+            if (actualizado > 0) {
+                db.cerrarConsulta();
+                success = true;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return success;
+    }
 }
