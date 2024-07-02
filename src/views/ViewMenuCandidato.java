@@ -1,6 +1,8 @@
 package views;
 
 import controllers.CandidatoController;
+import controllers.EmpleoController;
+import controllers.PostulacionController;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
@@ -8,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Candidato;
+import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
 
@@ -16,12 +19,14 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     Util util = new Util();
     Login login = new Login();
     CandidatoController candidatoController = new CandidatoController();
+    EmpleoController empleoController = new EmpleoController();
 
     public ViewMenuCandidato() {
         initComponents();
         mostrarDatosBasicos();
         listarEstudiosAcademicos();
         listarExperienciaLaboral();
+        listarEmpleosCandidatos();
     }
 
     final public void mostrarDatosBasicos() {
@@ -51,8 +56,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             util.alertMessage("Error al obtener estudios academicos", true);
         }
     }
-    
-        final public void listarExperienciaLaboral() {
+
+    final public void listarExperienciaLaboral() {
         ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
         experienciaLaboral.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
 
@@ -73,6 +78,25 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         }
     }
 
+    final public void listarEmpleosCandidatos() {
+
+        final ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos();
+
+        if (response.isSuccess()) {
+            List<Object[]> items = response.getResult();
+
+            DefaultTableModel modelo = (DefaultTableModel) tblEmpleos.getModel();
+            modelo.setRowCount(0);
+
+            // Agregar los datos al modelo
+            for (Object[] item : items) {
+                modelo.addRow(item);
+            }
+        } else {
+            util.alertMessage("Error al obtener empleos", true);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -149,14 +173,14 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jTextField13 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblMisPostulaciones = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jTextField15 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblEmpleos = new javax.swing.JTable();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
+        txtEmpleoDescripcion = new javax.swing.JTextArea();
         jButton10 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -678,18 +702,18 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
         jButton8.setText("BUSCAR");
 
-        jTable1.setBackground(new java.awt.Color(229, 229, 229));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblMisPostulaciones.setBackground(new java.awt.Color(229, 229, 229));
+        tblMisPostulaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"a", null, null, null, null, null},
-                {"b", null, null, null, null, null},
-                {"c", null, null, null, null, null}
+                {"", null, null, null, null, null},
+                {"", null, null, null, null, null},
+                {"", null, null, null, null, null}
             },
             new String [] {
                 "Título", "Empresa", "Sueldo", "Modalidad", "Estado", "Feedback"
             }
         ));
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(tblMisPostulaciones);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -713,8 +737,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8))
                 .addGap(37, 37, 37)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(450, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mis Postulaciones", jPanel2);
@@ -728,25 +752,38 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jButton9.setForeground(new java.awt.Color(255, 255, 255));
         jButton9.setText("BUSCAR");
 
-        jTable3.setBackground(new java.awt.Color(229, 229, 229));
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblEmpleos.setBackground(new java.awt.Color(229, 229, 229));
+        tblEmpleos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"a", null, null, null},
-                {"b", null, null, null},
-                {"c", null, null, null},
-                {"d", null, null, null},
-                {"e", null, null, null}
+                {null, "", null, null, null, null, null},
+                {null, "", null, null, null, null, null},
+                {null, "", null, null, null, null, null},
+                {null, "", null, null, null, null, null},
+                {null, "", null, null, null, null, null}
             },
             new String [] {
-                "Título", "Empresa", "Sueldo", "Modalidad"
+                "Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Fecha Creado"
             }
-        ));
-        jScrollPane5.setViewportView(jTable3);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
 
-        jTextArea4.setBackground(new java.awt.Color(229, 229, 229));
-        jTextArea4.setColumns(20);
-        jTextArea4.setRows(5);
-        jScrollPane7.setViewportView(jTextArea4);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblEmpleos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEmpleosMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tblEmpleos);
+
+        txtEmpleoDescripcion.setBackground(new java.awt.Color(229, 229, 229));
+        txtEmpleoDescripcion.setColumns(20);
+        txtEmpleoDescripcion.setRows(5);
+        jScrollPane7.setViewportView(txtEmpleoDescripcion);
 
         jButton10.setBackground(new java.awt.Color(102, 102, 102));
         jButton10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -769,7 +806,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(334, 334, 334)))
                 .addContainerGap(109, Short.MAX_VALUE))
@@ -873,7 +909,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             candidato.setSexo(género);
             candidato.setEstadoCivil(estado_civil);
 
-
             candidatoController.registrarCandidato(candidato);
             System.out.println("Candidato creado exitosamente.");
 
@@ -919,7 +954,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         String fecha_ini = ExperienciaFechaInicio.getText();
         String fecha_fin = ExperienciaFechaFin.getText();
         String descripcion = txtDescripcionEL.getText();
-        
+
         ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
         experienciaLaboral.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
         experienciaLaboral.setTitulo(titulo);
@@ -927,20 +962,20 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         experienciaLaboral.setFechaInicio(fecha_ini);
         experienciaLaboral.setFechaFin(fecha_fin);
         experienciaLaboral.setDescripcion(descripcion);
-        
+
         ResponseService<Boolean> response = candidatoController.registrarExperienciaLaboral(experienciaLaboral);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
-        
+
         if (response.isSuccess()) {
             util.alertMessage(response.getMessage());
             listarExperienciaLaboral();
         } else {
             util.alertMessage("Error al registrar", true);
         }
-             
-                
+
+
     }//GEN-LAST:event_AgregarExperienciaActionPerformed
 
     private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
@@ -952,8 +987,33 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     }//GEN-LAST:event_ExperienciaActionPerformed
 
     private void AgregarAptitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarAptitudActionPerformed
-    
+
     }//GEN-LAST:event_AgregarAptitudActionPerformed
+
+    private void tblEmpleosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEmpleosMouseClicked
+        System.out.println("clickeando");
+
+        int fila = tblEmpleos.getSelectedRow();
+        System.out.println("La fila es: " + fila);
+
+        if (fila != -1) {
+            Object titulo = tblEmpleos.getValueAt(fila, 1);
+            Object empresa = tblEmpleos.getValueAt(fila, 2);
+            Object sueldo = tblEmpleos.getValueAt(fila, 3);
+            Object modalidad = tblEmpleos.getValueAt(fila, 4);
+            Object descripcion = tblEmpleos.getValueAt(fila, 5);
+
+            StringBuilder descripcionCompleta = new StringBuilder();
+            descripcionCompleta.append("================== DESCRIPCIÓN DEL EMPLEO ==================\n\n");
+            descripcionCompleta.append("Titulo:  ").append(titulo != null ? titulo.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Empresa:  ").append(empresa != null ? empresa.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Sueldo:  ").append(sueldo != null ? sueldo.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Modalidad:  ").append(modalidad != null ? modalidad.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
+
+            txtEmpleoDescripcion.setText(descripcionCompleta.toString());
+        }
+    }//GEN-LAST:event_tblEmpleosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1057,17 +1117,17 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField15;
+    private javax.swing.JTable tblEmpleos;
     private javax.swing.JTable tblListaEstudiosAcademicos;
+    private javax.swing.JTable tblMisPostulaciones;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextArea txtAreaAptitudes;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtDescripcionEL;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextArea txtEmpleoDescripcion;
     private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtTitulo;
