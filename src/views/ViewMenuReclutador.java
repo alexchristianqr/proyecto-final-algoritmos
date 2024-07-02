@@ -303,10 +303,25 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
             new String [] {
                 "Título", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Candidatos", "Creado", "Actualizado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblListaEmpleo.getTableHeader().setResizingAllowed(false);
+        tblListaEmpleo.getTableHeader().setReorderingAllowed(false);
         tblListaEmpleo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblListaEmpleoMouseClicked(evt);
+            }
+        });
+        tblListaEmpleo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tblListaEmpleoKeyTyped(evt);
             }
         });
         jScrollPane2.setViewportView(tblListaEmpleo);
@@ -485,6 +500,10 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
             txtEmpleoDescripcion.setText(descripcionCompleta.toString());
         }
     }//GEN-LAST:event_tblListaEmpleoMouseClicked
+
+    private void tblListaEmpleoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblListaEmpleoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblListaEmpleoKeyTyped
 
     /**
      * @param args the command line arguments
