@@ -196,8 +196,6 @@ public class Main {
     public static void testListarEmpleosCandidatos() {
         EmpleoController empleoController = new EmpleoController();
 
-//        Empleo empleo = new Empleo();
-//        empleo.setIdReclutador(2); // Asume un ID de reclutador, ajustar según sea necesario
         ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
