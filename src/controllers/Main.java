@@ -46,6 +46,8 @@ public class Main {
         //testRegistrarCandidato();
         //testActualizarCandidato();
         //testRegistrarCandidato();
+        //testRegistrarReclutador();
+        //testReporte();
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
         //testRegistrarFeedbackPersonalizado();
@@ -367,7 +369,7 @@ public class Main {
 
     public static void testReporte() throws IOException {
         try {
-            ReporteService.ReporteEdad();
+            ReporteService.ReporteBloqueados();
         } catch (IOException e) {
             e.printStackTrace();
         }
