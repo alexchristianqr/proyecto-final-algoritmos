@@ -1,13 +1,17 @@
 package controllers;
 
 import core.services.ExportService;
+import core.services.FileService;
 import core.services.MysqlDBService;
 import core.services.ResponseService;
 import core.utils.Util;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import models.Candidato;
 import models.Empleo;
 import models.EstudioAcademico;
@@ -53,12 +57,15 @@ public class Main {
         /* EMPLEO */
         //testRegistrarEmpleo();
         //testListarEmpleos();
-        testListarEmpleosCandidatos();
+        //testListarEmpleosCandidatos();
         /* USUARIO */
         //testRegistrarUsuario();
         /* REPORTES */
         //testReporteUsuarios();
         //testReporte();
+        /* ARCHIVOS */
+        //testUploadPDF();
+        testDownloadPDF();
     }
 
     public static void testViewLogin() {
@@ -363,6 +370,47 @@ public class Main {
             ReporteService.ReporteEdad();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /* ARCHIVOS PDF */
+    public static void testUploadPDF() {
+        FileService fileService = new FileService();
+
+        // Subir un archivo
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int uploadReturnValue = fileChooser.showOpenDialog(null);
+        if (uploadReturnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                String filePath = fileService.uploadFile(selectedFile);
+                JOptionPane.showMessageDialog(null, "File uploaded to: " + filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error uploading file: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public static void testDownloadPDF() {
+        FileService fileService = new FileService();
+
+        // Descargar un archivo
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnValue = fileChooser.showSaveDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedDirectory = fileChooser.getSelectedFile();
+            String destinationPath = selectedDirectory.getAbsolutePath() + File.separator + "prueba.pdf";
+            try {
+                fileService.downloadFile("prueba.pdf", destinationPath);
+                JOptionPane.showMessageDialog(null, "File downloaded to: " + destinationPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error downloading file: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
