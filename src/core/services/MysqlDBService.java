@@ -106,6 +106,11 @@ public class MysqlDBService {
         return true; // Valor por defecto si no se puede obtener
     }
 
+    public ResultSet queryConsultar(String sql) {
+        Object[] parametros = null;
+        return queryConsultar(sql, parametros);
+    }
+
     public ResultSet queryConsultar(String sql, Object[] parametros) {
         try {
             conn = this.getConnection();
@@ -113,8 +118,10 @@ public class MysqlDBService {
             int tamano = parametros.length;
             stmt = conn.prepareStatement(sql);
 
-            for (int i = 0; i < tamano; i++) {
-                stmt.setObject(i + 1, parametros[i]);
+            if (parametros != null) {
+                for (int i = 0; i < tamano; i++) {
+                    stmt.setObject(i + 1, parametros[i]);
+                }
             }
 
             System.out.print("[MysqlDBService.queryConsultar()] QUERY: " + stmt.toString().replace("com.mysql.cj.jdbc.ClientPreparedStatement: ", ""));
