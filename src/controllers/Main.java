@@ -26,7 +26,7 @@ public class Main {
     public static Util util = new Util();
 
     // Ejecutar programa, mostrando la vista de Login
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         //testViewLogin();
 
         /* AUTH */
@@ -351,7 +351,7 @@ public class Main {
     /* REPORTE */
     public static void testReporteUsuarios() {
         ReporteController reportecontroller = new ReporteController();
-        
+
         ResponseService<Boolean> response = reportecontroller.reporteUsuarios();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -360,7 +360,7 @@ public class Main {
 
     public static void testReportePersonas() {
         ReporteController reportecontroller = new ReporteController();
-        
+
         ResponseService<Boolean> response = reportecontroller.reportePersonas();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -369,7 +369,7 @@ public class Main {
 
     public static void testReporteEdad() {
         ReporteController reportecontroller = new ReporteController();
-        
+
         ResponseService<Boolean> response = reportecontroller.reporteEdad();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -378,7 +378,7 @@ public class Main {
 
     public static void testReporteAptitudes() {
         ReporteController reportecontroller = new ReporteController();
-        
+
         ResponseService<Boolean> response = reportecontroller.reporteAptitudes();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -387,7 +387,7 @@ public class Main {
 
     public static void testReporteExperiencias() {
         ReporteController reportecontroller = new ReporteController();
-        
+
         ResponseService<Boolean> response = reportecontroller.reporteExperiencias();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -396,7 +396,7 @@ public class Main {
 
     public static void testReporteReclutadores() {
         ReporteController reportecontroller = new ReporteController();
-        
+
         ResponseService<Boolean> response = reportecontroller.reporteReclutadores();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
