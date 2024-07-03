@@ -10,9 +10,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Candidato;
-import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
+import models.Postulacion;
 
 public class ViewMenuCandidato extends javax.swing.JFrame {
 
@@ -20,6 +20,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     Login login = new Login();
     CandidatoController candidatoController = new CandidatoController();
     EmpleoController empleoController = new EmpleoController();
+    PostulacionController postulacionController = new PostulacionController();
 
     public ViewMenuCandidato() {
         initComponents();
@@ -27,6 +28,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         listarEstudiosAcademicos();
         listarExperienciaLaboral();
         listarEmpleosCandidatos();
+        listarPostulaciones();
     }
 
     final public void mostrarDatosBasicos() {
@@ -96,7 +98,27 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             util.alertMessage("Error al obtener empleos", true);
         }
     }
-    
+
+    final public void listarPostulaciones() {
+        Postulacion postulacion = new Postulacion();
+        postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
+
+        final ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion.toString());
+
+        if (response.isSuccess()) {
+            List<Object[]> items = response.getResult();
+
+            DefaultTableModel modelo = (DefaultTableModel) tblMisPostulaciones.getModel();
+            modelo.setRowCount(0);
+
+            // Agregar los datos al modelo
+            for (Object[] item : items) {
+                modelo.addRow(item);
+            }
+        } else {
+            util.alertMessage("Error al obtener estudios academicos", true);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,6 +196,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblMisPostulaciones = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtPostulacionesDescripcion = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jTextField15 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
@@ -181,7 +205,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         tblEmpleos = new javax.swing.JTable();
         jScrollPane7 = new javax.swing.JScrollPane();
         txtEmpleoDescripcion = new javax.swing.JTextArea();
-        jButton10 = new javax.swing.JButton();
+        btnPostularEmpleos = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -705,15 +729,31 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         tblMisPostulaciones.setBackground(new java.awt.Color(229, 229, 229));
         tblMisPostulaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null, null, null, null},
-                {"", null, null, null, null, null},
-                {"", null, null, null, null, null}
+
             },
             new String [] {
-                "Título", "Empresa", "Sueldo", "Modalidad", "Estado", "Feedback"
+                "Título", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Feedback"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblMisPostulaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMisPostulacionesMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblMisPostulaciones);
+
+        txtPostulacionesDescripcion.setBackground(new java.awt.Color(229, 229, 229));
+        txtPostulacionesDescripcion.setColumns(20);
+        txtPostulacionesDescripcion.setRows(5);
+        jScrollPane1.setViewportView(txtPostulacionesDescripcion);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -721,12 +761,13 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 931, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 931, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton8)))
+                        .addComponent(jButton8))
+                    .addComponent(jScrollPane1))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -738,7 +779,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                     .addComponent(jButton8))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(450, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mis Postulaciones", jPanel2);
@@ -755,11 +798,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         tblEmpleos.setBackground(new java.awt.Color(229, 229, 229));
         tblEmpleos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "", null, null, null, null, null},
-                {null, "", null, null, null, null, null},
-                {null, "", null, null, null, null, null},
-                {null, "", null, null, null, null, null},
-                {null, "", null, null, null, null, null}
+
             },
             new String [] {
                 "Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Fecha Creado"
@@ -785,10 +824,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         txtEmpleoDescripcion.setRows(5);
         jScrollPane7.setViewportView(txtEmpleoDescripcion);
 
-        jButton10.setBackground(new java.awt.Color(102, 102, 102));
-        jButton10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("POSTULAR");
+        btnPostularEmpleos.setBackground(new java.awt.Color(102, 102, 102));
+        btnPostularEmpleos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnPostularEmpleos.setForeground(new java.awt.Color(255, 255, 255));
+        btnPostularEmpleos.setText("POSTULAR");
+        btnPostularEmpleos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPostularEmpleosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -806,7 +850,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPostularEmpleos, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(334, 334, 334)))
                 .addContainerGap(109, Short.MAX_VALUE))
         );
@@ -822,7 +866,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnPostularEmpleos, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(78, Short.MAX_VALUE))
         );
 
@@ -943,6 +987,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         if (response.isSuccess()) {
             util.alertMessage(response.getMessage());
             listarEstudiosAcademicos();
+            txtTitulo.setText("");
+            Estudios.setSelectedItem(0);
+            txtDescripcion.setText("");
+            EstudiosFechaInicio.setText("");
+            EstudiosFechaFin.setText("");
         } else {
             util.alertMessage("Error al registrar", true);
         }
@@ -971,6 +1020,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         if (response.isSuccess()) {
             util.alertMessage(response.getMessage());
             listarExperienciaLaboral();
+            Experiencia.setText("");
+            txtEmpresa.setText("");
+            ExperienciaFechaInicio.setText("");
+            ExperienciaFechaFin.setText("");
+            txtDescripcionEL.setText("");
         } else {
             util.alertMessage("Error al registrar", true);
         }
@@ -1014,6 +1068,35 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             txtEmpleoDescripcion.setText(descripcionCompleta.toString());
         }
     }//GEN-LAST:event_tblEmpleosMouseClicked
+
+    private void btnPostularEmpleosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularEmpleosActionPerformed
+    
+    }//GEN-LAST:event_btnPostularEmpleosActionPerformed
+
+    private void tblMisPostulacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMisPostulacionesMouseClicked
+    System.out.println("clickeando");
+
+        int fila = tblMisPostulaciones.getSelectedRow();
+        System.out.println("La fila es: " + fila);
+
+        if (fila != -1) {
+            Object titulo = tblMisPostulaciones.getValueAt(fila, 1);
+            Object empresa = tblMisPostulaciones.getValueAt(fila, 2);
+            Object sueldo = tblMisPostulaciones.getValueAt(fila, 3);
+            Object modalidad = tblMisPostulaciones.getValueAt(fila, 4);
+            Object descripcion = tblMisPostulaciones.getValueAt(fila, 5);
+
+            StringBuilder descripcionCompleta = new StringBuilder();
+            descripcionCompleta.append("================== DESCRIPCIÓN DEL EMPLEO ==================\n\n");
+            descripcionCompleta.append("Titulo:  ").append(titulo != null ? titulo.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Empresa:  ").append(empresa != null ? empresa.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Sueldo:  ").append(sueldo != null ? sueldo.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Modalidad:  ").append(modalidad != null ? modalidad.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
+
+            txtPostulacionesDescripcion.setText(descripcionCompleta.toString());
+        }
+    }//GEN-LAST:event_tblMisPostulacionesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1075,8 +1158,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JButton QuitarEstudios;
     private javax.swing.JButton QuitarExperiencia;
     private javax.swing.JTable TablaExperiencia;
+    private javax.swing.JButton btnPostularEmpleos;
     private javax.swing.JButton btnRegistrarEstudioAcademico;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -1110,6 +1193,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1130,6 +1214,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JTextArea txtEmpleoDescripcion;
     private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtNombres;
+    private javax.swing.JTextArea txtPostulacionesDescripcion;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

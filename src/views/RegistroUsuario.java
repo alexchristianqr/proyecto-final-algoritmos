@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package views;
 
 import controllers.UsuarioController;
@@ -191,7 +188,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN TIPO DE CUENTA");
             } else {
                 if (email.length() < 16 || email.length() > 50 || !email.contains("@") || !email.endsWith(".com")) {
-                    JOptionPane.showMessageDialog(null, "El email debe tener entre 16 y 50 caracteres, contener el símbolo '@' y terminar con '.com'");
+                    JOptionPane.showMessageDialog(null, "El email debe tener entre 16 y 50 caracteres y contener el símbolo '@'");
                 } else {
                     if (nombre.length() < 4 || nombre.length() > 22) {
                         JOptionPane.showMessageDialog(null, "El nombre debe tener entre 4 y 22 caracteres");
