@@ -22,7 +22,7 @@ public class Main {
         inventario.insertar(new Producto(50, "Gaseosa"));
         inventario.insertar(new Producto(30, "Chicle"));
         inventario.insertar(new Producto(20, "Galleta"));
-        inventario.insertar(new Producto(40, "Caramelo"));
+        inventario.insertar(new Producto(40, "Maní"));
         inventario.insertar(new Producto(70, "Chocolate"));
         inventario.insertar(new Producto(60, "Turrón"));
         inventario.insertar(new Producto(80, "Caramelo"));
