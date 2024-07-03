@@ -254,9 +254,9 @@ VALUES (1,1,1);
 
 -- empleos
 INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, estado)
-VALUES (1, 'SR Frontend REACT JS', 'UTP', '5500', 'remoto', 'Encargado de las tareas de frontend con React JS', 'activo');
+VALUES (1, 'SR Frontend REACT JS', 'UTP', '5500', 'remoto', 'Encargado de las tareas de frontend con React JS', 'disponible');
 INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, estado)
-VALUES (2, 'SR Frontend Angular', 'UTP', '7500', 'presencial', 'Encargado de las tareas de frontend con Angular v15', 'activo');
+VALUES (2, 'SR Frontend Angular', 'UTP', '7500', 'presencial', 'Encargado de las tareas de frontend con Angular v15', 'disponible');
 
 -- postulaciones
 INSERT INTO postulaciones (id_candidato, id_empleo, estado)
