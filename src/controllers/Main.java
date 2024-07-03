@@ -1,15 +1,11 @@
 package controllers;
 
-import core.services.ExportService;
 import core.services.FileService;
-import core.services.MysqlDBService;
 import core.services.ResponseService;
 import core.utils.Util;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import models.Candidato;
@@ -20,7 +16,6 @@ import models.FeedbackInfo;
 import models.Postulacion;
 import models.Reclutador;
 import models.Usuario;
-import services.ReporteService;
 import views.Login;
 
 public class Main {
@@ -67,7 +62,7 @@ public class Main {
         //testReporte();
         /* ARCHIVOS */
         //testUploadPDF();
-        testDownloadPDF();
+        //testDownloadPDF();
     }
 
     public static void testViewLogin() {
@@ -354,25 +349,58 @@ public class Main {
     }
 
     /* REPORTE */
-    public static void testReporteUsuarios() throws IOException {
-        try {
-            String sql = "select * from usuarios";
-
-            MysqlDBService db = new MysqlDBService();
-            db.stmt = db.conn.prepareStatement(sql);
-
-            ExportService.exportToExcel(db.stmt, "reporte_de_usuarios_01");
-
-        } catch (InterruptedException | SQLException | ExecutionException e) {
-        }
+    public static void testReporteUsuarios() {
+        ReporteController reportecontroller = new ReporteController();
+        
+        ResponseService<Boolean> response = reportecontroller.reporteUsuarios();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
     }
 
-    public static void testReporte() throws IOException {
-        try {
-            ReporteService.ReporteBloqueados();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void testReportePersonas() {
+        ReporteController reportecontroller = new ReporteController();
+        
+        ResponseService<Boolean> response = reportecontroller.reportePersonas();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testReporteEdad() {
+        ReporteController reportecontroller = new ReporteController();
+        
+        ResponseService<Boolean> response = reportecontroller.reporteEdad();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testReporteAptitudes() {
+        ReporteController reportecontroller = new ReporteController();
+        
+        ResponseService<Boolean> response = reportecontroller.reporteAptitudes();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testReporteExperiencias() {
+        ReporteController reportecontroller = new ReporteController();
+        
+        ResponseService<Boolean> response = reportecontroller.reporteExperiencias();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testReporteReclutadores() {
+        ReporteController reportecontroller = new ReporteController();
+        
+        ResponseService<Boolean> response = reportecontroller.reporteReclutadores();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
     }
 
     /* ARCHIVOS PDF */

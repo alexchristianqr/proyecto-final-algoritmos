@@ -2,6 +2,9 @@ package services;
 
 import core.services.ExportService;
 import core.services.MysqlDBService;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.concurrent.ExecutionException;
 
 public class ReporteService extends BaseService {
 
@@ -9,7 +12,7 @@ public class ReporteService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public boolean reporteUsuarios()  {
+    public boolean reporteUsuarios() {
         boolean success = false;
 
         try {
@@ -17,13 +20,13 @@ public class ReporteService extends BaseService {
             db.stmt = db.conn.prepareStatement(sql);
             ExportService.exportToExcel(db.stmt, "reporte_de_usuarios_01");
             success = true;
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException | SQLException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+
         return success;
     }
 
-    
     public boolean reportePersonas() {
         boolean success = false;
 
@@ -33,9 +36,10 @@ public class ReporteService extends BaseService {
             success = true;
             ExportService.exportToExcel(db.stmt, "reporte_de_personas_01");
 
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException | SQLException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+
         return success;
     }
 
@@ -48,9 +52,10 @@ public class ReporteService extends BaseService {
             success = true;
             ExportService.exportToExcel(db.stmt, "reporte_de_Edad_01");
 
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException | SQLException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+
         return success;
     }
 
@@ -63,9 +68,10 @@ public class ReporteService extends BaseService {
             success = true;
             ExportService.exportToExcel(db.stmt, "reporte_de_Aptitudes_01");
 
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException | SQLException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+
         return success;
     }
 
@@ -80,12 +86,13 @@ public class ReporteService extends BaseService {
 
             ExportService.exportToExcel(db.stmt, "reporte_de_Experiencias-Laborales_01");
 
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException | SQLException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+
         return success;
     }
-    
+
     public boolean reporteReclutadores() {
         boolean success = false;
 
@@ -95,9 +102,10 @@ public class ReporteService extends BaseService {
             success = true;
             ExportService.exportToExcel(db.stmt, "reporte_de_Reclutadores_01");
 
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException | SQLException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+
         return success;
     }
 }
