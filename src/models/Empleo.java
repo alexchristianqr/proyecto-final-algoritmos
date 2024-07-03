@@ -2,11 +2,12 @@ package models;
 
 public class Empleo {
 
+    private int idEmpleo;
     private int idReclutador;
-    private String titulo;
-    private String empresa;
-    private String sueldo;
-    private String modalidad;
+    protected String titulo;
+    protected String empresa;
+    protected String sueldo;
+    protected String modalidad;
     private String descripcion;
     private String estado;// disponible|indisponible
     private String fechaCreado;
@@ -18,6 +19,7 @@ public class Empleo {
     }
 
     public Empleo(Empleo empleo) {
+        this.idEmpleo = empleo.getIdEmpleo();
         this.idReclutador = empleo.getIdReclutador();
         this.titulo = empleo.getTitulo();
         this.empresa = empleo.getEmpresa();
@@ -28,6 +30,14 @@ public class Empleo {
         this.fechaCreado = empleo.getFechaCreado();
         this.fechaActualizado = empleo.getFechaActualizado();
         this.fechaEliminado = empleo.getFechaEliminado();
+    }
+
+    public int getIdEmpleo() {
+        return idEmpleo;
+    }
+
+    public void setIdEmpleo(int idEmpleo) {
+        this.idEmpleo = idEmpleo;
     }
 
     public int getIdReclutador() {

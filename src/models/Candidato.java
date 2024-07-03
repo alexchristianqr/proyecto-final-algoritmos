@@ -15,7 +15,7 @@ public class Candidato extends Persona {
     }
 
     public Candidato(Candidato candidato) {
-        super(candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getNombre(), candidato.getApellidos(), candidato.getSexo(), candidato.getEdad(), candidato.getTelefono(), candidato.getEstado(), candidato.getFechaCreado(), candidato.getFechaActualizado(), candidato.getIdPersona());
+        super(candidato.getTipoDocumento(), candidato.getNroDocumento(), candidato.getNombre(), candidato.getApellidos(), candidato.getSexo(), candidato.getFechaNacimiento(), candidato.getTelefono(), candidato.getEstado(), candidato.getFechaCreado(), candidato.getFechaActualizado(), candidato.getEstadoCivil(), candidato.getIdPersona());
         this.idUsuario = candidato.getIdUsuario();
         this.aptitudes = candidato.getAptitudes();
         this.imagenPerfil = candidato.getImagenPerfil();
@@ -23,6 +23,7 @@ public class Candidato extends Persona {
         this.pathCV = candidato.getPathCV();
         this.pathCertificadoTrabajo = candidato.getPathCertificadoTrabajo();
         this.pathAntecedentePolicial = candidato.getPathAntecedentePolicial();
+
     }
 
     public String getAptitudes() {

@@ -1,5 +1,7 @@
 package controllers;
 
+import core.services.ResponseService;
+import java.util.List;
 import models.Empleo;
 import services.EmpleoService;
 
@@ -10,12 +12,40 @@ public class EmpleoController extends BaseController<Empleo, EmpleoService> {
         service = new EmpleoService();
     }
 
-    public void registrarEmpleo(Empleo empleo) {
-        service.crearEmpleo(empleo);
+    public ResponseService<Boolean> registrarEmpleo(Empleo empleo) {
+        ResponseService<Boolean> response = new ResponseService<>();
+
+        boolean success = service.registrarEmpleo(empleo);
+
+        response.setSuccess(success);
+        response.setMessage("empleo registrado correctamente");
+
+        return response;
     }
 
-    public void listarPublicaciones() {
-        String[] columnNames = {"Codigo", "Reclutador", "Titulo", "Empresa", "Sueldo", "Modalidad", "Total Postulados", "Fecha creado"};
-        service.obtenerEmpleosPorReclutador(columnNames);
+    public ResponseService<List<Object[]>> listarEmpleos(Empleo empleo) {
+        ResponseService<List<Object[]>> response = new ResponseService<>();
+
+        String[] columnNames = {"Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Total Postulados", "Fecha Creado", "Fecha Actualizado"};
+        List<Object[]> resultado = service.listarEmpleos(columnNames, empleo);
+
+        response.setSuccess(true);
+        response.setMessage("listar empleos correctamente");
+        response.setResult(resultado);
+
+        return response;
+    }
+
+    public ResponseService<List<Object[]>> listarEmpleosCandidatos() {
+        ResponseService<List<Object[]>> response = new ResponseService<>();
+
+        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Fecha Creado"};
+        List<Object[]> resultado = service.listarEmpleosCandidatos(columnNames);
+
+        response.setSuccess(true);
+        response.setMessage("listar empleos para candidatos correctamente");
+        response.setResult(resultado);
+
+        return response;
     }
 }

@@ -12,26 +12,32 @@ public class Util {
     public static final String ANSI_RESET = "\033[0m";
 
     // Mostrar mensaje de alerta
-    public void alertMessage() {
-        JOptionPane.showMessageDialog(null, "Ha ocurrido un problema", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-    }
-
+//    public void alertMessage() {
+//        JOptionPane.showMessageDialog(null, "Ha ocurrido un problema", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+//    }
     public void alertMessage(String message) {
-        JOptionPane.showMessageDialog(null, message, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+        this.alertMessage(message, false);
     }
 
-    public void alertMessage(String message, String titleMessage) {
-        JOptionPane.showMessageDialog(null, message, titleMessage, JOptionPane.ERROR_MESSAGE);
+    public void alertMessage(String message, boolean isError) {
+        if (isError) {
+            JOptionPane.showMessageDialog(null, message, "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, message, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
-    public void alertMessage(String message, String titleMessage, Component component) {
-        JOptionPane.showMessageDialog(component, message, titleMessage, JOptionPane.ERROR_MESSAGE);
-    }
-
-    public void alertMessage(String message, String titleMessage, Component component, int jop) {
-        JOptionPane.showMessageDialog(component, message, titleMessage, jop);
-    }
-
+//    public void alertMessage(String message, String titleMessage) {
+//        JOptionPane.showMessageDialog(null, message, titleMessage, JOptionPane.ERROR_MESSAGE);
+//    }
+//
+//    public void alertMessage(String message, String titleMessage, Component component) {
+//        JOptionPane.showMessageDialog(component, message, titleMessage, JOptionPane.ERROR_MESSAGE);
+//    }
+//
+//    public void alertMessage(String message, String titleMessage, Component component, int jop) {
+//        JOptionPane.showMessageDialog(component, message, titleMessage, jop);
+//    }
     // Centrar vista en la pantalla
     public void centerOnScreen(final Component viewComponent, final boolean absolute) {
         final int width = viewComponent.getWidth();
@@ -46,7 +52,7 @@ public class Util {
         viewComponent.setLocation(x, y);
     }
 
-    // Imprimir tabla en terminal
+// Imprimir tabla en terminal
     public void imprimirTabla(String[] encabezados, Object[][] data) {
         int[] columnWidths = new int[encabezados.length];
 
@@ -54,7 +60,9 @@ public class Util {
         for (int i = 0; i < encabezados.length; i++) {
             columnWidths[i] = encabezados[i].length();
             for (Object[] row : data) {
-                columnWidths[i] = Math.max(columnWidths[i], row[i].toString().length());
+                if (row[i] != null) {
+                    columnWidths[i] = Math.max(columnWidths[i], row[i].toString().length());
+                }
             }
         }
 
@@ -83,7 +91,7 @@ public class Util {
     private void imprimirFila(Object[] row, int[] columnWidths, boolean isHeader) {
         for (int i = 0; i < row.length; i++) {
             System.out.print("| ");
-            String cellContent = row[i].toString();
+            String cellContent = (row[i] != null) ? row[i].toString() : ""; // Manejar valores nulos
             if (isHeader) {
                 cellContent = cellContent.toUpperCase(); // Convertir a mayúsculas
                 System.out.print(ANSI_BOLD + cellContent + ANSI_RESET);

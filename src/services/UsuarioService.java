@@ -1,9 +1,8 @@
 package services;
 
 import core.services.MysqlDBService;
-import core.utils.UsuarioThreadLocal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import models.Candidato;
+import models.Reclutador;
 import models.Usuario;
 
 public class UsuarioService extends BaseService {
@@ -12,63 +11,62 @@ public class UsuarioService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public void obtenerUsuarioPorRol(String rol, String username, String pwd) {
-
-        Object[] parametrosSQL_1 = new Object[2];
-
-        switch (rol) {
-            case "candidato" ->
-                querySQL_1 = "SELECT u.*, c.id AS 'id_candidato' FROM usuarios u JOIN candidatos c ON c.id_usuario = u.id AND c.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
-            case "reclutador" ->
-                querySQL_1 = "SELECT u.*, r.id AS 'id_reclutador' FROM usuarios u JOIN reclutadores r ON r.id_usuario = u.id AND r.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
-            default ->
-                throw new AssertionError();
-        }
-
-        parametrosSQL_1[0] = username;
-        parametrosSQL_1[1] = pwd;
-
-        ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
-        Usuario usuario = new Usuario();
+    public boolean registrarUsuario(Usuario usuario) {
+        boolean success = false;
 
         try {
 
-            // Eliminar usuario en sesión local
-            UsuarioThreadLocal.unset();
+            // Validaciones de entrada
+            if (usuario == null || usuario.getNombres() == null || usuario.getApellidos() == null || usuario.getRol() == null || usuario.getUsername() == null || usuario.getPassword() == null) {
+                throw new IllegalArgumentException("Datos del usuario incompletos o nulos.");
+            }
 
-            while (rs.next()) {
-                usuario.setIdUsuario(rs.getInt("id"));
+            String rol = usuario.getRol();
 
+            // Insertar usuario
+            querySQL_1 = "INSERT INTO usuarios (nombres, apellidos, rol, username, pwd) VALUES (?,?,?,?,?)";
+            Object[] parametrosSQL_1 = {usuario.getNombres(), usuario.getApellidos(), rol, usuario.getUsername(), usuario.getPassword()};
+            int id_usuario = db.queryInsertar(querySQL_1, parametrosSQL_1);
+
+            if (id_usuario > 0) {
                 switch (rol) {
                     case "candidato" -> {
-                        usuario.setIdCandidato(rs.getInt("id_candidato"));
+                        // Insertar candidato
+                        CandidatoService candidatoService = new CandidatoService();
+                        Candidato candidato = new Candidato();
+                        candidato.setIdUsuario(id_usuario);
+                        candidato.setNombre(usuario.getNombres());
+                        candidato.setApellidos(usuario.getApellidos());
+                        candidato.setEstado("activo");
+                        candidatoService.registrarCandidato(candidato);
+
+                        success = true;
+                        break;
                     }
                     case "reclutador" -> {
-                        usuario.setIdReclutador(rs.getInt("id_reclutador"));
+                        // Insertar reclutador
+                        ReclutadorService reclutadorService = new ReclutadorService();
+                        Reclutador reclutador = new Reclutador();
+                        reclutador.setIdUsuario(id_usuario);
+                        reclutador.setNombre(usuario.getNombres());
+                        reclutador.setApellidos(usuario.getApellidos());
+                        reclutadorService.registrarReclutador(reclutador);
+
+                        success = true;
+                        break;
                     }
                     default ->
                         throw new AssertionError();
                 }
-
-                usuario.setNombres(rs.getString("nombres"));
-                usuario.setApellidos(rs.getString("apellidos"));
-                usuario.setFullname(rs.getString("nombres") + " " + rs.getString("apellidos"));
-                usuario.setRol(rs.getString("rol"));
-                usuario.setUsername(rs.getString("username"));
-                usuario.setPassword(rs.getString("pwd"));
-                usuario.setEstado(rs.getString("estado"));
-                usuario.setFechaCreado(rs.getString("fecha_creado"));
+            } else {
+                throw new RuntimeException("No se pudo insertar el usuario en la base de datos.");
             }
-
-            // Actualizar nuevo usuario en sesión local
-            UsuarioThreadLocal.set(usuario);
-
-            System.out.println();
-
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error al registrar el usuario: " + e.getMessage(), e);
+        } finally {
+            db.cerrarConsulta();
         }
 
-        db.cerrarConsulta();
+        return success;
     }
 }

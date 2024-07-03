@@ -9,7 +9,6 @@ public class Usuario {
     private String password;
     private String perfil;
     private String estado;// activo|inactivo|pendiente
-    private String fullname;
     private String nombres;
     private String apellidos;
     private String rol;
@@ -25,23 +24,21 @@ public class Usuario {
         this.idReclutador = usuario.getIdReclutador();
         this.username = usuario.getUsername();
         this.password = usuario.getPassword();
-        this.password = usuario.getNombres();
         this.perfil = usuario.getPerfil();
         this.estado = usuario.getEstado();
         this.nombres = usuario.getNombres();
         this.apellidos = usuario.getApellidos();
-        this.fullname = usuario.getFullname();
         this.rol = usuario.getRol();
         this.fechaCreado = usuario.getFechaCreado();
         this.fechaActualizado = usuario.getFechaActualizado();
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
     public String getApellidos() {
@@ -114,14 +111,6 @@ public class Usuario {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
     }
 
     public String getFechaCreado() {

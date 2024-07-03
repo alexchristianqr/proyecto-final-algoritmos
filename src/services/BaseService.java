@@ -11,4 +11,5 @@ public abstract class BaseService {
     public MysqlDBService db;
     public String querySQL_1, querySQL_2, querySQL_3;
     public Usuario auth = UsuarioThreadLocal.get();
+    public boolean originalAutoCommit = true;
 }

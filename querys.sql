@@ -8,6 +8,11 @@ SELECT * FROM candidatos;
 SELECT * FROM reclutadores;
 
 SELECT 
+u.rol
+FROM usuarios u
+WHERE u.username = 'alex.quispe@gmail.com' AND u.pwd = 'candidato2024' AND u.estado = 'activo' LIMIT 1;
+
+SELECT 
 u.*,
 c.id AS 'id_candidato'
 FROM usuarios u
@@ -23,6 +28,21 @@ WHERE u.username = 'maria.gonzales@utp.edu.pe' AND u.pwd = 'reclutador2024' AND 
 
 -- actualizar
 UPDATE usuarios SET usuarios.pwd = 'candidato2024v2' WHERE usuarios.id = 1 AND usuarios.username = 'alex.quispe@gmail.com';
+
+-- ---------
+-- CANDIDATO
+-- ---------
+
+UPDATE candidatos c SET c.path_curriculum_vitae = ? WHERE c.id = ? AND c.estado IN ('activo');
+
+-- -------------------
+-- ESTUDIOS ACADEMICOS
+-- -------------------
+
+SELECT ea.* 
+FROM estudios_academicos ea
+JOIN candidatos_estudios_academicos cea ON cea.id_estudio_academico = ea.id
+WHERE cea.id_candidato = 1;
 
 -- ---------
 -- CANDIDATO
@@ -85,13 +105,14 @@ UPDATE postulaciones SET estado = 'cancelado' WHERE id = 1;
 UPDATE postulaciones SET estado = 'rechazado' WHERE id = 1;
 UPDATE postulaciones SET estado = 'bloqueado' WHERE id = 1;
 
--- -----------------
--- MIS PUBLICACIONES
--- -----------------
+-- -----------
+-- MIS EMPLEOS
+-- -----------
 SELECT * FROM postulaciones;
 SELECT * FROM candidatos;
 SELECT * FROM empleos e WHERE e.id_reclutador = 2;
 
+-- v1
 SELECT 
 e.id,
 e.id_reclutador,
@@ -100,8 +121,27 @@ e.titulo,
 e.empresa,
 e.sueldo,
 e.modalidad,
+e.estado,
 COUNT(po.id) AS 'total_candidatos_postulados',
 e.fecha_creado
+FROM empleos e
+JOIN reclutadores r ON r.id = e.id_reclutador
+JOIN personas pe ON pe.id = r.id_persona 
+LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado')
+WHERE e.id_reclutador = 1
+GROUP BY 
+e.id;
+
+-- v2
+SELECT 
+e.titulo, 
+e.empresa,
+e.sueldo,
+e.modalidad,
+e.estado,
+COUNT(po.id) AS 'total_candidatos_postulados',
+e.fecha_creado,
+e.fecha_actualizado
 FROM empleos e
 JOIN reclutadores r ON r.id = e.id_reclutador
 JOIN personas pe ON pe.id = r.id_persona 
@@ -219,3 +259,31 @@ Atentamente,
 
 Recuerda que la búsqueda de empleo es un proceso desafiante y que cada oportunidad es una experiencia de aprendizaje. ¡Mucho ánimo en tus futuras aplicaciones!' 
 WHERE e.id = 1 AND p.estado = 'postulado';
+
+
+-- TRANSACCIONES
+SHOW FULL PROCESSLIST;
+SELECT COUNT(*) FROM information_schema.innodb_trx;
+
+
+-- ------------------------------
+-- LISTAR EMPLEOS PARA CANDIDATOS
+-- ------------------------------
+ SELECT
+  e.id AS 'codigo',
+  e.titulo,
+  e.empresa,
+  e.sueldo,
+  e.modalidad,
+  e.descripcion,
+  e.fecha_creado
+FROM
+  empleos e
+  JOIN reclutadores r
+    ON r.id = e.id_reclutador
+    AND e.estado = 'disponible'
+  JOIN personas pe
+    ON pe.id = r.id_persona
+WHERE e.id_reclutador = 1
+ORDER BY e.id DESC;
+

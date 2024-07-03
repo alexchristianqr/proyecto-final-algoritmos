@@ -3,39 +3,42 @@ package models;
 public abstract class Persona {
 
     private int idPersona;
-    private String tipoDocumento;// DNI|PASAPORTE
+    private int tipoDocumento;// DNI|PASAPORTE
     private String nroDocumento;
     private String nombre;
     private String apellidos;
     private String sexo;
-    private String edad;
+    private String fechaNacimiento;
     private String telefono;
     private String estado;// activo|inactivo
     private String fechaCreado;
     private String fechaActualizado;
+    private String estadoCivil;
+    private String edad;
 
     public Persona() {
     }
 
-    public Persona(String tipoDocumento, String nroDocumento, String nombre, String apellidos, String sexo, String edad, String telefono, String estado, String fechaCreado, String fechaActualizado, int idPersona) {
+    public Persona(int tipoDocumento, String nroDocumento, String nombre, String apellidos, String sexo, String fechaNacimiento, String telefono, String estado, String fechaCreado, String fechaActualizado, String estadoCivil, int idPersona) {
         this.tipoDocumento = tipoDocumento;
         this.nroDocumento = nroDocumento;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.sexo = sexo;
-        this.edad = edad;
+        this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.estado = estado;
         this.fechaCreado = fechaCreado;
         this.fechaActualizado = fechaActualizado;
+        this.estadoCivil = estadoCivil;
         this.idPersona = idPersona;
     }
 
-    public String getTipoDocumento() {
+    public int getTipoDocumento() {
         return tipoDocumento;
     }
 
-    public void setTipoDocumento(String tipoDocumento) {
+    public void setTipoDocumento(int tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
 
@@ -79,6 +82,14 @@ public abstract class Persona {
         this.sexo = sexo;
     }
 
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
     public String getEdad() {
         return edad;
     }
@@ -117,6 +128,14 @@ public abstract class Persona {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(String estadoCivil) {
+        this.estadoCivil = estadoCivil;
     }
 
 }

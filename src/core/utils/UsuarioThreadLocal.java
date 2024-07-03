@@ -10,7 +10,7 @@ public class UsuarioThreadLocal {
         THREAD_LOCAL.set(usuario);
     }
 
-    public static void unset() {
+    public static void remove() {
         THREAD_LOCAL.remove();
     }
 
