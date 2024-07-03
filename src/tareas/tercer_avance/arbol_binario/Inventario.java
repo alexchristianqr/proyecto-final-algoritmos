@@ -4,7 +4,6 @@ public class Inventario {
 
     TreeNode root;
 
-    // Constructor
     Inventario() {
         root = null;
     }
@@ -65,58 +64,20 @@ public class Inventario {
         return buscarRecursivamente(root.right, codigo);
     }
 
-    // Método para imprimir el árbol en orden
-    void imprimirEnOrden() {
-        System.out.println("Imprimiendo el inventario en orden:");
-        imprimirEnOrdenRec(root);
-        System.out.println();
-    }
-
-    // Función recursiva para imprimir el árbol en orden
-    void imprimirEnOrdenRec(TreeNode root) {
-        if (root != null) {
-            imprimirEnOrdenRec(root.left);
-            System.out.println("Código: " + root.getProducto().getCodigo() + ", Nombre: " + root.getProducto().getNombre());
-            imprimirEnOrdenRec(root.right);
-        }
-    }
-
-//    // Método para imprimir el árbol en una estructura visual vertical
-//    void imprimirArbol() {
-//        System.out.println("Árbol binario:");
-//        imprimirArbolRec(root, "", true);
-//    }
-//
-//    // Función recursiva para imprimir el árbol en una estructura visual vertical
-//    void imprimirArbolRec(TreeNode root, String indent, boolean last) {
-//        if (root != null) {
-//            System.out.print(indent);
-//            if (last) {
-//                System.out.print("└─ ");
-//                indent += "   ";
-//            } else {
-//                System.out.print("├─ ");
-//                indent += "│  ";
-//            }
-//            System.out.println(root.producto.codigo + " (" + root.producto.nombre + ")");
-//            imprimirArbolRec(root.left, indent, false);
-//            imprimirArbolRec(root.right, indent, true);
-//        }
-//    }
     // Método para imprimir el árbol en una estructura visual ascendente
     void imprimirArbol() {
-        imprimirArbolRec(root, 0);
+        imprimirArbolRecursivamente(root, 0);
     }
 
     // Función recursiva para imprimir el árbol en una estructura visual ascendente
-    void imprimirArbolRec(TreeNode root, int nivel) {
+    void imprimirArbolRecursivamente(TreeNode root, int nivel) {
         if (root != null) {
-            imprimirArbolRec(root.right, nivel + 1);
+            imprimirArbolRecursivamente(root.right, nivel + 1);
             for (int i = 0; i < nivel; i++) {
                 System.out.print("                      ");// 06 tab
             }
-            System.out.println(root.producto.codigo + " (" + root.producto.nombre + ")");
-            imprimirArbolRec(root.left, nivel + 1);
+            System.out.println(root.getProducto().getCodigo() + " (" + root.getProducto().getNombre() + ")");
+            imprimirArbolRecursivamente(root.left, nivel + 1);
         }
     }
 }
