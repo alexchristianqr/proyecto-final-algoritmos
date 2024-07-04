@@ -9,7 +9,7 @@ public abstract class BaseService {
 
     public static Util util = new Util();
     public MysqlDBService db;
-    public String querySQL_1, querySQL_2, querySQL_3;
+    public String querySQL_1, querySQL_2, querySQL_3, querySQL_4, querySQL_5;
     public Usuario auth = UsuarioThreadLocal.get();
     public boolean originalAutoCommit = true;
 }

@@ -35,8 +35,8 @@ public class Main {
         //testLogout();
         /* POSTULACION */
         //testListarPostulaciones();
-        //testActualizarPostulacion();
         //testRegistrarPostulacion();
+        //testRegistrarFeedbackPersonalizado();
         /* CANDIDATO */
         //testRegistrarCandidato();
         //testActualizarCandidato();
@@ -46,7 +46,6 @@ public class Main {
         //testReporte();
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
-        //testRegistrarFeedbackPersonalizado();
         //testListarEstudiosAcademicos();
         //testListarExperienciasLaborales();
         /* RECLUTADOR */
