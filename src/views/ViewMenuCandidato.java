@@ -29,6 +29,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         listarExperienciaLaboral();
         listarEmpleosCandidatos();
         listarPostulaciones();
+        inicializarComponente();
     }
 
     final public void mostrarDatosBasicos() {
@@ -36,6 +37,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         txtNombres.setText(UsuarioThreadLocal.get().getNombres());
         txtApellidos.setText(UsuarioThreadLocal.get().getApellidos());
         txtEmail.setText(UsuarioThreadLocal.get().getUsername());
+    }
+
+    final public void inicializarComponente() {
+        btnPostularEmpleos.setEnabled(false);
+
     }
 
     final public void listarEstudiosAcademicos() {
@@ -76,7 +82,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 modelo.addRow(item);
             }
         } else {
-            util.alertMessage("Error al obtener estudios academicos", true);
+            util.alertMessage("Error al obtener experiencia laboral", true);
         }
     }
 
@@ -103,7 +109,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         Postulacion postulacion = new Postulacion();
         postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
 
-        final ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion.toString());
+        final ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion);
 
         if (response.isSuccess()) {
             List<Object[]> items = response.getResult();
@@ -116,9 +122,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 modelo.addRow(item);
             }
         } else {
-            util.alertMessage("Error al obtener estudios academicos", true);
+            util.alertMessage("Error al postulaciones", true);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -732,11 +739,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Título", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Feedback"
+                "Código", "Título", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Feedback", "Fecha Creado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, false, false
+                false, false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1051,14 +1058,18 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         System.out.println("La fila es: " + fila);
 
         if (fila != -1) {
+            btnPostularEmpleos.setEnabled(true);
+            Object codigo = tblEmpleos.getValueAt(fila, 0);
             Object titulo = tblEmpleos.getValueAt(fila, 1);
             Object empresa = tblEmpleos.getValueAt(fila, 2);
             Object sueldo = tblEmpleos.getValueAt(fila, 3);
             Object modalidad = tblEmpleos.getValueAt(fila, 4);
             Object descripcion = tblEmpleos.getValueAt(fila, 5);
+            Object fecha_creado = tblEmpleos.getValueAt(fila, 6);
 
             StringBuilder descripcionCompleta = new StringBuilder();
             descripcionCompleta.append("================== DESCRIPCIÓN DEL EMPLEO ==================\n\n");
+
             descripcionCompleta.append("Titulo:  ").append(titulo != null ? titulo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Empresa:  ").append(empresa != null ? empresa.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Sueldo:  ").append(sueldo != null ? sueldo.toString() : "No disponible").append("\n\n");
@@ -1070,11 +1081,48 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     }//GEN-LAST:event_tblEmpleosMouseClicked
 
     private void btnPostularEmpleosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularEmpleosActionPerformed
-    
+
+        int fila = tblEmpleos.getSelectedRow();
+        System.out.println("prueba: " + tblEmpleos.getValueAt(fila, 0));
+        System.out.println("prueba: " + tblEmpleos.getValueAt(fila, 0).toString());
+
+        if (fila != -1) {
+            Postulacion postulacion = new Postulacion();
+            postulacion.setEstado("postulado");
+            postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
+            postulacion.setIdEmpleo(Integer.parseInt(tblEmpleos.getValueAt(fila, 0).toString()));
+            ResponseService<String> response = postulacionController.registrarPostulacion(postulacion);
+            System.out.println("Success: " + response.isSuccess());
+            System.out.println("Mensaje: " + response.getMessage());
+            System.out.println("Resultado: " + response.getResult());
+
+            if (response.isSuccess()) {
+                switch (response.getResult().toString()) {
+                    case "creado":
+                        util.alertMessage("Postulado correctamente");
+                        listarPostulaciones();
+                        break;
+                    case "postulado":
+                        util.alertMessage("Usted ya se encuentra postulado a este empleo", true);
+                        listarPostulaciones();
+                        break;
+                    default:
+                        util.alertMessage("Error al postular", true);
+                        break;
+                }
+
+            } else {
+                util.alertMessage("Error al registrar", true);
+            }
+
+        } else {
+            // Mostrar mensaje de error si no se ha seleccionado una celda
+            util.alertMessage("POR FAVOR SELECCIONA UNA CELDA ANTES DE POSTULAR", true);
+        }
     }//GEN-LAST:event_btnPostularEmpleosActionPerformed
 
     private void tblMisPostulacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMisPostulacionesMouseClicked
-    System.out.println("clickeando");
+        System.out.println("clickeando");
 
         int fila = tblMisPostulaciones.getSelectedRow();
         System.out.println("La fila es: " + fila);
