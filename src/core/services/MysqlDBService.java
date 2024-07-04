@@ -124,7 +124,7 @@ public class MysqlDBService {
                 }
             }
 
-            System.out.print("[MysqlDBService.queryConsultar()] QUERY: " + stmt.toString().replace("com.mysql.cj.jdbc.ClientPreparedStatement: ", ""));
+            System.out.println("[MysqlDBService.queryConsultar()] QUERY: " + stmt.toString().replace("com.mysql.cj.jdbc.ClientPreparedStatement: ", ""));
 
             ResultSet rs = stmt.executeQuery();
 

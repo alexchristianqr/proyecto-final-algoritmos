@@ -27,7 +27,7 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) {
-        //testViewLogin();
+        testViewLogin();
 
         /* AUTH */
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
@@ -35,17 +35,17 @@ public class Main {
         //testLogout();
         /* POSTULACION */
         //testListarPostulaciones();
-        //testActualizarPostulacion();
         //testRegistrarPostulacion();
+        //testRegistrarFeedbackPersonalizado();
         /* CANDIDATO */
         //testRegistrarCandidato();
         //testActualizarCandidato();
+        //testActualizarCandidatoPorColumna();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
         //testReporte();
         //testRegistrarEstudioAcademico();
         //testRegistrarExperienciaLaboral();
-        //testRegistrarFeedbackPersonalizado();
         //testListarEstudiosAcademicos();
         //testListarExperienciasLaborales();
         /* RECLUTADOR */
@@ -120,9 +120,6 @@ public class Main {
 
     /* POSTULACION */
     public static void testRegistrarPostulacion() {
-        // INICIO DE SESION DE USUARIO CANDIDATO
-        testLogin("alex.quispe@gmail.com", "candidato2024");
-
         PostulacionController postulacionController = new PostulacionController();
 
         // CREAR INSTANCIA
@@ -132,7 +129,7 @@ public class Main {
         postulacion.setEstado("postulado");
 
         // ACCION POSTULAR A UN EMPLEO
-        ResponseService<Boolean> response = postulacionController.registrarPostulacion(postulacion);
+        ResponseService<String> response = postulacionController.registrarPostulacion(postulacion);
 
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -140,9 +137,6 @@ public class Main {
     }
 
     public static void testRegistrarFeedbackPersonalizado() {
-        // INICIO DE SESION
-        testLogin("alex.quispe@gmail.com", "candidato2024");
-
         PostulacionController postulacionController = new PostulacionController();
 
         // CREAR INSTANCIA
@@ -171,13 +165,14 @@ public class Main {
     }
 
     public static void testListarPostulaciones() {
-        // INICIO DE SESION DE USUARIO CANDIDATO
-        testLogin("alex.quispe@gmail.com", "candidato2024");
-
         PostulacionController postulacionController = new PostulacionController();
 
+        Postulacion postulacion = new Postulacion();
+        postulacion.setIdCandidato(2);
+        postulacion.setEstado("postulado");
+
         // MOSTRAR POSTULACIONES
-        ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones("postulado");
+        ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -280,9 +275,29 @@ public class Main {
 
         Candidato candidato = new Candidato();
         candidato.setIdCandidato(1);
+        candidato.setNombre("Hola");
+        candidato.setIdPersona(1);
+        //candidato.setIdUsuario(0);
+        candidato.setAptitudes("Java, SQL");
+        candidato.setImagenPerfil("profile_yo.jpg");
+        candidato.setPathCV("otro.pdf");
+        candidato.setPathCertificadoTrabajo("certificado_trabajo.pdf");
+        candidato.setPathAntecedentePolicial("antecedente_policial.pdf");
+
+        ResponseService<Boolean> response = candidatoController.actualizarCandidato(candidato);
+        System.out.println("success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testActualizarCandidatoPorColumna() {
+        CandidatoController candidatoController = new CandidatoController();
+
+        Candidato candidato = new Candidato();
+        candidato.setIdCandidato(1);
         candidato.setPathCV("/cv.pdf");
 
-        ResponseService<Boolean> response = candidatoController.actualizarCandidato(candidato, "path_curriculum_vitae");
+        ResponseService<Boolean> response = candidatoController.actualizarCandidatoPorColumna(candidato, "path_curriculum_vitae");
         System.out.println("success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());

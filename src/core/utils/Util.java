@@ -12,9 +12,6 @@ public class Util {
     public static final String ANSI_RESET = "\033[0m";
 
     // Mostrar mensaje de alerta
-//    public void alertMessage() {
-//        JOptionPane.showMessageDialog(null, "Ha ocurrido un problema", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-//    }
     public void alertMessage(String message) {
         this.alertMessage(message, false);
     }
@@ -27,17 +24,6 @@ public class Util {
         }
     }
 
-//    public void alertMessage(String message, String titleMessage) {
-//        JOptionPane.showMessageDialog(null, message, titleMessage, JOptionPane.ERROR_MESSAGE);
-//    }
-//
-//    public void alertMessage(String message, String titleMessage, Component component) {
-//        JOptionPane.showMessageDialog(component, message, titleMessage, JOptionPane.ERROR_MESSAGE);
-//    }
-//
-//    public void alertMessage(String message, String titleMessage, Component component, int jop) {
-//        JOptionPane.showMessageDialog(component, message, titleMessage, jop);
-//    }
     // Centrar vista en la pantalla
     public void centerOnScreen(final Component viewComponent, final boolean absolute) {
         final int width = viewComponent.getWidth();
@@ -52,7 +38,7 @@ public class Util {
         viewComponent.setLocation(x, y);
     }
 
-// Imprimir tabla en terminal
+    // Imprimir tabla en terminal
     public void imprimirTabla(String[] encabezados, Object[][] data) {
         int[] columnWidths = new int[encabezados.length];
 

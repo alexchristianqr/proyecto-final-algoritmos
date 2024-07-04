@@ -1,11 +1,25 @@
 USE dbpostulantes;
 
+SELECT u.*, c.id AS 'id_candidato', c.id_persona FROM usuarios u JOIN candidatos c ON c.id_usuario = u.id AND c.estado = 'activo' WHERE u.username = 'alex.quispe@gmail.com' AND u.pwd = 'candidato2024' AND u.estado = 'activo' LIMIT 1;
+z
 -- -----------------
 -- Login de Usuarios
 -- -----------------
 SELECT * FROM usuarios;
 SELECT * FROM candidatos;
 SELECT * FROM reclutadores;
+SELECT * FROM personas;
+
+DESC reclutadores;
+
+SELECT u.*, p.*, c.*, c.id AS 'id_candidato'
+FROM usuarios u 
+JOIN candidatos c ON c.id_usuario = u.id AND c.estado = 'activo';
+
+SELECT * FROM candidatos c WHERE c.id = 1 LIMIT 1;
+SELECT * FROM candidatos c WHERE c.id = 1 LIMIT 1;
+SELECT * FROM personas p WHERE p.id = 1 LIMIT 1;
+-- WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1;
 
 SELECT 
 u.rol
@@ -76,8 +90,10 @@ e.titulo,
 e.empresa,
 e.sueldo,
 e.modalidad,
+e.descripcion,
 po.estado,
-CONCAT(pe.nombre, ' ',pe.apellido ) AS 'candidato',
+po.feedback,
+-- CONCAT(pe.nombre, ' ',pe.apellido ) AS 'candidato',
 po.fecha_creado
 FROM empleos e
 JOIN postulaciones po ON po.id_empleo = e.id 

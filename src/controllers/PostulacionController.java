@@ -2,7 +2,6 @@ package controllers;
 
 import core.services.ResponseService;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
 import models.FeedbackInfo;
 import models.Postulacion;
 import services.PostulacionService;
@@ -17,7 +16,7 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
     public ResponseService<Boolean> registrarFeedbackPersonalizado(Postulacion postulacion, FeedbackInfo feedbackInfo) {
         ResponseService<Boolean> response = new ResponseService<>();
 
-        boolean success = service.registrarFeedbackPersonalizado(postulacion,feedbackInfo);
+        boolean success = service.registrarFeedbackPersonalizado(postulacion, feedbackInfo);
 
         response.setSuccess(success);
         response.setMessage("feedback guardado correctamente");
@@ -26,14 +25,14 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
         return response;
     }
 
-    public ResponseService<Boolean> registrarPostulacion(Postulacion postulacion) {
-        ResponseService<Boolean> response = new ResponseService<>();
+    public ResponseService<String> registrarPostulacion(Postulacion postulacion) {
+        ResponseService<String> response = new ResponseService<>();
 
-        boolean success = service.registrarPostulacion(postulacion);
+        String result = service.registrarPostulacion(postulacion);
 
-        response.setSuccess(success);
-        response.setMessage("postulación actualizada");
-        response.setResult(null);
+        response.setSuccess(true);
+        response.setMessage("postulación creada correctamente");
+        response.setResult(result);
 
         return response;
     }
@@ -48,26 +47,17 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
         boolean success = service.actualizarPostulacion(postulacion, columna);
 
         response.setSuccess(success);
-        response.setMessage("postulación actualizada");
+        response.setMessage("postulación actualizada correctamente");
         response.setResult(null);
 
         return response;
     }
 
-    public DefaultTableModel tablaPostulaciones(String estado) {
-        DefaultTableModel modelo;
-        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Estado", "Candidato", "Fecha creado"};
-        Object[] data = new Object[columnNames.length];
-        modelo = new DefaultTableModel(null, columnNames);
-        modelo = service.tablaPostulaciones(modelo, data, estado);
-        return modelo;
-    }
-
-    public ResponseService<List<Object[]>> listarPostulaciones(String estado) {
+    public ResponseService<List<Object[]>> listarPostulaciones(Postulacion postulacion) {
         ResponseService<List<Object[]>> response = new ResponseService<>();
 
-        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Estado", "Candidato", "Fecha creado"};
-        List<Object[]> resultado = service.listarPostulaciones(columnNames, estado);
+        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Feedback", "Fecha Creado"};
+        List<Object[]> resultado = service.listarPostulaciones(columnNames, postulacion);
 
         response.setSuccess(true);
         response.setMessage("listado de postulaciones");

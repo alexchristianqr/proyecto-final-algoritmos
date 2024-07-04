@@ -3,8 +3,11 @@ package models;
 public class Usuario {
 
     private int idUsuario;
+    private int idPersona;
     private int idCandidato;
     private int idReclutador;
+    private Candidato candidato;
+    private Reclutador reclutador;
     private String username;
     private String password;
     private String perfil;
@@ -21,7 +24,10 @@ public class Usuario {
     public Usuario(Usuario usuario) {
         this.idUsuario = usuario.getIdUsuario();
         this.idCandidato = usuario.getIdCandidato();
+        this.candidato = usuario.getCandidato();
         this.idReclutador = usuario.getIdReclutador();
+        this.reclutador = usuario.getReclutador();
+        this.idPersona = usuario.getIdPersona();
         this.username = usuario.getUsername();
         this.password = usuario.getPassword();
         this.perfil = usuario.getPerfil();
@@ -31,6 +37,30 @@ public class Usuario {
         this.rol = usuario.getRol();
         this.fechaCreado = usuario.getFechaCreado();
         this.fechaActualizado = usuario.getFechaActualizado();
+    }
+
+    public Candidato getCandidato() {
+        return candidato;
+    }
+
+    public void setCandidato(Candidato candidato) {
+        this.candidato = candidato;
+    }
+
+    public Reclutador getReclutador() {
+        return reclutador;
+    }
+
+    public void setReclutador(Reclutador reclutador) {
+        this.reclutador = reclutador;
+    }
+
+    public int getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
     }
 
     public String getNombres() {

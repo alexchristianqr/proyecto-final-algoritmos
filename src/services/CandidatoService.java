@@ -112,7 +112,7 @@ public class CandidatoService extends BaseService {
         return candidatos;
     }
 
-    public boolean actualizarCandidato(Candidato candidato, String columna) {
+    public boolean actualizarCandidatoPorColumna(Candidato candidato, String columna) {
         boolean success = false;
 
         try {
@@ -132,6 +132,117 @@ public class CandidatoService extends BaseService {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+
+        return success;
+    }
+
+    public boolean actualizarCandidato(Candidato candidato) {
+        boolean success = false;
+
+        try {
+
+            StringBuilder querySQL_1 = new StringBuilder("UPDATE personas SET ");
+            List<Object> parametrosSQL_1 = new ArrayList<>();
+
+            // Añade solo los campos que tienen valores no nulos
+            if (candidato.getNombre() != null) {
+                querySQL_1.append("nombre = ?, ");
+                parametrosSQL_1.add(candidato.getNombre());
+            }
+            if (candidato.getApellidos() != null) {
+                querySQL_1.append("apellido = ?, ");
+                parametrosSQL_1.add(candidato.getApellidos());
+            }
+            if (candidato.getTipoDocumento() > 0) {
+                querySQL_1.append("tipo_documento = ?, ");
+                parametrosSQL_1.add(candidato.getTipoDocumento());
+            }
+            if (candidato.getNroDocumento() != null) {
+                querySQL_1.append("nrodocumento = ?, ");
+                parametrosSQL_1.add(candidato.getNroDocumento());
+            }
+            if (candidato.getSexo() != null) {
+                querySQL_1.append("sexo = ?, ");
+                parametrosSQL_1.add(candidato.getSexo());
+            }
+            if (candidato.getEstadoCivil()!= null) {
+                querySQL_1.append("estado_civil = ?, ");
+                parametrosSQL_1.add(candidato.getEstadoCivil());
+            }
+            if (candidato.getEstado() != null) {
+                querySQL_1.append("estado = ?, ");
+                parametrosSQL_1.add(candidato.getEstado());
+            }
+            if (candidato.getFechaNacimiento() != null) {
+                querySQL_1.append("fecha_nacimiento = ?, ");
+                parametrosSQL_1.add(candidato.getFechaNacimiento());
+            }
+            if (candidato.getTelefono() != null) {
+                querySQL_1.append("telefono = ?, ");
+                parametrosSQL_1.add(candidato.getTelefono());
+            }
+
+            // Elimina la última coma y espacio, y añade la cláusula WHERE
+            querySQL_1.setLength(querySQL_1.length() - 2);
+            querySQL_1.append(" WHERE id = ?;");
+            parametrosSQL_1.add(candidato.getIdPersona());
+
+            Object[] parametrosArray = parametrosSQL_1.toArray();
+            int actualizadoPersona = db.queryActualizar(querySQL_1.toString(), parametrosArray);
+
+            if (actualizadoPersona > 0) {
+                success = true;
+            }
+
+            //UPDATE personas SET nombre = ?, apellido = ?, tipo_documento = ?, nrodocumento = ?, sexo = ?, estado = ?, fecha_nacimiento = ?, telefono = ? WHERE id = ?;
+            StringBuilder querySQL_2 = new StringBuilder("UPDATE candidatos SET ");
+            List<Object> parametrosSQL_2 = new ArrayList<>();
+
+            if (candidato.getIdPersona() > 0) {
+                querySQL_2.append("id_persona = ?, ");
+                parametrosSQL_2.add(candidato.getIdPersona());
+            }
+            if (candidato.getIdUsuario() > 0) {
+                querySQL_2.append("id_usuario = ?, ");
+                parametrosSQL_2.add(candidato.getIdUsuario());
+            }
+            if (candidato.getAptitudes() != null) {
+                querySQL_2.append("aptitudes = ?, ");
+                parametrosSQL_2.add(candidato.getAptitudes());
+            }
+            if (candidato.getImagenPerfil() != null) {
+                querySQL_2.append("imagen_perfil = ?, ");
+                parametrosSQL_2.add(candidato.getImagenPerfil());
+            }
+            if (candidato.getPathCV() != null) {
+                querySQL_2.append("path_curriculum_vitae = ?, ");
+                parametrosSQL_2.add(candidato.getPathCV());
+            }
+            if (candidato.getPathCertificadoTrabajo() != null) {
+                querySQL_2.append("path_certificado_trabajo = ?, ");
+                parametrosSQL_2.add(candidato.getPathCertificadoTrabajo());
+            }
+            if (candidato.getPathAntecedentePolicial() != null) {
+                querySQL_2.append("path_antecendente_policial = ?, ");
+                parametrosSQL_2.add(candidato.getPathAntecedentePolicial());
+            }
+
+            querySQL_2.setLength(querySQL_2.length() - 2);
+            querySQL_2.append(" WHERE id = ?");
+            parametrosSQL_2.add(candidato.getIdCandidato());
+
+            Object[] parametrosArray2 = parametrosSQL_2.toArray(Object[]::new);
+            int actualizadoCandaito = db.queryActualizar(querySQL_2.toString(), parametrosArray2);
+
+            if (actualizadoCandaito > 0) {
+                success = true;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            db.cerrarConsulta();
         }
 
         return success;

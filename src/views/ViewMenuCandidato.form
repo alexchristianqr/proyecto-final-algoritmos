@@ -116,13 +116,13 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="DNI" max="32767" attributes="0"/>
+                                          <Component id="txtDNI" max="32767" attributes="0"/>
                                           <Component id="txtNombres" pref="160" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="48" pref="48" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="FechaNacimiento" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
+                                          <Component id="txtFechaNacimiento" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
                                           <Component id="txtApellidos" alignment="1" min="-2" pref="159" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -184,14 +184,14 @@
                                   </Group>
                                   <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="Genero" alignment="0" pref="140" max="32767" attributes="0"/>
+                                  <Component id="cbxGenero" alignment="0" pref="140" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Celular" max="32767" attributes="0"/>
-                                  <Component id="EstadoCivil" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                                  <Component id="txtTelefono" max="32767" attributes="0"/>
+                                  <Component id="cbxEstadoCivil" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                           </Group>
@@ -257,7 +257,7 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="QuitarExperiencia" min="-2" pref="86" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jButton4" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                  <Component id="btnActualizarCandidato" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -286,12 +286,12 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="DNI" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtDNI" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="FechaNacimiento" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtFechaNacimiento" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -302,17 +302,17 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="Genero" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbxGenero" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="Celular" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTelefono" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="EstadoCivil" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbxEstadoCivil" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -406,7 +406,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                              <Component id="jButton4" min="-2" pref="49" max="-2" attributes="0"/>
+                              <Component id="btnActualizarCandidato" min="-2" pref="49" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -455,19 +455,20 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtEmail">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="Celular">
+            <Component class="javax.swing.JTextField" name="txtTelefono">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="Genero">
+            <Component class="javax.swing.JComboBox" name="cbxGenero">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
@@ -504,21 +505,21 @@
                 <Property name="text" type="java.lang.String" value="Estado Civil"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="DNI">
+            <Component class="javax.swing.JTextField" name="txtDNI">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="FechaNacimiento">
+            <Component class="javax.swing.JTextField" name="txtFechaNacimiento">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="EstadoCivil">
+            <Component class="javax.swing.JComboBox" name="cbxEstadoCivil">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
@@ -684,7 +685,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AgregarAptitudActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton4">
+            <Component class="javax.swing.JButton" name="btnActualizarCandidato">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="66" type="rgb"/>
@@ -698,7 +699,7 @@
                 <Property name="text" type="java.lang.String" value="GUARDAR"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarCandidatoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="QuitarExperiencia">
@@ -856,11 +857,11 @@
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="4">
-                        <Column editable="true" title="T&#xed;tulo" type="java.lang.Object"/>
-                        <Column editable="true" title="Descripci&#xf3;n" type="java.lang.Object"/>
-                        <Column editable="true" title="Fecha Inicio" type="java.lang.Object"/>
-                        <Column editable="true" title="Fecha Final" type="java.lang.Object"/>
-                        <Column editable="true" title="Grado" type="java.lang.Object"/>
+                        <Column editable="false" title="T&#xed;tulo" type="java.lang.Object"/>
+                        <Column editable="false" title="Descripci&#xf3;n" type="java.lang.Object"/>
+                        <Column editable="false" title="Fecha Inicio" type="java.lang.Object"/>
+                        <Column editable="false" title="Fecha Final" type="java.lang.Object"/>
+                        <Column editable="false" title="Grado" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -913,11 +914,11 @@
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="4">
-                        <Column editable="true" title="T&#xed;tulo" type="java.lang.Object"/>
-                        <Column editable="true" title="Descripci&#xf3;n" type="java.lang.Object"/>
-                        <Column editable="true" title="Empresa" type="java.lang.Object"/>
-                        <Column editable="true" title="Fecha Inicio" type="java.lang.Object"/>
-                        <Column editable="true" title="Fecha Final" type="java.lang.Object"/>
+                        <Column editable="false" title="T&#xed;tulo" type="java.lang.Object"/>
+                        <Column editable="false" title="Descripci&#xf3;n" type="java.lang.Object"/>
+                        <Column editable="false" title="Empresa" type="java.lang.Object"/>
+                        <Column editable="false" title="Fecha Inicio" type="java.lang.Object"/>
+                        <Column editable="false" title="Fecha Final" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -1044,8 +1045,9 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txtAreaAptitudes">
+                <Component class="javax.swing.JTextArea" name="txtAptitudes">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e5" green="e5" red="e5" type="rgb"/>
                     </Property>
@@ -1141,18 +1143,30 @@
                       <Color blue="e5" green="e5" red="e5" type="rgb"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="7" rowCount="0">
+                      <Table columnCount="9" rowCount="0">
+                        <Column editable="false" title="C&#xf3;digo" type="java.lang.Object"/>
                         <Column editable="false" title="T&#xed;tulo" type="java.lang.Object"/>
                         <Column editable="false" title="Empresa" type="java.lang.Object"/>
-                        <Column editable="true" title="Sueldo" type="java.lang.Object"/>
+                        <Column editable="false" title="Sueldo" type="java.lang.Object"/>
                         <Column editable="false" title="Modalidad" type="java.lang.Object"/>
                         <Column editable="false" title="Descripcion" type="java.lang.Object"/>
                         <Column editable="false" title="Estado" type="java.lang.Object"/>
                         <Column editable="false" title="Feedback" type="java.lang.Object"/>
+                        <Column editable="true" title="Fecha Creado" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                           <Title/>
                           <Editor/>

@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
 import models.FeedbackInfo;
 import models.Postulacion;
 
@@ -15,28 +14,39 @@ public class PostulacionService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public boolean registrarPostulacion(Postulacion postulacion) {
-        boolean success = false;
+    public String registrarPostulacion(Postulacion postulacion) {
+        String response = "";
 
         try {
             if (postulacion.getEstado().isEmpty() || postulacion.getEstado().isBlank()) {
                 util.alertMessage("[estado] es requerido");
             }
 
-            querySQL_1 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado) VALUES (?,?,?)";
-            Object[] parametrosSQL_1 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
-            int creado = db.queryInsertar(querySQL_1, parametrosSQL_1);
+            querySQL_1 = "SELECT p.estado FROM postulaciones p WHERE p.id_candidato = ? AND p.id_empleo = ? AND p.estado IN ('postulado', 'bloqueado', 'contactado', 'entrevistado', 'contratado') LIMIT 1";
+            Object[] parametrosSQL_1 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo()};
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
-            if (creado > 0) {
-                db.cerrarConsulta();
-                success = true;
+            String estado = "";
+            if (rs.next()) {
+                estado = rs.getString("estado");
+                response = estado;
+            } else {
+                querySQL_2 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado) VALUES (?,?,?)";
+                Object[] parametrosSQL_2 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
+                int creado = db.queryInsertar(querySQL_2, parametrosSQL_2);
+
+                if (creado > 0) {
+                    response = "creado";// postulado
+                }
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            db.cerrarConsulta();
         }
 
-        return success;
+        return response;
     }
 
     public boolean actualizarPostulacion(Postulacion postulacion, String columna) {
@@ -120,47 +130,24 @@ public class PostulacionService extends BaseService {
         return success;
     }
 
-    public DefaultTableModel tablaPostulaciones(DefaultTableModel modelo, Object[] data, String estado) {
-        querySQL_1 = "SELECT e.id, e.titulo, e.empresa, e.sueldo, e.modalidad, po.estado, CONCAT(pe.nombre, ' ', pe.apellido) AS 'candidato', po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato JOIN personas pe ON pe.id = c.id_persona WHERE po.id_candidato = ?;";
-        Object[] parametrosSQL_1 = {auth.getIdCandidato()};
-        ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
-
-        try {
-            while (rs.next()) {
-                data[0] = rs.getInt("id");
-                data[1] = rs.getString("titulo");
-                data[2] = rs.getString("empresa");
-                data[3] = rs.getString("sueldo");
-                data[4] = rs.getString("modalidad");
-                data[5] = rs.getString("estado");
-                data[6] = rs.getString("candidato");
-                data[7] = rs.getString("fecha_creado");
-                modelo.addRow(data);
-            }
-
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        db.cerrarConsulta();
-
-        return modelo;
-    }
-
-    public List listarPostulaciones(String[] columnNames, String estado) {
-
+    public List listarPostulaciones(String[] columnNames, Postulacion postulacion) {
         List<Object[]> lista = new ArrayList<>();
 
         try {
-            Object[] parametrosSQL_1 = new Object[2];
+            List<Object> parametrosList = new ArrayList<>();
 
-            querySQL_1 = "SELECT e.id, e.titulo, e.empresa, e.sueldo, e.modalidad, po.estado, CONCAT(pe.nombre, ' ', pe.apellido) AS 'candidato', po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato JOIN personas pe ON pe.id = c.id_persona WHERE po.id_candidato = ? ";
-            parametrosSQL_1[0] = auth.getIdCandidato();
+            querySQL_1 = "SELECT po.id, e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, po.estado, po.feedback, po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato WHERE po.id_candidato = ? ";
+            parametrosList.add(postulacion.getIdCandidato());
 
-            if (estado != null) {
+            if (postulacion.getEstado() != null) {
                 querySQL_1 += " AND po.estado = ? ";
-                parametrosSQL_1[1] = estado;
+                parametrosList.add(postulacion.getEstado());
             }
+
+            querySQL_1 += " ORDER BY po.id DESC; ";
+
+            // Convertimos la lista a un array
+            Object[] parametrosSQL_1 = parametrosList.toArray(Object[]::new);
 
             ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
@@ -176,9 +163,10 @@ public class PostulacionService extends BaseService {
                 data[2] = rs.getString("empresa");
                 data[3] = rs.getString("sueldo");
                 data[4] = rs.getString("modalidad");
-                data[5] = rs.getString("estado");
-                data[6] = rs.getString("candidato");
-                data[7] = rs.getString("fecha_creado");
+                data[5] = rs.getString("descripcion");
+                data[6] = rs.getString("estado");
+                data[7] = rs.getString("feedback");
+                data[8] = rs.getString("fecha_creado");
 
                 // Agregar el arreglo de datos a la lista de contenido de datos
                 lista.add(data);
@@ -189,9 +177,9 @@ public class PostulacionService extends BaseService {
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
+        } finally {
+            db.cerrarConsulta();
         }
-
-        db.cerrarConsulta();
 
         return lista;
     }

@@ -5,7 +5,6 @@
 package views;
 
 import controllers.UsuarioController;
-import core.forms.BaseJdialog;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
@@ -17,8 +16,6 @@ public class Login extends javax.swing.JFrame {
     Util util = new Util();
     ViewMenuCandidato viewMenuCandidato;
     ViewMenuReclutador viewMenuReclutador;
-    RegistroUsuario registroUsuario = new RegistroUsuario();
-
     UsuarioController usuarioController = new UsuarioController();
 
     /**
@@ -28,7 +25,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         txtUsername.setText("alex.quispe@gmail.com");
         txtPwd.setText("candidato2024");
-        
+
     }
 
     private char[] pwdToArray(String pwd) {
@@ -203,7 +200,6 @@ public class Login extends javax.swing.JFrame {
 
                 // Guardar el usuario en el ThreadLocal
                 //UsuarioThreadLocal.set(usuario);
-
             } else {
                 util.alertMessage("Usuario o contraseña inválida. Inténtalo nuevamente.");
                 btnLogin.setEnabled(true);
@@ -212,7 +208,7 @@ public class Login extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             util.alertMessage("Ocurrió un error. Por favor, inténtalo nuevamente.");
-            
+
             btnLogin.setEnabled(true);
             txtPwd.setText("");
             txtPwd.requestFocus();
@@ -223,6 +219,8 @@ public class Login extends javax.swing.JFrame {
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
         // TODO add your handling code here:
         this.setVisible(true);
+        RegistroUsuario registroUsuario = new RegistroUsuario(this);
+        util.centerOnScreen(registroUsuario, true);
         registroUsuario.setVisible(true);
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 

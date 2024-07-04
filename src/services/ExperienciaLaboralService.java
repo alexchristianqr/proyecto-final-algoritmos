@@ -27,12 +27,13 @@ public class ExperienciaLaboralService extends BaseService {
             int creado = db.queryInsertar(querySQL_2, parametrosSQL_2);
 
             if (creado > 0) {
-                db.cerrarConsulta();
                 success = true;
             }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            db.cerrarConsulta();
         }
 
         return success;

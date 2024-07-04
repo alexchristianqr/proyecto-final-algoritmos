@@ -82,14 +82,26 @@ public class CandidatoController extends BaseController<Candidato, CandidatoServ
 
         return response;
     }
-    
-    public ResponseService<Boolean> actualizarCandidato(Candidato candidato, String columna) {
+
+    public ResponseService<Boolean> actualizarCandidato(Candidato candidato) {
         ResponseService<Boolean> response = new ResponseService<>();
 
-        boolean success = candidatoService.actualizarCandidato(candidato, columna);
+        boolean success = candidatoService.actualizarCandidato(candidato);
 
         response.setSuccess(success);
         response.setMessage("candidato actualizado correctamente");
+        response.setResult(null);
+
+        return response;
+    }
+
+    public ResponseService<Boolean> actualizarCandidatoPorColumna(Candidato candidato, String columna) {
+        ResponseService<Boolean> response = new ResponseService<>();
+
+        boolean success = candidatoService.actualizarCandidatoPorColumna(candidato, columna);
+
+        response.setSuccess(success);
+        response.setMessage("columna del candidato actualizado correctamente");
         response.setResult(null);
 
         return response;
