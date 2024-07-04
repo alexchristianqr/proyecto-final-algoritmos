@@ -120,9 +120,6 @@ public class Main {
 
     /* POSTULACION */
     public static void testRegistrarPostulacion() {
-        // INICIO DE SESION DE USUARIO CANDIDATO
-        testLogin("alex.quispe@gmail.com", "candidato2024");
-
         PostulacionController postulacionController = new PostulacionController();
 
         // CREAR INSTANCIA
@@ -132,7 +129,7 @@ public class Main {
         postulacion.setEstado("postulado");
 
         // ACCION POSTULAR A UN EMPLEO
-        ResponseService<Boolean> response = postulacionController.registrarPostulacion(postulacion);
+        ResponseService<String> response = postulacionController.registrarPostulacion(postulacion);
 
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -140,9 +137,6 @@ public class Main {
     }
 
     public static void testRegistrarFeedbackPersonalizado() {
-        // INICIO DE SESION
-        testLogin("alex.quispe@gmail.com", "candidato2024");
-
         PostulacionController postulacionController = new PostulacionController();
 
         // CREAR INSTANCIA

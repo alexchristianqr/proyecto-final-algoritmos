@@ -25,14 +25,14 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
         return response;
     }
 
-    public ResponseService<Boolean> registrarPostulacion(Postulacion postulacion) {
-        ResponseService<Boolean> response = new ResponseService<>();
+    public ResponseService<String> registrarPostulacion(Postulacion postulacion) {
+        ResponseService<String> response = new ResponseService<>();
 
-        boolean success = service.registrarPostulacion(postulacion);
+        String result = service.registrarPostulacion(postulacion);
 
-        response.setSuccess(success);
-        response.setMessage("postulación actualizada correctamente");
-        response.setResult(null);
+        response.setSuccess(true);
+        response.setMessage("postulación creada correctamente");
+        response.setResult(result);
 
         return response;
     }

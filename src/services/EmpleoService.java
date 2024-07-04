@@ -20,12 +20,12 @@ public class EmpleoService extends BaseService {
             Object[] parametrosSQL_1 = {empleo.getIdReclutador(), empleo.getTitulo(), empleo.getEmpresa(), empleo.getSueldo(), empleo.getModalidad(), empleo.getDescripcion(), empleo.getEstado()};
             db.queryInsertar(querySQL_1, parametrosSQL_1);
 
-            db.cerrarConsulta();
-
             response = true;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            db.cerrarConsulta();
         }
 
         return response;

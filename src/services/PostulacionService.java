@@ -14,28 +14,39 @@ public class PostulacionService extends BaseService {
         db = new MysqlDBService();
     }
 
-    public boolean registrarPostulacion(Postulacion postulacion) {
-        boolean success = false;
+    public String registrarPostulacion(Postulacion postulacion) {
+        String response = "";
 
         try {
             if (postulacion.getEstado().isEmpty() || postulacion.getEstado().isBlank()) {
                 util.alertMessage("[estado] es requerido");
             }
 
-            querySQL_1 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado) VALUES (?,?,?)";
-            Object[] parametrosSQL_1 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
-            int creado = db.queryInsertar(querySQL_1, parametrosSQL_1);
+            querySQL_1 = "SELECT p.estado FROM postulaciones p WHERE p.id_candidato = ? AND p.id_empleo = ? AND p.estado IN ('postulado', 'bloqueado', 'contactado', 'entrevistado', 'contratado') LIMIT 1";
+            Object[] parametrosSQL_1 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo()};
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
-            if (creado > 0) {
-                db.cerrarConsulta();
-                success = true;
+            String estado = "";
+            if (rs.next()) {
+                estado = rs.getString("estado");
+                response = estado;
+            } else {
+                querySQL_2 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado) VALUES (?,?,?)";
+                Object[] parametrosSQL_2 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
+                int creado = db.queryInsertar(querySQL_2, parametrosSQL_2);
+
+                if (creado > 0) {
+                    response = "creado";// postulado
+                }
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            db.cerrarConsulta();
         }
 
-        return success;
+        return response;
     }
 
     public boolean actualizarPostulacion(Postulacion postulacion, String columna) {
@@ -132,7 +143,7 @@ public class PostulacionService extends BaseService {
                 querySQL_1 += " AND po.estado = ? ";
                 parametrosList.add(postulacion.getEstado());
             }
-            
+
             querySQL_1 += " ORDER BY po.id DESC; ";
 
             // Convertimos la lista a un array
