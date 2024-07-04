@@ -34,9 +34,9 @@ public class AuthService extends BaseService {
 
             switch (rol) {
                 case "candidato" ->
-                    querySQL_2 = "SELECT u.*, c.id AS 'id_candidato' FROM usuarios u JOIN candidatos c ON c.id_usuario = u.id AND c.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
+                    querySQL_2 = "SELECT u.*, c.id AS 'id_candidato', c.id_persona FROM usuarios u JOIN candidatos c ON c.id_usuario = u.id AND c.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
                 case "reclutador" ->
-                    querySQL_2 = "SELECT u.*, r.id AS 'id_reclutador' FROM usuarios u JOIN reclutadores r ON r.id_usuario = u.id AND r.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
+                    querySQL_2 = "SELECT u.*, r.id AS 'id_reclutador', r.id_persona FROM usuarios u JOIN reclutadores r ON r.id_usuario = u.id AND r.estado = 'activo' WHERE u.username = ? AND u.pwd = ? AND u.estado = 'activo' LIMIT 1; ";
                 default ->
                     throw new RuntimeException(new Error("rol no permitido"));
             }
@@ -60,6 +60,7 @@ public class AuthService extends BaseService {
                         throw new RuntimeException(new Error("rol no permitido"));
                 }
 
+                usuario.setIdPersona(rs.getInt("id_persona"));
                 usuario.setNombres(rs.getString("nombres"));
                 usuario.setApellidos(rs.getString("apellidos"));
                 usuario.setRol(rs.getString("rol"));

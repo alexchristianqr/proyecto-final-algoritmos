@@ -5,6 +5,7 @@ public class Usuario {
     private int idUsuario;
     private int idCandidato;
     private int idReclutador;
+    private int idPersona;
     private String username;
     private String password;
     private String perfil;
@@ -22,6 +23,7 @@ public class Usuario {
         this.idUsuario = usuario.getIdUsuario();
         this.idCandidato = usuario.getIdCandidato();
         this.idReclutador = usuario.getIdReclutador();
+        this.idPersona = usuario.getIdPersona();
         this.username = usuario.getUsername();
         this.password = usuario.getPassword();
         this.perfil = usuario.getPerfil();
@@ -31,6 +33,14 @@ public class Usuario {
         this.rol = usuario.getRol();
         this.fechaCreado = usuario.getFechaCreado();
         this.fechaActualizado = usuario.getFechaActualizado();
+    }
+
+    public int getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
     }
 
     public String getNombres() {

@@ -951,6 +951,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             Candidato candidato = new Candidato();
 
             // Candidato
+            candidato.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
+            candidato.setIdPersona(UsuarioThreadLocal.get().getIdPersona());
             candidato.setNombre(nombres);
             candidato.setApellidos(apellidos);
 
@@ -960,11 +962,13 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             candidato.setSexo(género);
             candidato.setEstadoCivil(estado_civil);
 
-            candidatoController.registrarCandidato(candidato);
+            candidatoController.actualizarCandidato(candidato);
             System.out.println("Candidato creado exitosamente.");
 
+            util.alertMessage("actualizado correctamente");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "NO SE PUDO GUARDAR TU USUARIO" + e);
+            util.alertMessage("NO SE PUDO GUARDAR TU USUARIO", true);
+            throw new RuntimeException(e);
         }
 
 

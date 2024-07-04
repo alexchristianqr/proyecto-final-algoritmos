@@ -40,6 +40,7 @@ public class Main {
         /* CANDIDATO */
         //testRegistrarCandidato();
         //testActualizarCandidato();
+        //testActualizarCandidatoPorColumna();
         //testRegistrarCandidato();
         //testRegistrarReclutador();
         //testReporte();
@@ -275,9 +276,29 @@ public class Main {
 
         Candidato candidato = new Candidato();
         candidato.setIdCandidato(1);
+        candidato.setNombre("Hola");
+        candidato.setIdPersona(1);
+        //candidato.setIdUsuario(0);
+        candidato.setAptitudes("Java, SQL");
+        candidato.setImagenPerfil("profile_yo.jpg");
+        candidato.setPathCV("otro.pdf");
+        candidato.setPathCertificadoTrabajo("certificado_trabajo.pdf");
+        candidato.setPathAntecedentePolicial("antecedente_policial.pdf");
+
+        ResponseService<Boolean> response = candidatoController.actualizarCandidato(candidato);
+        System.out.println("success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testActualizarCandidatoPorColumna() {
+        CandidatoController candidatoController = new CandidatoController();
+
+        Candidato candidato = new Candidato();
+        candidato.setIdCandidato(1);
         candidato.setPathCV("/cv.pdf");
 
-        ResponseService<Boolean> response = candidatoController.actualizarCandidato(candidato, "path_curriculum_vitae");
+        ResponseService<Boolean> response = candidatoController.actualizarCandidatoPorColumna(candidato, "path_curriculum_vitae");
         System.out.println("success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
