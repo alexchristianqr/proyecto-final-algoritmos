@@ -123,16 +123,18 @@ public class PostulacionService extends BaseService {
         List<Object[]> lista = new ArrayList<>();
 
         try {
-            int tamano = 2;
-            Object[] parametrosSQL_1 = new Object[tamano];
+            List<Object> parametrosList = new ArrayList<>();
 
             querySQL_1 = "SELECT po.id, e.titulo, e.empresa, e.sueldo, e.modalidad, po.estado, po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato WHERE po.id_candidato = ? ";
-            parametrosSQL_1[0] = postulacion.getIdCandidato();
+            parametrosList.add(postulacion.getIdCandidato());
 
-            if (!postulacion.getEstado().isEmpty()) {
+            if (postulacion.getEstado() != null) {
                 querySQL_1 += " AND po.estado = ? ";
-                parametrosSQL_1[1] = postulacion.getEstado();
+                parametrosList.add(postulacion.getEstado());
             }
+
+            // Convertimos la lista a un array
+            Object[] parametrosSQL_1 = parametrosList.toArray(Object[]::new);
 
             ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 

@@ -34,7 +34,7 @@ public class Main {
         //testLogin("alex.quispe@gmail.com", "candidato2024");
         //testLogout();
         /* POSTULACION */
-        testListarPostulaciones();
+        //testListarPostulaciones();
         //testActualizarPostulacion();
         //testRegistrarPostulacion();
         /* CANDIDATO */
@@ -172,7 +172,7 @@ public class Main {
 
     public static void testListarPostulaciones() {
         PostulacionController postulacionController = new PostulacionController();
-        
+
         Postulacion postulacion = new Postulacion();
         postulacion.setIdCandidato(2);
         postulacion.setEstado("postulado");
