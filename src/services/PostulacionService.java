@@ -125,7 +125,7 @@ public class PostulacionService extends BaseService {
         try {
             List<Object> parametrosList = new ArrayList<>();
 
-            querySQL_1 = "SELECT po.id, e.titulo, e.empresa, e.sueldo, e.modalidad, po.estado, po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato WHERE po.id_candidato = ? ";
+            querySQL_1 = "SELECT po.id, e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, po.estado, po.feedback, po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato WHERE po.id_candidato = ? ";
             parametrosList.add(postulacion.getIdCandidato());
 
             if (postulacion.getEstado() != null) {
@@ -150,8 +150,10 @@ public class PostulacionService extends BaseService {
                 data[2] = rs.getString("empresa");
                 data[3] = rs.getString("sueldo");
                 data[4] = rs.getString("modalidad");
-                data[5] = rs.getString("estado");
-                data[6] = rs.getString("fecha_creado");
+                data[5] = rs.getString("descripcion");
+                data[6] = rs.getString("estado");
+                data[7] = rs.getString("feedback");
+                data[8] = rs.getString("fecha_creado");
 
                 // Agregar el arreglo de datos a la lista de contenido de datos
                 lista.add(data);

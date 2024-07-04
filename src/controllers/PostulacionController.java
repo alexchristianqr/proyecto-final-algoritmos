@@ -56,7 +56,7 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
     public ResponseService<List<Object[]>> listarPostulaciones(Postulacion postulacion) {
         ResponseService<List<Object[]>> response = new ResponseService<>();
 
-        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Estado", "Fecha creado"};
+        String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Feedback", "Fecha Creado"};
         List<Object[]> resultado = service.listarPostulaciones(columnNames, postulacion);
 
         response.setSuccess(true);
