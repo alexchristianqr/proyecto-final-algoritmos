@@ -7,7 +7,6 @@ import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Candidato;
 import models.EstudioAcademico;
@@ -33,15 +32,19 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     }
 
     final public void mostrarDatosBasicos() {
-
-        txtNombres.setText(UsuarioThreadLocal.get().getNombres());
-        txtApellidos.setText(UsuarioThreadLocal.get().getApellidos());
+        txtNombres.setText(UsuarioThreadLocal.get().getCandidato().getNombre());
+        txtApellidos.setText(UsuarioThreadLocal.get().getCandidato().getApellidos());
         txtEmail.setText(UsuarioThreadLocal.get().getUsername());
+        cbxGenero.setSelectedItem(UsuarioThreadLocal.get().getCandidato().getSexo());
+        cbxEstadoCivil.setSelectedItem(UsuarioThreadLocal.get().getCandidato().getEstadoCivil());
+        txtAptitudes.setText(UsuarioThreadLocal.get().getCandidato().getAptitudes());
+        txtDNI.setText(UsuarioThreadLocal.get().getCandidato().getNroDocumento());
+        txtFechaNacimiento.setText(UsuarioThreadLocal.get().getCandidato().getFechaNacimiento());
+        txtTelefono.setText(UsuarioThreadLocal.get().getCandidato().getTelefono());
     }
 
     final public void inicializarComponente() {
         btnPostularEmpleos.setEnabled(false);
-
     }
 
     final public void listarEstudiosAcademicos() {
@@ -144,15 +147,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         txtNombres = new javax.swing.JTextField();
         txtApellidos = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        Celular = new javax.swing.JTextField();
-        Genero = new javax.swing.JComboBox<>();
+        txtTelefono = new javax.swing.JTextField();
+        cbxGenero = new javax.swing.JComboBox<>();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        DNI = new javax.swing.JTextField();
-        FechaNacimiento = new javax.swing.JTextField();
-        EstadoCivil = new javax.swing.JComboBox<>();
+        txtDNI = new javax.swing.JTextField();
+        txtFechaNacimiento = new javax.swing.JTextField();
+        cbxEstadoCivil = new javax.swing.JComboBox<>();
         jLabel28 = new javax.swing.JLabel();
         Estudios = new javax.swing.JComboBox<>();
         jLabel29 = new javax.swing.JLabel();
@@ -170,7 +173,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         Aptitudes = new javax.swing.JTextField();
         AgregarAptitud = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnActualizarCandidato = new javax.swing.JButton();
         QuitarExperiencia = new javax.swing.JButton();
         QuitarEstudios = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -197,7 +200,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtEmpresa = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txtAreaAptitudes = new javax.swing.JTextArea();
+        txtAptitudes = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jTextField13 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
@@ -235,12 +238,13 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         txtApellidos.setBackground(new java.awt.Color(229, 229, 229));
 
+        txtEmail.setEditable(false);
         txtEmail.setBackground(new java.awt.Color(229, 229, 229));
 
-        Celular.setBackground(new java.awt.Color(229, 229, 229));
+        txtTelefono.setBackground(new java.awt.Color(229, 229, 229));
 
-        Genero.setBackground(new java.awt.Color(229, 229, 229));
-        Genero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "M", "F" }));
+        cbxGenero.setBackground(new java.awt.Color(229, 229, 229));
+        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "M", "F" }));
 
         jLabel24.setText("DNI");
 
@@ -250,12 +254,12 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jLabel27.setText("Estado Civil");
 
-        DNI.setBackground(new java.awt.Color(229, 229, 229));
+        txtDNI.setBackground(new java.awt.Color(229, 229, 229));
 
-        FechaNacimiento.setBackground(new java.awt.Color(229, 229, 229));
+        txtFechaNacimiento.setBackground(new java.awt.Color(229, 229, 229));
 
-        EstadoCivil.setBackground(new java.awt.Color(229, 229, 229));
-        EstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "soltero", "casado", "viudo" }));
+        cbxEstadoCivil.setBackground(new java.awt.Color(229, 229, 229));
+        cbxEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "soltero", "casado", "viudo" }));
 
         jLabel28.setText("Grado");
 
@@ -321,13 +325,13 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(102, 102, 102));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("GUARDAR");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizarCandidato.setBackground(new java.awt.Color(102, 102, 102));
+        btnActualizarCandidato.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnActualizarCandidato.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizarCandidato.setText("GUARDAR");
+        btnActualizarCandidato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnActualizarCandidatoActionPerformed(evt);
             }
         });
 
@@ -415,7 +419,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             new String [] {
                 "Título", "Descripción", "Fecha Inicio", "Fecha Final", "Grado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(tblListaEstudiosAcademicos);
 
         TablaExperiencia.setBackground(new java.awt.Color(229, 229, 229));
@@ -429,7 +441,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             new String [] {
                 "Título", "Descripción", "Empresa", "Fecha Inicio", "Fecha Final"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane6.setViewportView(TablaExperiencia);
 
         QuitarAptitud.setBackground(new java.awt.Color(102, 102, 102));
@@ -464,10 +484,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         txtEmpresa.setBackground(new java.awt.Color(226, 226, 226));
 
-        txtAreaAptitudes.setBackground(new java.awt.Color(229, 229, 229));
-        txtAreaAptitudes.setColumns(20);
-        txtAreaAptitudes.setRows(5);
-        jScrollPane2.setViewportView(txtAreaAptitudes);
+        txtAptitudes.setEditable(false);
+        txtAptitudes.setBackground(new java.awt.Color(229, 229, 229));
+        txtAptitudes.setColumns(20);
+        txtAptitudes.setRows(5);
+        jScrollPane2.setViewportView(txtAptitudes);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -494,12 +515,12 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addComponent(jLabel19))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(DNI)
+                                    .addComponent(txtDNI)
                                     .addComponent(txtNombres, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
                                 .addGap(48, 48, 48)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel25)
-                                    .addComponent(FechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtApellidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -546,13 +567,13 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addComponent(jLabel20))
                             .addComponent(jLabel26)
                             .addComponent(txtEmail)
-                            .addComponent(Genero, 0, 140, Short.MAX_VALUE))
+                            .addComponent(cbxGenero, 0, 140, Short.MAX_VALUE))
                         .addGap(72, 72, 72)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel21)
                             .addComponent(jLabel27)
-                            .addComponent(Celular)
-                            .addComponent(EstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTelefono)
+                            .addComponent(cbxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel23)
@@ -600,7 +621,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addComponent(AgregarExperiencia)
                                 .addGap(18, 18, 18)
                                 .addComponent(QuitarExperiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnActualizarCandidato, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(61, 61, 61))
         );
         jPanel1Layout.setVerticalGroup(
@@ -622,11 +643,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel24)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel25)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(FechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel20)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -634,15 +655,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(jLabel26)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(Genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel21)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Celular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel27)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(EstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -715,7 +736,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnActualizarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -935,16 +956,16 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_QuitarEstudiosActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnActualizarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarCandidatoActionPerformed
         // TODO add your handling code here:
         String nombres = txtNombres.getText();
         String apellidos = txtApellidos.getText();
         String email = txtEmail.getText();
-        String celular = Celular.getText();
-        String dni = DNI.getText();
-        String fecha_nac = FechaNacimiento.getText();
-        String género = Genero.getSelectedItem().toString();
-        String estado_civil = EstadoCivil.getSelectedItem().toString();
+        String celular = txtTelefono.getText();
+        String dni = txtDNI.getText();
+        String fechaNacimiento = txtFechaNacimiento.getText();
+        String sexo = cbxGenero.getSelectedItem().toString();
+        String estadoCivil = cbxEstadoCivil.getSelectedItem().toString();
 
         try {
             CandidatoController candidatoController = new CandidatoController();
@@ -958,9 +979,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
             candidato.setTelefono(celular);
             candidato.setNroDocumento(dni);
-            candidato.setFechaNacimiento(fecha_nac);
-            candidato.setSexo(género);
-            candidato.setEstadoCivil(estado_civil);
+            candidato.setFechaNacimiento(fechaNacimiento);
+            candidato.setSexo(sexo);
+            candidato.setEstadoCivil(estadoCivil);
 
             candidatoController.actualizarCandidato(candidato);
             System.out.println("Candidato creado exitosamente.");
@@ -972,7 +993,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         }
 
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnActualizarCandidatoActionPerformed
 
     private void btnRegistrarEstudioAcademicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEstudioAcademicoActionPerformed
 
@@ -1192,27 +1213,24 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JButton AgregarCurriculum;
     private javax.swing.JButton AgregarExperiencia;
     private javax.swing.JTextField Aptitudes;
-    private javax.swing.JTextField Celular;
     private javax.swing.JLabel CurriculumArchivo;
-    private javax.swing.JTextField DNI;
-    private javax.swing.JComboBox<String> EstadoCivil;
     private javax.swing.JComboBox<String> Estudios;
     private javax.swing.JTextField EstudiosFechaFin;
     private javax.swing.JTextField EstudiosFechaInicio;
     private javax.swing.JTextField Experiencia;
     private javax.swing.JTextField ExperienciaFechaFin;
     private javax.swing.JTextField ExperienciaFechaInicio;
-    private javax.swing.JTextField FechaNacimiento;
-    private javax.swing.JComboBox<String> Genero;
     private javax.swing.JButton QuitarAptitud;
     private javax.swing.JButton QuitarCertificado;
     private javax.swing.JButton QuitarCurriculum;
     private javax.swing.JButton QuitarEstudios;
     private javax.swing.JButton QuitarExperiencia;
     private javax.swing.JTable TablaExperiencia;
+    private javax.swing.JButton btnActualizarCandidato;
     private javax.swing.JButton btnPostularEmpleos;
     private javax.swing.JButton btnRegistrarEstudioAcademico;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> cbxEstadoCivil;
+    private javax.swing.JComboBox<String> cbxGenero;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
@@ -1259,14 +1277,17 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JTable tblListaEstudiosAcademicos;
     private javax.swing.JTable tblMisPostulaciones;
     private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextArea txtAreaAptitudes;
+    private javax.swing.JTextArea txtAptitudes;
+    private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtDescripcionEL;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextArea txtEmpleoDescripcion;
     private javax.swing.JTextField txtEmpresa;
+    private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextArea txtPostulacionesDescripcion;
+    private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }
