@@ -34,7 +34,7 @@ public class Main {
         //testLogin("alex.quispe@gmail.com", "candidato2024");
         //testLogout();
         /* POSTULACION */
-        //testListarPostulaciones();
+        testListarPostulaciones();
         //testActualizarPostulacion();
         //testRegistrarPostulacion();
         /* CANDIDATO */
@@ -171,13 +171,14 @@ public class Main {
     }
 
     public static void testListarPostulaciones() {
-        // INICIO DE SESION DE USUARIO CANDIDATO
-        testLogin("alex.quispe@gmail.com", "candidato2024");
-
         PostulacionController postulacionController = new PostulacionController();
+        
+        Postulacion postulacion = new Postulacion();
+        postulacion.setIdCandidato(2);
+        postulacion.setEstado("postulado");
 
         // MOSTRAR POSTULACIONES
-        ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones("postulado");
+        ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
