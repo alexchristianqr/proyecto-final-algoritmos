@@ -132,6 +132,8 @@ public class PostulacionService extends BaseService {
                 querySQL_1 += " AND po.estado = ? ";
                 parametrosList.add(postulacion.getEstado());
             }
+            
+            querySQL_1 += " ORDER BY po.id DESC; ";
 
             // Convertimos la lista a un array
             Object[] parametrosSQL_1 = parametrosList.toArray(Object[]::new);
