@@ -16,8 +16,6 @@ public class Login extends javax.swing.JFrame {
     Util util = new Util();
     ViewMenuCandidato viewMenuCandidato;
     ViewMenuReclutador viewMenuReclutador;
-    RegistroUsuario registroUsuario = new RegistroUsuario();
-
     UsuarioController usuarioController = new UsuarioController();
 
     /**
@@ -221,6 +219,7 @@ public class Login extends javax.swing.JFrame {
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
         // TODO add your handling code here:
         this.setVisible(true);
+        RegistroUsuario registroUsuario = new RegistroUsuario(this);
         util.centerOnScreen(registroUsuario, true);
         registroUsuario.setVisible(true);
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
