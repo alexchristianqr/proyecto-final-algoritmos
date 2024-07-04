@@ -470,6 +470,11 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         if (response.isSuccess()) {
             util.alertMessage(response.getMessage());
             listarEmpleos();
+            txtTitulo.setText("");
+            txtEmpresa.setText("");
+            txtSueldo.setText("");
+            cbxModalidad.setSelectedIndex(0);
+            txtDescripcion.setText("");
         } else {
             util.alertMessage("Error al registrar", true);
         }

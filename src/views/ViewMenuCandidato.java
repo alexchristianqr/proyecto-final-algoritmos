@@ -999,7 +999,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             util.alertMessage(response.getMessage());
             listarEstudiosAcademicos();
             txtTitulo.setText("");
-            Estudios.setSelectedItem(0);
+            Estudios.setSelectedIndex(0);
             txtDescripcion.setText("");
             EstudiosFechaInicio.setText("");
             EstudiosFechaFin.setText("");
