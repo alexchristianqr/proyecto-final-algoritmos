@@ -4,17 +4,14 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.function.Predicate;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 public class Util {
 
     // ANSI escape codes for bold text
     public static final String ANSI_BOLD = "\033[1m";
     public static final String ANSI_RESET = "\033[0m";
-    public static ValidationUtils validation;
 
     // Mostrar mensaje de alerta
     public void alertMessage(String message) {
@@ -101,41 +98,4 @@ public class Util {
     public static boolean validateComponent(JComponent component, Predicate<JComponent> validationRule) {
         return validationRule.test(component);
     }
-
-    // Reglas de validación comunes
-    public static Predicate<JComponent> isRequired() {
-        return component -> {
-            if (component instanceof JTextField) {
-                String text = ((JTextField) component).getText().trim();
-                return !text.isEmpty();
-            } else if (component instanceof JComboBox) {
-                Object selectedItem = ((JComboBox<?>) component).getSelectedItem();
-                return selectedItem != null;
-            }
-            return false; // No se puede validar el tipo de componente
-        };
-    }
-
-    // Regla de validación para longitud mínima en JTextField
-    public static Predicate<JComponent> hasMinLength(int minLength) {
-        return component -> {
-            if (component instanceof JTextField) {
-                String text = ((JTextField) component).getText().trim();
-                return text.length() >= minLength;
-            }
-            return true; // No aplica para otros tipos de componentes
-        };
-    }
-
-    // Regla de validación para longitud máxima en JTextField
-    public static Predicate<JComponent> hasMaxLength(int maxLength) {
-        return component -> {
-            if (component instanceof JTextField) {
-                String text = ((JTextField) component).getText().trim();
-                return text.length() <= maxLength;
-            }
-            return true; // No aplica para otros tipos de componentes
-        };
-    }
-
 }

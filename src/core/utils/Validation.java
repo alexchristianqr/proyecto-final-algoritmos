@@ -5,27 +5,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class ValidationUtils {
+public class Validation {
 
-    private JComponent componentToValidate;
-    private List<Predicate<JComponent>> validationRules;
-    private List<String> errorMessages;
+    private final JComponent componentToValidate;
+    private final List<Predicate<JComponent>> validationRules;
+    private final List<String> errorMessages;
 
     // Constructor privado para asegurar que se utilice el builder pattern
-    private ValidationUtils(JComponent component) {
+    private Validation(JComponent component) {
         this.componentToValidate = component;
         this.validationRules = new ArrayList<>();
         this.errorMessages = new ArrayList<>();
     }
 
     // Método estático para iniciar la validación con un componente específico
-    public static ValidationUtils validateComponent(JComponent component) {
-        return new ValidationUtils(component);
+    public static Validation validateComponent(JComponent component) {
+        return new Validation(component);
     }
 
-    // Función de validación requerida
     // Función de validación requerida para JTextField
-    public ValidationUtils required() {
+    public Validation required() {
         validationRules.add(comp -> {
             if (comp instanceof JTextField) {
                 String text = ((JTextField) comp).getText().trim();
@@ -38,7 +37,7 @@ public class ValidationUtils {
     }
 
     // Función de validación requerida para JComboBox con condición personalizada
-    public ValidationUtils required(Predicate<JComboBox<?>> condition) {
+    public Validation required(Predicate<JComboBox<?>> condition) {
         validationRules.add(comp -> {
             if (comp instanceof JComboBox) {
                 return condition.test((JComboBox<?>) comp);
@@ -50,10 +49,10 @@ public class ValidationUtils {
     }
 
     // Función de validación de longitud mínima
-    public ValidationUtils min(int minLength) {
+    public Validation min(int minLength) {
         validationRules.add(comp -> {
-            if (comp instanceof JTextField) {
-                String text = ((JTextField) comp).getText().trim();
+            if (comp instanceof JTextField jTextField) {
+                String text = jTextField.getText().trim();
                 return text.length() >= minLength;
             }
             return true; // No aplica para otros tipos de componentes
@@ -63,10 +62,10 @@ public class ValidationUtils {
     }
 
     // Función de validación de longitud máxima
-    public ValidationUtils max(int maxLength) {
+    public Validation max(int maxLength) {
         validationRules.add(comp -> {
-            if (comp instanceof JTextField) {
-                String text = ((JTextField) comp).getText().trim();
+            if (comp instanceof JTextField jTextField) {
+                String text = jTextField.getText().trim();
                 return text.length() <= maxLength;
             }
             return true; // No aplica para otros tipos de componentes

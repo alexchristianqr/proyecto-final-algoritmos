@@ -6,7 +6,7 @@ import controllers.PostulacionController;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
-import core.utils.ValidationUtils;
+import core.utils.Validation;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import models.Candidato;
@@ -467,11 +467,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         txtTitulo.setBackground(new java.awt.Color(229, 229, 229));
 
         txtDescripcion.setBackground(new java.awt.Color(229, 229, 229));
-        txtDescripcion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDescripcionActionPerformed(evt);
-            }
-        });
 
         jLabel8.setText("Descripción");
 
@@ -958,22 +953,23 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     }//GEN-LAST:event_QuitarEstudiosActionPerformed
 
     private void btnActualizarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarCandidatoActionPerformed
-        // TODO add your handling code here:
+        // Validar
+        boolean validateTxtNombres = Validation.validateComponent(txtNombres).required().min(5).max(10).validate();
+        boolean validateEstadoCivil = Validation.validateComponent(cbxEstadoCivil).required(cb -> cb.getSelectedIndex() > 0).validate();
+        boolean validateGenero = Validation.validateComponent(cbxGenero).required(cb -> cb.getSelectedIndex() > 0).validate();
+
+        if (!validateTxtNombres || !validateEstadoCivil || !validateGenero) {
+            return;
+        }
+
+        // Actualizar
         String nombres = txtNombres.getText();
         String apellidos = txtApellidos.getText();
-        String email = txtEmail.getText();
         String celular = txtTelefono.getText();
         String dni = txtDNI.getText();
         String fechaNacimiento = txtFechaNacimiento.getText();
         String sexo = cbxGenero.getSelectedItem().toString();
         String estadoCivil = cbxEstadoCivil.getSelectedItem().toString();
-
-        boolean validateTxtNombres = ValidationUtils.validateComponent(txtNombres).required().min(5).max(10).validate();
-        boolean validateEstadoCivil = ValidationUtils.validateComponent(cbxEstadoCivil).required(cb -> cb.getSelectedIndex() > 0).validate();
-        boolean validateGenero = ValidationUtils.validateComponent(cbxGenero).required(cb -> cb.getSelectedIndex() > 0).validate();
-        if (!validateTxtNombres || !validateEstadoCivil || !validateGenero) {
-            return;
-        }
 
         try {
             CandidatoController candidatoController = new CandidatoController();
@@ -999,8 +995,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             util.alertMessage("NO SE PUDO GUARDAR TU USUARIO", true);
             throw new RuntimeException(e);
         }
-
-
     }//GEN-LAST:event_btnActualizarCandidatoActionPerformed
 
     private void btnRegistrarEstudioAcademicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEstudioAcademicoActionPerformed
@@ -1068,13 +1062,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         } else {
             util.alertMessage("Error al registrar", true);
         }
-
-
     }//GEN-LAST:event_AgregarExperienciaActionPerformed
-
-    private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDescripcionActionPerformed
 
     private void ExperienciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExperienciaActionPerformed
         // TODO add your handling code here:
