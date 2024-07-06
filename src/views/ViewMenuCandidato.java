@@ -6,6 +6,7 @@ import controllers.PostulacionController;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
+import core.utils.ValidationUtils;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import models.Candidato;
@@ -966,6 +967,13 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         String fechaNacimiento = txtFechaNacimiento.getText();
         String sexo = cbxGenero.getSelectedItem().toString();
         String estadoCivil = cbxEstadoCivil.getSelectedItem().toString();
+
+        boolean validateTxtNombres = ValidationUtils.validateComponent(txtNombres).required().min(5).max(10).validate();
+        boolean validateEstadoCivil = ValidationUtils.validateComponent(cbxEstadoCivil).required(cb -> cb.getSelectedIndex() > 0).validate();
+        boolean validateGenero = ValidationUtils.validateComponent(cbxGenero).required(cb -> cb.getSelectedIndex() > 0).validate();
+        if (!validateTxtNombres || !validateEstadoCivil || !validateGenero) {
+            return;
+        }
 
         try {
             CandidatoController candidatoController = new CandidatoController();

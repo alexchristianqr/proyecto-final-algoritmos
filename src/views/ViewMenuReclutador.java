@@ -453,6 +453,8 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         String modalidad = cbxModalidad.getSelectedItem().toString();
         String descripcion = txtDescripcion.getText();
 
+        
+        
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
         empleo.setTitulo(titulo);
