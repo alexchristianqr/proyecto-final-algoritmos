@@ -204,7 +204,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         txtAptitudes = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jTextField13 = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
+        btnBuscarMisPostulaciones = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblMisPostulaciones = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -249,7 +249,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jLabel24.setText("DNI");
 
-        jLabel25.setText("Fecha de Nacimiento");
+        jLabel25.setText("Fecha de Nacimiento (DD/MM/YY)");
 
         jLabel26.setText("Género");
 
@@ -513,11 +513,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtDNI)
                                     .addComponent(txtNombres, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
-                                .addGap(48, 48, 48)
+                                .addGap(56, 56, 56)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel25)
+                                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtApellidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel25)))
                             .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -556,21 +556,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel20))
-                            .addComponent(jLabel26)
-                            .addComponent(txtEmail)
-                            .addComponent(cbxGenero, 0, 140, Short.MAX_VALUE))
-                        .addGap(72, 72, 72)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel27)
-                            .addComponent(txtTelefono)
-                            .addComponent(cbxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -611,6 +596,20 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel26)
+                                        .addComponent(txtEmail)
+                                        .addComponent(cbxGenero, 0, 140, Short.MAX_VALUE))
+                                    .addComponent(jLabel20))
+                                .addGap(72, 72, 72)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel21)
+                                    .addComponent(jLabel27)
+                                    .addComponent(txtTelefono)
+                                    .addComponent(cbxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(56, 56, 56))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addGap(262, 262, 262))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -645,15 +644,16 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel20)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGap(22, 22, 22)
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jLabel26)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel20))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -745,10 +745,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jTextField13.setBackground(new java.awt.Color(229, 229, 229));
 
-        jButton8.setBackground(new java.awt.Color(102, 102, 102));
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("BUSCAR");
+        btnBuscarMisPostulaciones.setBackground(new java.awt.Color(102, 102, 102));
+        btnBuscarMisPostulaciones.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnBuscarMisPostulaciones.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarMisPostulaciones.setText("BUSCAR");
+        btnBuscarMisPostulaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarMisPostulacionesActionPerformed(evt);
+            }
+        });
 
         tblMisPostulaciones.setBackground(new java.awt.Color(229, 229, 229));
         tblMisPostulaciones.setModel(new javax.swing.table.DefaultTableModel(
@@ -790,7 +795,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton8))
+                        .addComponent(btnBuscarMisPostulaciones))
                     .addComponent(jScrollPane1))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
@@ -800,7 +805,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8))
+                    .addComponent(btnBuscarMisPostulaciones))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
@@ -955,10 +960,14 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private void btnActualizarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarCandidatoActionPerformed
         // Validar
         boolean validateTxtNombres = Validation.validateComponent(txtNombres).required().min(5).max(10).validate();
-        boolean validateEstadoCivil = Validation.validateComponent(cbxEstadoCivil).required(cb -> cb.getSelectedIndex() > 0).validate();
+        boolean validateTxtApellidos = Validation.validateComponent(txtApellidos).required().min(10).max(20).validate();
+        boolean validateTxtCelular = Validation.validateComponent(txtTelefono).required().min(9).max(9).validate();
+        boolean validateTxtEmail = Validation.validateComponent(txtEmail).required().min(10).max(50).email().validate();
+        boolean validateTxtFechaNacimiento = Validation.validateComponent(txtFechaNacimiento).required().min(10).max(10).validateAge().validate();
         boolean validateGenero = Validation.validateComponent(cbxGenero).required(cb -> cb.getSelectedIndex() > 0).validate();
-
-        if (!validateTxtNombres || !validateEstadoCivil || !validateGenero) {
+        boolean validateEstadoCivil = Validation.validateComponent(cbxEstadoCivil).required(cb -> cb.getSelectedIndex() > 0).validate();
+        
+        if (!validateTxtNombres || !validateTxtApellidos || !validateTxtCelular || !validateTxtEmail || !validateTxtFechaNacimiento || !validateGenero ||!validateEstadoCivil ) {
             return;
         }
 
@@ -1167,6 +1176,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblMisPostulacionesMouseClicked
 
+    private void btnBuscarMisPostulacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMisPostulacionesActionPerformed
+     
+    }//GEN-LAST:event_btnBuscarMisPostulacionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1223,11 +1236,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JButton QuitarExperiencia;
     private javax.swing.JTable TablaExperiencia;
     private javax.swing.JButton btnActualizarCandidato;
+    private javax.swing.JButton btnBuscarMisPostulaciones;
     private javax.swing.JButton btnPostularEmpleos;
     private javax.swing.JButton btnRegistrarEstudioAcademico;
     private javax.swing.JComboBox<String> cbxEstadoCivil;
     private javax.swing.JComboBox<String> cbxGenero;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
