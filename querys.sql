@@ -102,6 +102,10 @@ JOIN personas pe ON pe.id = c.id_persona
 WHERE po.id_candidato = 1;
 -- WHERE po.estado NOT IN ('cancelado','rechazado','bloqueado');
 
+-- consultar
+SELECT e.id FROM (SELECT * FROM empleos e WHERE e.id = 1 HAVING (17 >= e.edad_min AND 17 <= e.edad_max)) e;
+
+SELECT p.estado FROM postulaciones p WHERE p.id_candidato = 1 AND p.id_empleo = 5 AND p.estado IN ('postulado', 'bloqueado', 'contactado', 'entrevistado', 'contratado') LIMIT 1;
 -- insertar
 INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado) VALUES (1, 1, 'postulado', NOW());
 INSERT INTO postulaciones (id_candidato, id_empleo, estado, fecha_creado) VALUES (2, 2, 'postulado', NOW());

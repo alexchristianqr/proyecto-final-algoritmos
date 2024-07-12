@@ -15,28 +15,38 @@ public class PostulacionService extends BaseService {
     }
 
     public String registrarPostulacion(Postulacion postulacion) {
-        String response = "";
+        String response = "error";
 
         try {
+            ResultSet rs, rs_2;
+
             if (postulacion.getEstado().isEmpty() || postulacion.getEstado().isBlank()) {
-                util.alertMessage("[estado] es requerido");
+                util.alertMessage("[estado] es requerido", true);
             }
 
-            querySQL_1 = "SELECT p.estado FROM postulaciones p WHERE p.id_candidato = ? AND p.id_empleo = ? AND p.estado IN ('postulado', 'bloqueado', 'contactado', 'entrevistado', 'contratado') LIMIT 1";
+            querySQL_1 = "SELECT p.estado FROM postulaciones p WHERE p.id_candidato = ? AND p.id_empleo = ? AND p.estado IN ('postulado', 'bloqueado', 'contactado', 'entrevistado', 'contratado') LIMIT 1;";
             Object[] parametrosSQL_1 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo()};
-            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+            rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
-            String estado = "";
             if (rs.next()) {
-                estado = rs.getString("estado");
+                String estado = rs.getString("estado");
                 response = estado;
             } else {
-                querySQL_2 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado) VALUES (?,?,?)";
-                Object[] parametrosSQL_2 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
-                int creado = db.queryInsertar(querySQL_2, parametrosSQL_2);
+                querySQL_2 = "SELECT e.id FROM (SELECT * FROM empleos e WHERE e.id = ? HAVING (? >= e.edad_min AND ? <= e.edad_max)) e;";
+                Object[] parametrosSQL_2 = {postulacion.getIdEmpleo(), postulacion.getEdad(), postulacion.getEdad()};
+                rs_2 = db.queryConsultar(querySQL_2, parametrosSQL_2);
 
-                if (creado > 0) {
-                    response = "creado";// postulado
+                if (rs_2.next()) {
+                    int id_empleo = rs_2.getInt("id");
+                    if (id_empleo != 0) {
+                        querySQL_3 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado) VALUES (?,?,?)";
+                        Object[] parametrosSQL_3 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
+                        int creado = db.queryInsertar(querySQL_3, parametrosSQL_3);
+
+                        if (creado > 0) {
+                            response = "creado";// postulado
+                        }
+                    }
                 }
             }
 

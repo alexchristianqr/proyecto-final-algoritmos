@@ -27,7 +27,7 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) {
-        testViewLogin();
+        //testViewLogin();
 
         /* AUTH */
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
@@ -35,7 +35,7 @@ public class Main {
         //testLogout();
         /* POSTULACION */
         //testListarPostulaciones();
-        //testRegistrarPostulacion();
+        testRegistrarPostulacion();
         //testRegistrarFeedbackPersonalizado();
         /* CANDIDATO */
         //testRegistrarCandidato();
@@ -64,7 +64,7 @@ public class Main {
         //testUploadPDF();
         //testDownloadPDF();
     }
-
+    
     public static void testViewLogin() {
         Login login = new Login();
         util.centerOnScreen(login, true);
@@ -90,28 +90,28 @@ public class Main {
         usuario.setUsername("deysi.barrios@gmail.com");
         usuario.setPassword("reclutador2024");
         usuario.setRol("reclutador");
-
+        
         ResponseService<Boolean> response = usuarioController.registrarUsuario(usuario);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testLogin(String username, String pwd) {
         UsuarioController usuarioController = new UsuarioController();
-
+        
         ResponseService<Usuario> response = usuarioController.login(username, pwd);
-
+        
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testLogout() {
         UsuarioController usuarioController = new UsuarioController();
-
+        
         ResponseService<Boolean> response = usuarioController.logout();
-
+        
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -125,17 +125,18 @@ public class Main {
         // CREAR INSTANCIA
         Postulacion postulacion = new Postulacion();
         postulacion.setIdCandidato(1);
-        postulacion.setIdEmpleo(1);
+        postulacion.setIdEmpleo(5);
         postulacion.setEstado("postulado");
+        postulacion.setEdad(29);
 
         // ACCION POSTULAR A UN EMPLEO
         ResponseService<String> response = postulacionController.registrarPostulacion(postulacion);
-
+        
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testRegistrarFeedbackPersonalizado() {
         PostulacionController postulacionController = new PostulacionController();
 
@@ -158,15 +159,15 @@ public class Main {
 
         // ACCION ACTUALIZAR POSTULACION POR EL CAMPO "ESTADO"
         ResponseService<Boolean> response = postulacionController.registrarFeedbackPersonalizado(postulacion, feedbackInfo);
-
+        
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testListarPostulaciones() {
         PostulacionController postulacionController = new PostulacionController();
-
+        
         Postulacion postulacion = new Postulacion();
         postulacion.setIdCandidato(2);
         postulacion.setEstado("postulado");
@@ -182,7 +183,7 @@ public class Main {
     /* EMPLEOS */
     public static void testListarEmpleos() {
         EmpleoController empleoController = new EmpleoController();
-
+        
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(2); // Asume un ID de reclutador, ajustar según sea necesario
 
@@ -191,16 +192,16 @@ public class Main {
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testListarEmpleosCandidatos() {
         EmpleoController empleoController = new EmpleoController();
-
+        
         ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testRegistrarEmpleo() {
         EmpleoController empleoController = new EmpleoController();
         Empleo empleo = new Empleo();
@@ -212,8 +213,10 @@ public class Main {
         empleo.setSueldo("4500.00");
         empleo.setModalidad("remoto");
         empleo.setDescripcion("Responsable del desarrollo de aplicaciones Java");
+        empleo.setEdadMin(18);
+        empleo.setEdadMax(35);
         empleo.setEstado("activo");
-
+        
         ResponseService<Boolean> response = empleoController.registrarEmpleo(empleo);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -224,7 +227,7 @@ public class Main {
     /* RECLUTADOR */
     public static void testRegistrarReclutador() {
         ReclutadorController reclutadorController = new ReclutadorController();
-
+        
         Reclutador reclutador = new Reclutador();
         reclutador.setIdUsuario(1);
         reclutador.setNombre("Kevin");
@@ -236,7 +239,7 @@ public class Main {
         reclutador.setTelefono("999865774");
         reclutador.setEstado("activo");
         reclutador.setEstadoCivil("soltero");
-
+        
         ResponseService<Boolean> response = reclutadorController.registrarReclutador(reclutador);
         System.out.println("success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -247,7 +250,7 @@ public class Main {
     /* CANDIDATO */
     public static void testRegistrarCandidato() {
         CandidatoController candidatoController = new CandidatoController();
-
+        
         Candidato candidato = new Candidato();
         candidato.setIdUsuario(1);
         candidato.setNombre("John");
@@ -263,16 +266,16 @@ public class Main {
         candidato.setPathCV("cv.pdf");
         candidato.setPathCertificadoTrabajo("certificado_trabajo.pdf");
         candidato.setPathAntecedentePolicial("antecedente_policial.pdf");
-
+        
         ResponseService<Boolean> response = candidatoController.registrarCandidato(candidato);
         System.out.println("success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testActualizarCandidato() {
         CandidatoController candidatoController = new CandidatoController();
-
+        
         Candidato candidato = new Candidato();
         candidato.setIdCandidato(1);
         candidato.setNombre("Hola");
@@ -283,29 +286,29 @@ public class Main {
         candidato.setPathCV("otro.pdf");
         candidato.setPathCertificadoTrabajo("certificado_trabajo.pdf");
         candidato.setPathAntecedentePolicial("antecedente_policial.pdf");
-
+        
         ResponseService<Boolean> response = candidatoController.actualizarCandidato(candidato);
         System.out.println("success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testActualizarCandidatoPorColumna() {
         CandidatoController candidatoController = new CandidatoController();
-
+        
         Candidato candidato = new Candidato();
         candidato.setIdCandidato(1);
         candidato.setPathCV("/cv.pdf");
-
+        
         ResponseService<Boolean> response = candidatoController.actualizarCandidatoPorColumna(candidato, "path_curriculum_vitae");
         System.out.println("success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testRegistrarEstudioAcademico() {
         CandidatoController candidatoController = new CandidatoController();
-
+        
         EstudioAcademico estudioAcademico = new EstudioAcademico();
         estudioAcademico.setIdCandidato(1);
         estudioAcademico.setTitulo("IDAT");
@@ -314,28 +317,28 @@ public class Main {
         estudioAcademico.setFechaFin("06/2013");
         estudioAcademico.setGrado("tecnico");
         estudioAcademico.setOrden(1);
-
+        
         ResponseService<Boolean> response = candidatoController.registrarEstudioAcademico(estudioAcademico);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testListarEstudiosAcademicos() {
         CandidatoController candidatoController = new CandidatoController();
-
+        
         EstudioAcademico estudioAcademico = new EstudioAcademico();
         estudioAcademico.setIdCandidato(1);
-
+        
         ResponseService<List<Object[]>> response = candidatoController.listarEstudiosAcademicos(estudioAcademico);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testRegistrarExperienciaLaboral() {
         CandidatoController candidatoController = new CandidatoController();
-
+        
         ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
         experienciaLaboral.setIdCandidato(2);
         experienciaLaboral.setTitulo("Desarrollador Fontend (NodeJs - AWS)");
@@ -344,19 +347,19 @@ public class Main {
         experienciaLaboral.setFechaInicio("01/2022");
         experienciaLaboral.setFechaFin("06/2024");
         experienciaLaboral.setOrden(1);
-
+        
         ResponseService<Boolean> response = candidatoController.registrarExperienciaLaboral(experienciaLaboral);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testListarExperienciasLaborales() {
         CandidatoController candidatoController = new CandidatoController();
-
+        
         ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
         experienciaLaboral.setIdCandidato(1);
-
+        
         ResponseService<List<Object[]>> response = candidatoController.listarExperienciasLaborales(experienciaLaboral);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -366,52 +369,52 @@ public class Main {
     /* REPORTE */
     public static void testReporteUsuarios() {
         ReporteController reportecontroller = new ReporteController();
-
+        
         ResponseService<Boolean> response = reportecontroller.reporteUsuarios();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testReportePersonas() {
         ReporteController reportecontroller = new ReporteController();
-
+        
         ResponseService<Boolean> response = reportecontroller.reportePersonas();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testReporteEdad() {
         ReporteController reportecontroller = new ReporteController();
-
+        
         ResponseService<Boolean> response = reportecontroller.reporteEdad();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testReporteAptitudes() {
         ReporteController reportecontroller = new ReporteController();
-
+        
         ResponseService<Boolean> response = reportecontroller.reporteAptitudes();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testReporteExperiencias() {
         ReporteController reportecontroller = new ReporteController();
-
+        
         ResponseService<Boolean> response = reportecontroller.reporteExperiencias();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
+    
     public static void testReporteReclutadores() {
         ReporteController reportecontroller = new ReporteController();
-
+        
         ResponseService<Boolean> response = reportecontroller.reporteReclutadores();
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
@@ -437,7 +440,7 @@ public class Main {
             }
         }
     }
-
+    
     public static void testDownloadPDF() {
         FileService fileService = new FileService();
 
@@ -445,7 +448,7 @@ public class Main {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnValue = fileChooser.showSaveDialog(null);
-
+        
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedDirectory = fileChooser.getSelectedFile();
             String destinationPath = selectedDirectory.getAbsolutePath() + File.separator + "prueba.pdf";

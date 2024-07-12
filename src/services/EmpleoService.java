@@ -16,8 +16,8 @@ public class EmpleoService extends BaseService {
     public boolean registrarEmpleo(Empleo empleo) {
         boolean response = false;
         try {
-            querySQL_1 = "INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, estado) VALUES (?,?,?,?,?,?,?);";
-            Object[] parametrosSQL_1 = {empleo.getIdReclutador(), empleo.getTitulo(), empleo.getEmpresa(), empleo.getSueldo(), empleo.getModalidad(), empleo.getDescripcion(), empleo.getEstado()};
+            querySQL_1 = "INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, edad_min, edad_max, estado) VALUES (?,?,?,?,?,?,?,?,?);";
+            Object[] parametrosSQL_1 = {empleo.getIdReclutador(), empleo.getTitulo(), empleo.getEmpresa(), empleo.getSueldo(), empleo.getModalidad(), empleo.getDescripcion(), empleo.getEdadMin(), empleo.getEdadMax(), empleo.getEstado()};
             db.queryInsertar(querySQL_1, parametrosSQL_1);
 
             response = true;

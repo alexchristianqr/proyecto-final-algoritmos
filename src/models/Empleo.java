@@ -9,6 +9,8 @@ public class Empleo {
     protected String sueldo;
     protected String modalidad;
     private String descripcion;
+    private int edadMin;
+    private int edadMax;
     private String estado;// disponible|indisponible
     private String fechaCreado;
     private String fechaActualizado;
@@ -23,13 +25,31 @@ public class Empleo {
         this.idReclutador = empleo.getIdReclutador();
         this.titulo = empleo.getTitulo();
         this.empresa = empleo.getEmpresa();
-        this.estado = empleo.getEstado();
         this.sueldo = empleo.getSueldo();
         this.modalidad = empleo.getModalidad();
         this.descripcion = empleo.getDescripcion();
+        this.edadMin = empleo.getEdadMin();
+        this.edadMax = empleo.getEdadMax();
+        this.estado = empleo.getEstado();
         this.fechaCreado = empleo.getFechaCreado();
         this.fechaActualizado = empleo.getFechaActualizado();
         this.fechaEliminado = empleo.getFechaEliminado();
+    }
+
+    public int getEdadMin() {
+        return edadMin;
+    }
+
+    public void setEdadMin(int edadMin) {
+        this.edadMin = edadMin;
+    }
+
+    public int getEdadMax() {
+        return edadMax;
+    }
+
+    public void setEdadMax(int edadMax) {
+        this.edadMax = edadMax;
     }
 
     public int getIdEmpleo() {
