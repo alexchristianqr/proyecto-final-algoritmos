@@ -12,10 +12,10 @@
 
 
 -- # crear base de datos / ut8mb_general_ci
-CREATE DATABASE dbpostulantes;
+CREATE DATABASE db_postulantes;
 
 -- # usar base de datos
-USE dbpostulantes;
+USE db_postulantes;
 
 -- # crear tabla usuarios
 CREATE TABLE usuarios
@@ -157,8 +157,10 @@ CREATE TABLE empleos
     titulo VARCHAR(250) NOT NULL,
     empresa VARCHAR(250) NOT NULL,
     sueldo VARCHAR(30) NOT NULL,
-    modalidad ENUM('remoto','presencial') NOT NULL,
+    modalidad ENUM('remoto','presencial','hibrido') NOT NULL,
     descripcion TEXT NOT NULL,
+    edad_min INT NOT NULL,
+    edad_max INT NOT NULL,
     estado ENUM('activo','disponible','indisponible','eliminado','finalizado') DEFAULT 'activo',
     fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     fecha_actualizado DATETIME,
@@ -253,10 +255,20 @@ INSERT INTO candidatos_estudios_academicos (id_candidato, id_estudio_academico, 
 VALUES (1,1,1);
 
 -- empleos
-INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, estado)
-VALUES (1, 'SR Frontend REACT JS', 'UTP', '5500', 'remoto', 'Encargado de las tareas de frontend con React JS', 'disponible');
-INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, estado)
-VALUES (2, 'SR Frontend Angular', 'UTP', '7500', 'presencial', 'Encargado de las tareas de frontend con Angular v15', 'disponible');
+INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, edad_min, edad_max, estado)
+VALUES (1, 'SR Frontend REACT JS', 'UTP', '5500', 'remoto', 'Encargado de las tareas de frontend con React JS', 18, 35, 'disponible');
+INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, edad_min, edad_max, estado)
+VALUES (2, 'SR Frontend Angular', 'UTP', '7500', 'presencial', 'Encargado de las tareas de frontend con Angular v15', 25, 40, 'disponible');
+INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, edad_min, edad_max, estado)
+VALUES (2, 'Desarrollador Full Stack Node.js', 'UTP', '8000', 'remoto', 'Responsable del desarrollo full stack utilizando Node.js y frameworks relacionados', 26, 45, 'disponible');
+INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, edad_min, edad_max, estado)
+VALUES (2, 'Ingeniero de Software Java Senior', 'UTP', '9000', 'hibrido', 'Encargado del desarrollo de software en Java, liderando proyectos críticos para la empresa', 30, 50, 'disponible');
+INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, edad_min, edad_max, estado)
+VALUES (1, 'Analista de Datos SQL', 'UTP', '7000', 'remoto', 'Responsable del análisis de datos utilizando SQL y herramientas de BI para generar informes y análisis estratégicos', 28, 45, 'disponible');
+INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, edad_min, edad_max, estado)
+VALUES (1, 'Diseñador UI/UX Remoto', 'UTP', '6000', 'hibrido', 'Encargado del diseño de interfaces de usuario y experiencia de usuario, colaborando con equipos de desarrollo', 25, 40, 'disponible');
+INSERT INTO empleos (id_reclutador, titulo, empresa, sueldo, modalidad, descripcion, edad_min, edad_max, estado)
+VALUES (1, 'Project Manager IT', 'UTP', '10000', 'presencial', 'Responsable de la gestión de proyectos de TI, asegurando la entrega oportuna y dentro del presupuesto', 30, 50, 'disponible');
 
 -- postulaciones
 INSERT INTO postulaciones (id_candidato, id_empleo, estado)
