@@ -119,11 +119,11 @@
                                           <Component id="txtDNI" max="32767" attributes="0"/>
                                           <Component id="txtNombres" pref="160" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="48" pref="48" max="-2" attributes="0"/>
+                                      <EmptySpace min="56" pref="56" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtFechaNacimiento" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
-                                          <Component id="txtApellidos" alignment="1" min="-2" pref="159" max="-2" attributes="0"/>
+                                          <Component id="txtApellidos" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
+                                          <Component id="txtFechaNacimiento" min="-2" pref="159" max="-2" attributes="0"/>
+                                          <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -176,25 +176,6 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane6" alignment="1" pref="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                                      <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cbxGenero" alignment="0" pref="140" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtTelefono" max="32767" attributes="0"/>
-                                  <Component id="cbxEstadoCivil" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
@@ -249,6 +230,24 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="cbxGenero" alignment="0" pref="140" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtTelefono" max="32767" attributes="0"/>
+                                          <Component id="cbxEstadoCivil" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="262" max="-2" attributes="0"/>
                                   </Group>
@@ -296,8 +295,7 @@
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                                   <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
@@ -306,7 +304,10 @@
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtTelefono" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -492,7 +493,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel25">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Fecha de Nacimiento"/>
+                <Property name="text" type="java.lang.String" value="Fecha de Nacimiento (DD/MM/YY)"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel26">
@@ -1080,7 +1081,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jTextField13" min="-2" pref="189" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnBuscarMisPostulaciones" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -1094,7 +1095,7 @@
                       <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jTextField13" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBuscarMisPostulaciones" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="jScrollPane4" min="-2" pref="200" max="-2" attributes="0"/>
@@ -1113,7 +1114,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton8">
+            <Component class="javax.swing.JButton" name="btnBuscarMisPostulaciones">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="66" type="rgb"/>
@@ -1126,6 +1127,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="BUSCAR"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarMisPostulacionesActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane4">
               <AuxValues>

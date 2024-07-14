@@ -1,5 +1,6 @@
 package core.utils;
 
+import java.time.LocalDate;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,42 @@ public class Validation {
         errorMessages.add(String.format("El campo no debe exceder los %d caracteres.", maxLength));
         return this;
     }
+    
+    // Nueva función de validación para verificar correos electrónicos
+    public Validation email() {
+        validationRules.add(comp -> {
+            if (comp instanceof JTextField jTextField) {
+                String text = jTextField.getText().trim();
+                return text.contains("@");
+            }
+            return true; // No aplica para otros tipos de componentes
+        });
+        errorMessages.add("El campo debe contener una dirección de correo electrónico válida.");
+        return this;
+    }
+     // Nueva función de validación para verificar la edad mínima
+    public Validation validateAge() {
+        validationRules.add(comp -> {
+            if (comp instanceof JTextField jTextField) {
+                String text = jTextField.getText().trim();
+                if (text.length() >= 4) {
+                    try {
+                        int birthYear = Integer.parseInt(text.substring(text.length() - 4));
+                        int currentYear = LocalDate.now().getYear();
+                        int age = currentYear - birthYear;
+                        return age >= 18;
+                    } catch (NumberFormatException e) {
+                        return false; // Los últimos 4 caracteres no son un año válido
+                    }
+                }
+                return false; // La cadena no tiene al menos 4 caracteres
+            }
+            return true; // No aplica para otros tipos de componentes
+        });
+        errorMessages.add("Debe tener al menos 18 años.");
+        return this;
+    }
+    
 
     // Método para ejecutar la validación y mostrar el mensaje de error si falla
     public boolean validate() {

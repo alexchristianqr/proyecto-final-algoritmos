@@ -5,6 +5,7 @@ import controllers.ReclutadorController;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
+import core.utils.Validation;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -256,7 +257,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(398, 398, 398)
+                        .addGap(339, 339, 339)
                         .addComponent(btnCrearEmpleo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(210, Short.MAX_VALUE))
         );
@@ -283,9 +284,9 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addGap(35, 35, 35)
                 .addComponent(btnCrearEmpleo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Crear Empleo", jPanel2);
@@ -332,6 +333,11 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("BUSCAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         txtEmpleoDescripcion.setBackground(new java.awt.Color(226, 226, 226));
         txtEmpleoDescripcion.setColumns(20);
@@ -423,6 +429,18 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void btnGuardarReclutadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarReclutadorActionPerformed
+        //Validar
+        boolean validateTxtNombres = Validation.validateComponent(txtNombres).required().min(5).max(10).validate();
+        boolean validateTxtApellidos = Validation.validateComponent(txtApellidos).required().min(10).max(20).validate();
+        boolean validateTxtDNI = Validation.validateComponent(txtDNI).required().min(8).max(8).validate();
+        boolean validateTxtEmail = Validation.validateComponent(txtEmail).required().min(10).max(50).email().validate();
+        boolean validateTxtCelular = Validation.validateComponent(txtCelular).required().min(9).max(9).validate();
+        
+        if (!validateTxtNombres || !validateTxtApellidos || !validateTxtDNI || !validateTxtEmail || !validateTxtCelular) {
+            return;
+        }
+        
+        
         String nombres = txtNombres.getText();
         String apellidos = txtApellidos.getText();
         String celular = txtCelular.getText();
@@ -447,6 +465,16 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarReclutadorActionPerformed
 
     private void btnCrearEmpleoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearEmpleoActionPerformed
+        boolean validateTxtTitulo = Validation.validateComponent(txtTitulo).required().min(35).max(100).validate();
+        boolean validateTxtEmpresa = Validation.validateComponent(txtEmpresa).required().min(2).max(20).validate();
+        boolean validateTxtSueldo = Validation.validateComponent(txtSueldo).required().min(4).max(4).validate();
+        boolean validateModalidad = Validation.validateComponent(cbxModalidad).required(cb -> cb.getSelectedIndex() > 0).validate();
+        boolean validateDescripcion = Validation.validateComponent(txtDescripcion).required().min(100).max(200).validate();
+        
+        if (!validateTxtTitulo || !validateTxtEmpresa || !validateTxtSueldo || !validateModalidad || !validateDescripcion) {
+            return;
+        }
+        
         String titulo = txtTitulo.getText();
         String empresa = txtEmpresa.getText();
         String sueldo = txtSueldo.getText();
@@ -509,8 +537,12 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_tblListaEmpleoMouseClicked
 
     private void tblListaEmpleoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblListaEmpleoKeyTyped
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_tblListaEmpleoKeyTyped
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
