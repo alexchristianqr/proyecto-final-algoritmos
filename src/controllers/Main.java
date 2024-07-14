@@ -117,7 +117,6 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
-
     /* POSTULACION */
     public static void testRegistrarPostulacion() {
         PostulacionController postulacionController = new PostulacionController();
@@ -178,7 +177,6 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
-
     /* EMPLEOS */
     public static void testListarEmpleos() {
         EmpleoController empleoController = new EmpleoController();
@@ -220,7 +218,6 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
-
     /* RECLUTADOR */
     public static void testRegistrarReclutador() {
         ReclutadorController reclutadorController = new ReclutadorController();
@@ -242,7 +239,6 @@ public class Main {
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
 
     /* CANDIDATO */
     public static void testRegistrarCandidato() {
