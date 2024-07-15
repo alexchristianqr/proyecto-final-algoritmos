@@ -168,12 +168,7 @@ public class PostulacionService extends BaseService {
 
             querySQL_1 += " ORDER BY po.id DESC; ";
             System.out.println("es:"+filtroPostulaciones.getBuscar());
-            System.out.println("es: SQL: "+ querySQL_1);
             
-            parametrosList.forEach((t) -> {
-                System.out.println("item: "+t.toString());
-            });
-
             // Convertimos la lista a un array
             Object[] parametrosSQL_1 = parametrosList.toArray(Object[]::new);
 
