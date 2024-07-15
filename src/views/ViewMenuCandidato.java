@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import models.Candidato;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
+import models.FiltroPostulaciones;
 import models.Postulacion;
 
 public class ViewMenuCandidato extends javax.swing.JFrame {
@@ -113,7 +114,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         Postulacion postulacion = new Postulacion();
         postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
 
-        final ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion);
+        FiltroPostulaciones filtroPostulaciones = new FiltroPostulaciones();
+        filtroPostulaciones.setBuscar(txtBuscar.getText());
+        final ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion, filtroPostulaciones);
 
         if (response.isSuccess()) {
             List<Object[]> items = response.getResult();
@@ -203,7 +206,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAptitudes = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
-        jTextField13 = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         btnBuscarMisPostulaciones = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblMisPostulaciones = new javax.swing.JTable();
@@ -743,7 +746,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTextField13.setBackground(new java.awt.Color(229, 229, 229));
+        txtBuscar.setBackground(new java.awt.Color(229, 229, 229));
 
         btnBuscarMisPostulaciones.setBackground(new java.awt.Color(102, 102, 102));
         btnBuscarMisPostulaciones.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -793,7 +796,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 931, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscarMisPostulaciones))
                     .addComponent(jScrollPane1))
@@ -804,7 +807,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarMisPostulaciones))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -966,8 +969,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         boolean validateTxtFechaNacimiento = Validation.validateComponent(txtFechaNacimiento).required().min(10).max(10).validateAge().validate();
         boolean validateGenero = Validation.validateComponent(cbxGenero).required(cb -> cb.getSelectedIndex() > 0).validate();
         boolean validateEstadoCivil = Validation.validateComponent(cbxEstadoCivil).required(cb -> cb.getSelectedIndex() > 0).validate();
-        
-        if (!validateTxtNombres || !validateTxtApellidos || !validateTxtCelular || !validateTxtEmail || !validateTxtFechaNacimiento || !validateGenero ||!validateEstadoCivil ) {
+
+        if (!validateTxtNombres || !validateTxtApellidos || !validateTxtCelular || !validateTxtEmail || !validateTxtFechaNacimiento || !validateGenero || !validateEstadoCivil) {
             return;
         }
 
@@ -1177,7 +1180,27 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     }//GEN-LAST:event_tblMisPostulacionesMouseClicked
 
     private void btnBuscarMisPostulacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMisPostulacionesActionPerformed
-     
+
+        Postulacion postulacion = new Postulacion();
+        postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
+
+        FiltroPostulaciones filtroPostulaciones = new FiltroPostulaciones();
+        filtroPostulaciones.setBuscar(txtBuscar.getText());
+        final ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion, filtroPostulaciones);
+
+        if (response.isSuccess()) {
+            List<Object[]> items = response.getResult();
+
+            DefaultTableModel modelo = (DefaultTableModel) tblMisPostulaciones.getModel();
+            modelo.setRowCount(0);
+
+            // Agregar los datos al modelo
+            for (Object[] item : items) {
+                modelo.addRow(item);
+            }
+        } else {
+            util.alertMessage("Error al postulaciones", true);
+        }
     }//GEN-LAST:event_btnBuscarMisPostulacionesActionPerformed
 
     /**
@@ -1280,13 +1303,13 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTable tblEmpleos;
     private javax.swing.JTable tblListaEstudiosAcademicos;
     private javax.swing.JTable tblMisPostulaciones;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextArea txtAptitudes;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtDescripcionEL;

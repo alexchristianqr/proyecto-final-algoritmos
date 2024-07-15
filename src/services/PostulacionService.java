@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import models.FeedbackInfo;
+import models.FiltroPostulaciones;
 import models.Postulacion;
 
 public class PostulacionService extends BaseService {
@@ -140,7 +141,7 @@ public class PostulacionService extends BaseService {
         return success;
     }
 
-    public List listarPostulaciones(String[] columnNames, Postulacion postulacion) {
+    public List listarPostulaciones(String[] columnNames, Postulacion postulacion, FiltroPostulaciones filtroPostulaciones) {
         List<Object[]> lista = new ArrayList<>();
 
         try {
@@ -149,12 +150,29 @@ public class PostulacionService extends BaseService {
             querySQL_1 = "SELECT po.id, e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, po.estado, po.feedback, po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato WHERE po.id_candidato = ? ";
             parametrosList.add(postulacion.getIdCandidato());
 
-            if (postulacion.getEstado() != null) {
+            if (filtroPostulaciones.getBuscar()!= null) {
+                querySQL_1 += " AND e.titulo LIKE ? OR e.descripcion LIKE ? OR e.empresa LIKE ? ";
+                String buscar = "%" + filtroPostulaciones.getBuscar() + "%";
+                parametrosList.add(buscar);
+                parametrosList.add(buscar);
+                parametrosList.add(buscar);
+            }
+            if (filtroPostulaciones.getModalidad() != null) {
+                querySQL_1 += " AND e.modalidad = ? ";
+                parametrosList.add(filtroPostulaciones.getModalidad());
+            }
+            if (filtroPostulaciones.getEstado() != null) {
                 querySQL_1 += " AND po.estado = ? ";
-                parametrosList.add(postulacion.getEstado());
+                parametrosList.add(filtroPostulaciones.getEstado());
             }
 
             querySQL_1 += " ORDER BY po.id DESC; ";
+            System.out.println("es:"+filtroPostulaciones.getBuscar());
+            System.out.println("es: SQL: "+ querySQL_1);
+            
+            parametrosList.forEach((t) -> {
+                System.out.println("item: "+t.toString());
+            });
 
             // Convertimos la lista a un array
             Object[] parametrosSQL_1 = parametrosList.toArray(Object[]::new);
