@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import models.Empleo;
 import models.FiltroEmpleosCandidato;
+import models.FiltroEmpleosReclutador;
 
 public class EmpleoService extends BaseService {
 
@@ -32,18 +33,38 @@ public class EmpleoService extends BaseService {
         return response;
     }
 
-    public List listarEmpleos(String[] columnNames, Empleo empleo) {
-
+    public List listarEmpleos(String[] columnNames, Empleo empleo, FiltroEmpleosReclutador filtroEmpleosReclutador) {
         List<Object[]> lista = new ArrayList<>();
 
         try {
-            Object[] parametrosSQL_1 = new Object[1];
+            List<Object> parametrosList = new ArrayList<>();
 
-            querySQL_1 = "SELECT e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.estado, COUNT(po.id) AS 'total_candidatos_postulados', e.fecha_creado, e.fecha_actualizado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador JOIN personas pe ON pe.id = r.id_persona LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado') WHERE e.id_reclutador = ? GROUP BY e.id;";
-            parametrosSQL_1[0] = empleo.getIdReclutador();
+            querySQL_1 = "SELECT e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.estado, COUNT(po.id) AS 'total_candidatos_postulados', e.fecha_creado, e.fecha_actualizado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador JOIN personas pe ON pe.id = r.id_persona LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado') WHERE e.id_reclutador = ? ";
+            parametrosList.add(empleo.getIdReclutador());
+            
+            if (filtroEmpleosReclutador.getBuscar() != null) {
+                querySQL_1 += " AND (e.titulo LIKE ? OR e.descripcion LIKE ? OR e.empresa LIKE ?) ";
+                String buscar = "%" + filtroEmpleosReclutador.getBuscar() + "%";
+                parametrosList.add(buscar);
+                parametrosList.add(buscar);
+                parametrosList.add(buscar);
+            }
+            if (filtroEmpleosReclutador.getModalidad() != null) {
+                querySQL_1 += " AND e.modalidad = ? ";
+                parametrosList.add(filtroEmpleosReclutador.getModalidad());
+            }
+            if (filtroEmpleosReclutador.getEstado() != null) {
+                querySQL_1 += " AND e.estado = ? ";
+                parametrosList.add(filtroEmpleosReclutador.getEstado());
+            }
 
-            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+            querySQL_1 += " GROUP BY e.id ";
+            querySQL_1 += " ORDER BY e.id DESC; ";
 
+            // Convertimos la lista a un array
+            Object[] parametrosSQL = parametrosList.toArray(Object[]::new);
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL);
+            
             System.out.println("\n");
 
             while (rs.next()) {
@@ -92,9 +113,9 @@ public class EmpleoService extends BaseService {
                 querySQL_1 += " AND e.modalidad = ? ";
                 parametrosList.add(filtroEmpleosCandidato.getModalidad());
             }
-            
+
             querySQL_1 += " ORDER BY e.id DESC; ";
-            
+
             // Convertimos la lista a un array
             Object[] parametrosSQL = parametrosList.toArray(Object[]::new);
             ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL);

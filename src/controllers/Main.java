@@ -14,6 +14,7 @@ import models.EstudioAcademico;
 import models.ExperienciaLaboral;
 import models.FeedbackInfo;
 import models.FiltroEmpleosCandidato;
+import models.FiltroEmpleosReclutador;
 import models.FiltroPostulaciones;
 import models.Postulacion;
 import models.Reclutador;
@@ -54,8 +55,8 @@ public class Main {
         //testRegistrarReclutador();
         /* EMPLEO */
         //testRegistrarEmpleo();
-        //testListarEmpleos();
-        testListarEmpleosCandidatos();
+        testListarEmpleos();
+        //testListarEmpleosCandidatos();
         /* USUARIO */
         //testRegistrarUsuario();
         /* REPORTES */
@@ -189,7 +190,12 @@ public class Main {
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(2); // Asume un ID de reclutador, ajustar según sea necesario
 
-        ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo);
+        FiltroEmpleosReclutador filtroEmpleosReclutador = new FiltroEmpleosReclutador();
+        filtroEmpleosReclutador.setBuscar("java");
+        filtroEmpleosReclutador.setModalidad("hibrido");
+        filtroEmpleosReclutador.setEstado("disponible");// finalizado, eliminado
+
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -197,7 +203,7 @@ public class Main {
 
     public static void testListarEmpleosCandidatos() {
         EmpleoController empleoController = new EmpleoController();
-        
+
         FiltroEmpleosCandidato filtroEmpleosCandidato = new FiltroEmpleosCandidato();
         filtroEmpleosCandidato.setBuscar("SQL");
         filtroEmpleosCandidato.setModalidad("remoto");
