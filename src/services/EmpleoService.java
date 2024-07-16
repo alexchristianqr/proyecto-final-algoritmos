@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import models.Empleo;
+import models.FiltroEmpleosCandidato;
 
 public class EmpleoService extends BaseService {
 
@@ -72,23 +73,38 @@ public class EmpleoService extends BaseService {
         return lista;
     }
 
-    public List listarEmpleosCandidatos(String[] columnNames) {
-
+    public List listarEmpleosCandidatos(String[] columnNames, FiltroEmpleosCandidato filtroEmpleosCandidato) {
         List<Object[]> lista = new ArrayList<>();
 
         try {
-            Object[] parametrosSQL_1 = {};
+            List<Object> parametrosList = new ArrayList<>();
 
-            querySQL_1 = "SELECT e.id AS 'codigo', e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.fecha_creado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador AND e.estado = 'disponible' JOIN personas pe ON pe.id = r.id_persona ORDER BY e.id DESC;";
+            querySQL_1 = "SELECT e.id, e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.fecha_creado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador AND e.estado = 'disponible' JOIN personas pe ON pe.id = r.id_persona WHERE 1 = 1 ";
 
-            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+            if (filtroEmpleosCandidato.getBuscar() != null) {
+                querySQL_1 += " AND (e.titulo LIKE ? OR e.descripcion LIKE ? OR e.empresa LIKE ?) ";
+                String buscar = "%" + filtroEmpleosCandidato.getBuscar() + "%";
+                parametrosList.add(buscar);
+                parametrosList.add(buscar);
+                parametrosList.add(buscar);
+            }
+            if (filtroEmpleosCandidato.getModalidad() != null) {
+                querySQL_1 += " AND e.modalidad = ? ";
+                parametrosList.add(filtroEmpleosCandidato.getModalidad());
+            }
+            
+            querySQL_1 += " ORDER BY e.id DESC; ";
+            
+            // Convertimos la lista a un array
+            Object[] parametrosSQL = parametrosList.toArray(Object[]::new);
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL);
 
             System.out.println("\n");
 
             while (rs.next()) {
                 Object[] data = new Object[columnNames.length];
 
-                data[0] = rs.getString("codigo");
+                data[0] = rs.getString("id");
                 data[1] = rs.getString("titulo");
                 data[2] = rs.getString("empresa");
                 data[3] = rs.getString("sueldo");

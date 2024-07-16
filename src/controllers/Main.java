@@ -13,6 +13,7 @@ import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
 import models.FeedbackInfo;
+import models.FiltroEmpleosCandidato;
 import models.FiltroPostulaciones;
 import models.Postulacion;
 import models.Reclutador;
@@ -50,11 +51,11 @@ public class Main {
         //testListarEstudiosAcademicos();
         //testListarExperienciasLaborales();
         /* RECLUTADOR */
-        testRegistrarReclutador();
+        //testRegistrarReclutador();
         /* EMPLEO */
         //testRegistrarEmpleo();
         //testListarEmpleos();
-        //testListarEmpleosCandidatos();
+        testListarEmpleosCandidatos();
         /* USUARIO */
         //testRegistrarUsuario();
         /* REPORTES */
@@ -169,7 +170,6 @@ public class Main {
 
         Postulacion postulacion = new Postulacion();
         postulacion.setIdCandidato(1);
-//        postulacion.setEstado("postulado");
 
         FiltroPostulaciones filtroPostulaciones = new FiltroPostulaciones();
         filtroPostulaciones.setBuscar("utp");
@@ -197,8 +197,12 @@ public class Main {
 
     public static void testListarEmpleosCandidatos() {
         EmpleoController empleoController = new EmpleoController();
+        
+        FiltroEmpleosCandidato filtroEmpleosCandidato = new FiltroEmpleosCandidato();
+        filtroEmpleosCandidato.setBuscar("SQL");
+        filtroEmpleosCandidato.setModalidad("remoto");
 
-        ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos();
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos(filtroEmpleosCandidato);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());

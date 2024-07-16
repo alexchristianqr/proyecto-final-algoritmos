@@ -1,6 +1,6 @@
 package models;
 
-public class FiltroEmpleos {
+public class FiltroEmpleosCandidato {
 
     private String buscar;
     private String estado;
@@ -10,7 +10,7 @@ public class FiltroEmpleos {
     private String sueldoMax;
     private String sueldo;
 
-    public FiltroEmpleos() {
+    public FiltroEmpleosCandidato() {
     }
 
     public String getBuscar() {
