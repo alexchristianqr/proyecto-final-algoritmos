@@ -1,8 +1,6 @@
 package controllers;
 
 import core.services.ResponseService;
-import services.UpPDFService;
-
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +40,7 @@ public class UpPDFController {
             }
         } else {
             response.setSuccess(false);
-            response.setMessage("Archivo cargado correctamente.");
+            response.setMessage("ERROR AL CARGAR ARCHIVO.");
         }
 
         return response;

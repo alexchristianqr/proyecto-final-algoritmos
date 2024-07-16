@@ -3,11 +3,17 @@ package views;
 import controllers.CandidatoController;
 import controllers.EmpleoController;
 import controllers.PostulacionController;
+import controllers.UpPDFController;
+import core.services.FileService;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import core.utils.Validation;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Candidato;
 import models.EstudioAcademico;
@@ -182,7 +188,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         QuitarEstudios = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
-        AgregarCurriculum = new javax.swing.JButton();
+        btnAgregarCV = new javax.swing.JButton();
         CurriculumArchivo = new javax.swing.JLabel();
         QuitarCurriculum = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
@@ -356,10 +362,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jLabel22.setText("Curriculum Vitae");
 
-        AgregarCurriculum.setBackground(new java.awt.Color(102, 102, 102));
-        AgregarCurriculum.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        AgregarCurriculum.setForeground(new java.awt.Color(255, 255, 255));
-        AgregarCurriculum.setText("AGREGAR");
+        btnAgregarCV.setBackground(new java.awt.Color(102, 102, 102));
+        btnAgregarCV.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAgregarCV.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarCV.setText("AGREGAR");
+        btnAgregarCV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarCVActionPerformed(evt);
+            }
+        });
 
         CurriculumArchivo.setText("archivo");
 
@@ -381,7 +392,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGap(254, 254, 254)
                 .addComponent(jLabel22)
                 .addGap(18, 18, 18)
-                .addComponent(AgregarCurriculum)
+                .addComponent(btnAgregarCV)
                 .addGap(18, 18, 18)
                 .addComponent(QuitarCurriculum, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -394,7 +405,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(AgregarCurriculum)
+                    .addComponent(btnAgregarCV)
                     .addComponent(QuitarCurriculum)
                     .addComponent(CurriculumArchivo))
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -1203,6 +1214,29 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarMisPostulacionesActionPerformed
 
+    private void btnAgregarCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCVActionPerformed
+        UpPDFController fileController = new UpPDFController();
+        ResponseService<String> response = fileController.uploadFile();
+
+        if (response.isSuccess()) {
+            CandidatoController candidatoController = new CandidatoController();
+
+            Candidato candidato = new Candidato();
+            candidato.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
+            candidato.setPathCV(response.getResult());
+
+            ResponseService<Boolean> responsito = candidatoController.actualizarCandidatoPorColumna(candidato, "path_curriculum_vitae");
+
+            System.out.println("success: " + responsito.isSuccess());
+            System.out.println("Mensaje: " + responsito.getMessage());
+            System.out.println("Resultado: " + responsito.getResult());
+        } else {
+
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error en la subida del archivo", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnAgregarCVActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1242,7 +1276,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AgregarAptitud;
     private javax.swing.JButton AgregarCertificado;
-    private javax.swing.JButton AgregarCurriculum;
     private javax.swing.JButton AgregarExperiencia;
     private javax.swing.JTextField Aptitudes;
     private javax.swing.JLabel CurriculumArchivo;
@@ -1259,6 +1292,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JButton QuitarExperiencia;
     private javax.swing.JTable TablaExperiencia;
     private javax.swing.JButton btnActualizarCandidato;
+    private javax.swing.JButton btnAgregarCV;
     private javax.swing.JButton btnBuscarMisPostulaciones;
     private javax.swing.JButton btnPostularEmpleos;
     private javax.swing.JButton btnRegistrarEstudioAcademico;

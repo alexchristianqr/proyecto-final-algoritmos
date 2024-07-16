@@ -743,7 +743,7 @@
                           <EmptySpace min="-2" pref="254" max="-2" attributes="0"/>
                           <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="AgregarCurriculum" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAgregarCV" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="QuitarCurriculum" min="-2" pref="82" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -758,7 +758,7 @@
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="AgregarCurriculum" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAgregarCV" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="QuitarCurriculum" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="CurriculumArchivo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -773,7 +773,7 @@
                     <Property name="text" type="java.lang.String" value="Curriculum Vitae"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="AgregarCurriculum">
+                <Component class="javax.swing.JButton" name="btnAgregarCV">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="66" green="66" red="66" type="rgb"/>
@@ -786,6 +786,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="AGREGAR"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarCVActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="CurriculumArchivo">
                   <Properties>
