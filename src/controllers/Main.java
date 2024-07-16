@@ -28,7 +28,7 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) {
-        testViewLogin();
+        //testViewLogin();
 
         /* AUTH */
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
@@ -50,8 +50,7 @@ public class Main {
         //testListarEstudiosAcademicos();
         //testListarExperienciasLaborales();
         /* RECLUTADOR */
-        //testRegistrarReclutador();
-        //testRegistrarReclutador();
+        testRegistrarReclutador();
         /* EMPLEO */
         //testRegistrarEmpleo();
         //testListarEmpleos();
@@ -232,14 +231,14 @@ public class Main {
 
         Reclutador reclutador = new Reclutador();
         reclutador.setIdUsuario(1);
-        reclutador.setNombre("Kevin");
-        reclutador.setApellidos("Lucca");
+        reclutador.setNombre("pedro");
+        reclutador.setApellidos("Gonzales");
         reclutador.setTipoDocumento(1);
-        reclutador.setNroDocumento("99988644");
+        reclutador.setNroDocumento("999444555");
         reclutador.setSexo("M");
-        reclutador.setEdad("23");
-        reclutador.setTelefono("999865774");
-        reclutador.setEstado("activo");
+        reclutador.setEdad("28");
+        reclutador.setTelefono("123456789");
+//        reclutador.setEstado("activo");
         reclutador.setEstadoCivil("soltero");
 
         ResponseService<Boolean> response = reclutadorController.registrarReclutador(reclutador);
