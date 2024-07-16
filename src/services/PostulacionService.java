@@ -151,7 +151,7 @@ public class PostulacionService extends BaseService {
             parametrosList.add(postulacion.getIdCandidato());
 
             if (filtroPostulaciones.getBuscar()!= null) {
-                querySQL_1 += " AND e.titulo LIKE ? OR e.descripcion LIKE ? OR e.empresa LIKE ? ";
+                querySQL_1 += " AND (e.titulo LIKE ? OR e.descripcion LIKE ? OR e.empresa LIKE ?) ";
                 String buscar = "%" + filtroPostulaciones.getBuscar() + "%";
                 parametrosList.add(buscar);
                 parametrosList.add(buscar);
@@ -167,12 +167,10 @@ public class PostulacionService extends BaseService {
             }
 
             querySQL_1 += " ORDER BY po.id DESC; ";
-            System.out.println("es:"+filtroPostulaciones.getBuscar());
             
             // Convertimos la lista a un array
-            Object[] parametrosSQL_1 = parametrosList.toArray(Object[]::new);
-
-            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+            Object[] parametrosSQL = parametrosList.toArray(Object[]::new);
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL);
 
             System.out.println("\n");
 

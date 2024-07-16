@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Empleo;
+import models.FiltroEmpleosReclutador;
 import models.Reclutador;
 
 public class ViewMenuReclutador extends javax.swing.JFrame {
@@ -35,8 +36,8 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     final public void listarEmpleos() {
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
-
-        final ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo);
+        FiltroEmpleosReclutador filtroEmpleosReclutador = new FiltroEmpleosReclutador();
+        final ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);
 
         if (response.isSuccess()) {
             List<Object[]> items = response.getResult();
@@ -88,13 +89,22 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
         cbxModalidad = new javax.swing.JComboBox<>();
+        txtEdadMin = new javax.swing.JTextField();
+        txtEdadMax = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblListaEmpleo = new javax.swing.JTable();
-        jTextField10 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        txtBuscarReclutador = new javax.swing.JTextField();
+        btnBuscarEmpleos = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtEmpleoDescripcion = new javax.swing.JTextArea();
+        cbxEstadoReclutador = new javax.swing.JComboBox<>();
+        cbxModalidadReclutador = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -233,6 +243,10 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         cbxModalidad.setBackground(new java.awt.Color(226, 226, 226));
         cbxModalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "presencial", "remoto" }));
 
+        jLabel11.setText("Edad Min:");
+
+        jLabel12.setText("Edad Máx:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -242,22 +256,29 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(164, 164, 164)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel11))
                                 .addGap(63, 63, 63)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtEmpresa)
                                     .addComponent(txtSueldo)
                                     .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
-                                    .addComponent(cbxModalidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jLabel5)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cbxModalidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtEdadMin, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtEdadMax, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(339, 339, 339)
+                        .addGap(348, 348, 348)
                         .addComponent(btnCrearEmpleo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(210, Short.MAX_VALUE))
         );
@@ -280,13 +301,20 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cbxModalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtEdadMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtEdadMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12))
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(btnCrearEmpleo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
 
         jTabbedPane1.addTab("Crear Empleo", jPanel2);
@@ -296,17 +324,17 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         tblListaEmpleo.setBackground(new java.awt.Color(229, 229, 229));
         tblListaEmpleo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null, null, null, null, null, null, null},
-                {"", null, null, null, null, null, null, null, null},
-                {"", null, null, null, null, null, null, null, null},
-                {"", null, null, null, null, null, null, null, null}
+                {"", null, null, null, null, null, null, null, null, null, null},
+                {"", null, null, null, null, null, null, null, null, null, null},
+                {"", null, null, null, null, null, null, null, null, null, null},
+                {"", null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Título", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Candidatos", "Creado", "Actualizado"
+                "Cargo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Candidatos", "Edad Min", "Edad Max", "Creado", "Actualizado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -327,15 +355,15 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblListaEmpleo);
 
-        jTextField10.setBackground(new java.awt.Color(229, 229, 229));
+        txtBuscarReclutador.setBackground(new java.awt.Color(229, 229, 229));
 
-        jButton3.setBackground(new java.awt.Color(102, 102, 102));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("BUSCAR");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarEmpleos.setBackground(new java.awt.Color(102, 102, 102));
+        btnBuscarEmpleos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnBuscarEmpleos.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarEmpleos.setText("BUSCAR");
+        btnBuscarEmpleos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnBuscarEmpleosActionPerformed(evt);
             }
         });
 
@@ -343,6 +371,16 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         txtEmpleoDescripcion.setColumns(20);
         txtEmpleoDescripcion.setRows(5);
         jScrollPane3.setViewportView(txtEmpleoDescripcion);
+
+        cbxEstadoReclutador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "disponible", "finalizado", "eliminado" }));
+
+        cbxModalidadReclutador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "remoto", "presencial", "hibrido" }));
+
+        jLabel13.setText("Estado:");
+
+        jLabel14.setText("Modalidad:");
+
+        jLabel15.setText("Cargo o Empresa o Descripción:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -352,25 +390,43 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                 .addGap(70, 70, 70)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscarReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxEstadoReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(cbxModalidadReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(btnBuscarEmpleos))
+                            .addComponent(jLabel14))))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscarReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxEstadoReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxModalidadReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarEmpleos))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mis Empleos", jPanel4);
@@ -435,12 +491,11 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         boolean validateTxtDNI = Validation.validateComponent(txtDNI).required().min(8).max(8).validate();
         boolean validateTxtEmail = Validation.validateComponent(txtEmail).required().min(10).max(50).email().validate();
         boolean validateTxtCelular = Validation.validateComponent(txtCelular).required().min(9).max(9).validate();
-        
+
         if (!validateTxtNombres || !validateTxtApellidos || !validateTxtDNI || !validateTxtEmail || !validateTxtCelular) {
             return;
         }
-        
-        
+
         String nombres = txtNombres.getText();
         String apellidos = txtApellidos.getText();
         String celular = txtCelular.getText();
@@ -470,19 +525,17 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         boolean validateTxtSueldo = Validation.validateComponent(txtSueldo).required().min(4).max(4).validate();
         boolean validateModalidad = Validation.validateComponent(cbxModalidad).required(cb -> cb.getSelectedIndex() > 0).validate();
         boolean validateDescripcion = Validation.validateComponent(txtDescripcion).required().min(100).max(200).validate();
-        
+
         if (!validateTxtTitulo || !validateTxtEmpresa || !validateTxtSueldo || !validateModalidad || !validateDescripcion) {
             return;
         }
-        
+
         String titulo = txtTitulo.getText();
         String empresa = txtEmpresa.getText();
         String sueldo = txtSueldo.getText();
         String modalidad = cbxModalidad.getSelectedItem().toString();
         String descripcion = txtDescripcion.getText();
 
-        
-        
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
         empleo.setTitulo(titulo);
@@ -523,6 +576,8 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
             Object sueldo = tblListaEmpleo.getValueAt(fila, 2);
             Object modalidad = tblListaEmpleo.getValueAt(fila, 3);
             Object descripcion = tblListaEmpleo.getValueAt(fila, 4);
+            Object edadMin = tblListaEmpleo.getValueAt(fila, 7);
+            Object edadMax = tblListaEmpleo.getValueAt(fila, 8);
 
             StringBuilder descripcionCompleta = new StringBuilder();
             descripcionCompleta.append("================== DESCRIPCIÓN DEL EMPLEO ==================\n\n");
@@ -530,6 +585,8 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
             descripcionCompleta.append("Empresa:  ").append(empresa != null ? empresa.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Sueldo:  ").append(sueldo != null ? sueldo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Modalidad:  ").append(modalidad != null ? modalidad.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Edad Min:  ").append(edadMin != null ? edadMin.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Edad Max:  ").append(edadMax != null ? edadMax.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
 
             txtEmpleoDescripcion.setText(descripcionCompleta.toString());
@@ -537,12 +594,42 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_tblListaEmpleoMouseClicked
 
     private void tblListaEmpleoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblListaEmpleoKeyTyped
-     
+
     }//GEN-LAST:event_tblListaEmpleoKeyTyped
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnBuscarEmpleosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleosActionPerformed
+
+        Empleo empleo = new Empleo();
+        empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
+        FiltroEmpleosReclutador filtroEmpleosReclutador = new FiltroEmpleosReclutador();
+
+        if (!txtBuscarReclutador.getText().isEmpty()) {
+            filtroEmpleosReclutador.setBuscar(txtBuscarReclutador.getText());
+        }
+        if (!cbxEstadoReclutador.getSelectedItem().toString().equals("todos")) {
+            filtroEmpleosReclutador.setEstado(cbxEstadoReclutador.getSelectedItem().toString());
+        }
+
+        if (!cbxModalidadReclutador.getSelectedItem().toString().equals("todos")) {
+            filtroEmpleosReclutador.setModalidad(cbxModalidadReclutador.getSelectedItem().toString());
+        }
+
+        final ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);
+
+        if (response.isSuccess()) {
+            List<Object[]> items = response.getResult();
+
+            DefaultTableModel modelo = (DefaultTableModel) tblListaEmpleo.getModel();
+            modelo.setRowCount(0);
+
+            // Agregar los datos al modelo
+            for (Object[] item : items) {
+                modelo.addRow(item);
+            }
+        } else {
+            util.alertMessage("Error al lista empleos", true);
+        }
+    }//GEN-LAST:event_btnBuscarEmpleosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -581,12 +668,19 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarEmpleos;
     private javax.swing.JButton btnCrearEmpleo;
     private javax.swing.JButton btnGuardarReclutador;
+    private javax.swing.JComboBox<String> cbxEstadoReclutador;
     private javax.swing.JComboBox<String> cbxModalidad;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> cbxModalidadReclutador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -606,12 +700,14 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField10;
     private javax.swing.JTable tblListaEmpleo;
     private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtBuscarReclutador;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextArea txtDescripcion;
+    private javax.swing.JTextField txtEdadMax;
+    private javax.swing.JTextField txtEdadMin;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextArea txtEmpleoDescripcion;
     private javax.swing.JTextField txtEmpresa;

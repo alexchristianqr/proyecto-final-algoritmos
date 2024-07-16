@@ -13,6 +13,8 @@ import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
 import models.FeedbackInfo;
+import models.FiltroEmpleosCandidato;
+import models.FiltroEmpleosReclutador;
 import models.FiltroPostulaciones;
 import models.Postulacion;
 import models.Reclutador;
@@ -50,10 +52,10 @@ public class Main {
         //testListarEstudiosAcademicos();
         //testListarExperienciasLaborales();
         /* RECLUTADOR */
-        testRegistrarReclutador();
+        //testRegistrarReclutador();
         /* EMPLEO */
         //testRegistrarEmpleo();
-        //testListarEmpleos();
+        testListarEmpleos();
         //testListarEmpleosCandidatos();
         /* USUARIO */
         //testRegistrarUsuario();
@@ -169,7 +171,6 @@ public class Main {
 
         Postulacion postulacion = new Postulacion();
         postulacion.setIdCandidato(1);
-//        postulacion.setEstado("postulado");
 
         FiltroPostulaciones filtroPostulaciones = new FiltroPostulaciones();
         filtroPostulaciones.setBuscar("utp");
@@ -189,7 +190,12 @@ public class Main {
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(2); // Asume un ID de reclutador, ajustar según sea necesario
 
-        ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo);
+        FiltroEmpleosReclutador filtroEmpleosReclutador = new FiltroEmpleosReclutador();
+        filtroEmpleosReclutador.setBuscar("java");
+        filtroEmpleosReclutador.setModalidad("hibrido");
+        filtroEmpleosReclutador.setEstado("disponible");// finalizado, eliminado
+
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -198,7 +204,11 @@ public class Main {
     public static void testListarEmpleosCandidatos() {
         EmpleoController empleoController = new EmpleoController();
 
-        ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos();
+        FiltroEmpleosCandidato filtroEmpleosCandidato = new FiltroEmpleosCandidato();
+        filtroEmpleosCandidato.setBuscar("SQL");
+        filtroEmpleosCandidato.setModalidad("remoto");
+
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos(filtroEmpleosCandidato);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
