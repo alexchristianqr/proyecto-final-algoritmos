@@ -53,9 +53,10 @@ public class Main {
         //testListarExperienciasLaborales();
         /* RECLUTADOR */
         //testRegistrarReclutador();
+        testActualizarReclutador();
         /* EMPLEO */
         //testRegistrarEmpleo();
-        testListarEmpleos();
+        //testListarEmpleos();
         //testListarEmpleosCandidatos();
         /* USUARIO */
         //testRegistrarUsuario();
@@ -248,10 +249,26 @@ public class Main {
         reclutador.setSexo("M");
         reclutador.setEdad("28");
         reclutador.setTelefono("123456789");
-//        reclutador.setEstado("activo");
+        //reclutador.setEstado("activo");
         reclutador.setEstadoCivil("soltero");
 
         ResponseService<Boolean> response = reclutadorController.registrarReclutador(reclutador);
+        System.out.println("success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
+
+    public static void testActualizarReclutador() {
+        ReclutadorController reclutadorController = new ReclutadorController();
+
+        Reclutador reclutador = new Reclutador();
+        reclutador.setIdReclutador(1);
+        reclutador.setNombre("Hola");
+        reclutador.setEstado("activo");
+        reclutador.setIdPersona(1);
+        //candidato.setIdUsuario(0);
+
+        ResponseService<Boolean> response = reclutadorController.actualizarReclutador(reclutador);
         System.out.println("success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());

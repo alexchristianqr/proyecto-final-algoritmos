@@ -179,13 +179,13 @@ public class CandidatoService extends BaseService {
                 parametrosSQL_1.add(candidato.getFechaNacimiento());
             }
             if (candidato.getTelefono() != null) {
-                querySQL_1.append("telefono = ?, ");
+                querySQL_1.append("telefono = ? ");
                 parametrosSQL_1.add(candidato.getTelefono());
             }
 
             // Elimina la última coma y espacio, y añade la cláusula WHERE
             querySQL_1.setLength(querySQL_1.length() - 2);
-            querySQL_1.append(" WHERE id = ?;");
+            querySQL_1.append(" WHERE id = ? ;");
             parametrosSQL_1.add(candidato.getIdPersona());
 
             Object[] parametrosArray = parametrosSQL_1.toArray();
@@ -224,12 +224,12 @@ public class CandidatoService extends BaseService {
                 parametrosSQL_2.add(candidato.getPathCertificadoTrabajo());
             }
             if (candidato.getPathAntecedentePolicial() != null) {
-                querySQL_2.append("path_antecendente_policial = ?, ");
+                querySQL_2.append("path_antecendente_policial = ? ");
                 parametrosSQL_2.add(candidato.getPathAntecedentePolicial());
             }
 
             querySQL_2.setLength(querySQL_2.length() - 2);
-            querySQL_2.append(" WHERE id = ?");
+            querySQL_2.append(" WHERE id = ? ;");
             parametrosSQL_2.add(candidato.getIdCandidato());
 
             Object[] parametrosArray2 = parametrosSQL_2.toArray(Object[]::new);

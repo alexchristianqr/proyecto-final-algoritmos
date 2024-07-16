@@ -21,4 +21,16 @@ public class ReclutadorController extends BaseController<Reclutador, ReclutadorS
 
         return response;
     }
+
+    public ResponseService<Boolean> actualizarReclutador(Reclutador reclutador) {
+        ResponseService<Boolean> response = new ResponseService<>();
+
+        boolean success = reclutadorService.actualizarReclutador(reclutador);
+
+        response.setSuccess(success);
+        response.setMessage("reclutador actualizado correctamente");
+        response.setResult(null);
+
+        return response;
+    }
 }
