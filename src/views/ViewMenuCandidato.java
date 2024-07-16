@@ -10,8 +10,10 @@ import core.utils.Validation;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import models.Candidato;
+import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
+import models.FiltroEmpleosCandidato;
 import models.FiltroPostulaciones;
 import models.Postulacion;
 
@@ -92,8 +94,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     }
 
     final public void listarEmpleosCandidatos() {
-
-        final ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos();
+        FiltroEmpleosCandidato filtroEmpleosCandidato = new FiltroEmpleosCandidato();
+        final ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos(filtroEmpleosCandidato);
 
         if (response.isSuccess()) {
             List<Object[]> items = response.getResult();
@@ -205,6 +207,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         txtEmpresa = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAptitudes = new javax.swing.JTextArea();
+        txtEdad = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtBuscar = new javax.swing.JTextField();
         btnBuscarMisPostulaciones = new javax.swing.JButton();
@@ -212,14 +216,22 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         tblMisPostulaciones = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtPostulacionesDescripcion = new javax.swing.JTextArea();
+        cbxEstado = new javax.swing.JComboBox<>();
+        cbxModalidad = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jTextField15 = new javax.swing.JTextField();
-        jButton9 = new javax.swing.JButton();
+        btnBuscarEmpleos = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblEmpleos = new javax.swing.JTable();
         jScrollPane7 = new javax.swing.JScrollPane();
         txtEmpleoDescripcion = new javax.swing.JTextArea();
         btnPostularEmpleos = new javax.swing.JButton();
+        cbxModalidadEmpleos = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -360,6 +372,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         AgregarCurriculum.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         AgregarCurriculum.setForeground(new java.awt.Color(255, 255, 255));
         AgregarCurriculum.setText("AGREGAR");
+        AgregarCurriculum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarCurriculumActionPerformed(evt);
+            }
+        });
 
         CurriculumArchivo.setText("archivo");
 
@@ -489,6 +506,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         txtAptitudes.setRows(5);
         jScrollPane2.setViewportView(txtAptitudes);
 
+        txtEdad.setBackground(new java.awt.Color(229, 229, 229));
+
+        jLabel16.setText("Edad");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -506,7 +527,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(QuitarAptitud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 7, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel18)
@@ -519,8 +540,14 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                 .addGap(56, 56, 56)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel25)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel25))
+                                        .addGap(25, 25, 25)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel16)
+                                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -558,7 +585,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                     .addComponent(jScrollPane2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -568,15 +595,17 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(5, 5, 5)
-                                        .addComponent(jLabel10))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(7, 7, 7)
-                                        .addComponent(jLabel1)))
-                                .addGap(18, 18, 18))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(5, 5, 5)
+                                .addComponent(jLabel10))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel1))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(46, 46, 46))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel9)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -613,9 +642,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                     .addComponent(cbxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(56, 56, 56))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(262, 262, 262))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(AgregarExperiencia)
                                 .addGap(18, 18, 18)
                                 .addComponent(QuitarExperiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -643,7 +669,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel25)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel25)
+                                        .addComponent(jLabel16))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -652,7 +680,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(jLabel26)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel21)
@@ -764,7 +794,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Título", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Feedback", "Fecha Creado"
+                "Código", "Cargo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Feedback", "Fecha Creado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -787,6 +817,18 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         txtPostulacionesDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtPostulacionesDescripcion);
 
+        cbxEstado.setBackground(new java.awt.Color(229, 229, 229));
+        cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "postulado", "cancelado" }));
+
+        cbxModalidad.setBackground(new java.awt.Color(229, 229, 229));
+        cbxModalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "remoto", "presencial", "hibrido" }));
+
+        jLabel11.setText("Estado:");
+
+        jLabel12.setText("Modalidad:");
+
+        jLabel13.setText("Cargo o Empresa o Descripción:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -795,20 +837,38 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 931, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscarMisPostulaciones))
-                    .addComponent(jScrollPane1))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(cbxModalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(btnBuscarMisPostulaciones))
+                            .addComponent(jLabel12))))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarMisPostulaciones))
+                    .addComponent(btnBuscarMisPostulaciones)
+                    .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxModalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
@@ -822,10 +882,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jTextField15.setBackground(new java.awt.Color(229, 229, 229));
 
-        jButton9.setBackground(new java.awt.Color(102, 102, 102));
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("BUSCAR");
+        btnBuscarEmpleos.setBackground(new java.awt.Color(102, 102, 102));
+        btnBuscarEmpleos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnBuscarEmpleos.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarEmpleos.setText("BUSCAR");
+        btnBuscarEmpleos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarEmpleosActionPerformed(evt);
+            }
+        });
 
         tblEmpleos.setBackground(new java.awt.Color(229, 229, 229));
         tblEmpleos.setModel(new javax.swing.table.DefaultTableModel(
@@ -833,7 +898,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Fecha Creado"
+                "Codigo", "Cargo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Fecha Creado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -866,6 +931,13 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             }
         });
 
+        cbxModalidadEmpleos.setBackground(new java.awt.Color(229, 229, 229));
+        cbxModalidadEmpleos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "remoto", "presencial", "hibrido" }));
+
+        jLabel14.setText("Modalidad:");
+
+        jLabel15.setText("Cargo o Empresa o Descripción:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -874,25 +946,36 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGap(78, 78, 78)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(26, 26, 26)
-                            .addComponent(jButton9)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel15))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel14)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(cbxModalidadEmpleos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(41, 41, 41)
+                                    .addComponent(btnBuscarEmpleos)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(btnPostularEmpleos, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(334, 334, 334)))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(242, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addGap(23, 23, 23)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9))
+                    .addComponent(btnBuscarEmpleos)
+                    .addComponent(cbxModalidadEmpleos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -961,6 +1044,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     }//GEN-LAST:event_QuitarEstudiosActionPerformed
 
     private void btnActualizarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarCandidatoActionPerformed
+
         // Validar
         boolean validateTxtNombres = Validation.validateComponent(txtNombres).required().min(5).max(10).validate();
         boolean validateTxtApellidos = Validation.validateComponent(txtApellidos).required().min(10).max(20).validate();
@@ -974,12 +1058,20 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             return;
         }
 
+        // Obtener la fecha de nacimiento y calcular la edad
+        String fechaNacimiento = txtFechaNacimiento.getText();
+        int yearOfBirth = Integer.parseInt(fechaNacimiento.substring(fechaNacimiento.length() - 4));
+        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        int edad = currentYear - yearOfBirth;
+
+        // Mostrar la edad calculada en el campo txtEdad
+        txtEdad.setText(String.valueOf(edad));
+
         // Actualizar
         String nombres = txtNombres.getText();
         String apellidos = txtApellidos.getText();
         String celular = txtTelefono.getText();
         String dni = txtDNI.getText();
-        String fechaNacimiento = txtFechaNacimiento.getText();
         String sexo = cbxGenero.getSelectedItem().toString();
         String estadoCivil = cbxEstadoCivil.getSelectedItem().toString();
 
@@ -992,7 +1084,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             candidato.setIdPersona(UsuarioThreadLocal.get().getIdPersona());
             candidato.setNombre(nombres);
             candidato.setApellidos(apellidos);
-
             candidato.setTelefono(celular);
             candidato.setNroDocumento(dni);
             candidato.setFechaNacimiento(fechaNacimiento);
@@ -1000,13 +1091,15 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             candidato.setEstadoCivil(estadoCivil);
 
             candidatoController.actualizarCandidato(candidato);
-            System.out.println("Candidato creado exitosamente.");
+            System.out.println("Candidato actualizado exitosamente.");
 
             util.alertMessage("actualizado correctamente");
         } catch (Exception e) {
             util.alertMessage("NO SE PUDO GUARDAR TU USUARIO", true);
             throw new RuntimeException(e);
         }
+
+
     }//GEN-LAST:event_btnActualizarCandidatoActionPerformed
 
     private void btnRegistrarEstudioAcademicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEstudioAcademicoActionPerformed
@@ -1124,6 +1217,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             postulacion.setEstado("postulado");
             postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
             postulacion.setIdEmpleo(Integer.parseInt(tblEmpleos.getValueAt(fila, 0).toString()));
+            postulacion.setEdad(60);
             ResponseService<String> response = postulacionController.registrarPostulacion(postulacion);
             System.out.println("Success: " + response.isSuccess());
             System.out.println("Mensaje: " + response.getMessage());
@@ -1185,7 +1279,17 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
 
         FiltroPostulaciones filtroPostulaciones = new FiltroPostulaciones();
-        filtroPostulaciones.setBuscar(txtBuscar.getText());
+        if (!txtBuscar.getText().isEmpty()) {
+            filtroPostulaciones.setBuscar(txtBuscar.getText());
+        }
+        if (!cbxEstado.getSelectedItem().toString().equals("todos")) {
+            filtroPostulaciones.setEstado(cbxEstado.getSelectedItem().toString());
+        }
+
+        if (!cbxModalidad.getSelectedItem().toString().equals("todos")) {
+            filtroPostulaciones.setModalidad(cbxModalidad.getSelectedItem().toString());
+        }
+
         final ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion, filtroPostulaciones);
 
         if (response.isSuccess()) {
@@ -1202,6 +1306,43 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             util.alertMessage("Error al postulaciones", true);
         }
     }//GEN-LAST:event_btnBuscarMisPostulacionesActionPerformed
+
+    private void btnBuscarEmpleosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleosActionPerformed
+
+        Empleo empleo = new Empleo();
+        empleo.setIdEmpleo(UsuarioThreadLocal.get().getIdCandidato());
+
+        FiltroEmpleosCandidato filtroEmpleosCandidato = new FiltroEmpleosCandidato();
+
+        if (!txtBuscar.getText().isEmpty()) {
+            filtroEmpleosCandidato.setBuscar(txtBuscar.getText());
+        }
+
+        if (!cbxModalidad.getSelectedItem().toString().equals("todos")) {
+            filtroEmpleosCandidato.setModalidad(cbxModalidad.getSelectedItem().toString());
+        }
+
+        final ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos(filtroEmpleosCandidato);
+
+        if (response.isSuccess()) {
+            List<Object[]> items = response.getResult();
+
+            DefaultTableModel modelo = (DefaultTableModel) tblEmpleos.getModel();
+            modelo.setRowCount(0);
+
+            // Agregar los datos al modelo
+            for (Object[] item : items) {
+                modelo.addRow(item);
+            }
+        } else {
+            util.alertMessage("Error al empleos", true);
+        }
+
+    }//GEN-LAST:event_btnBuscarEmpleosActionPerformed
+
+    private void AgregarCurriculumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarCurriculumActionPerformed
+
+    }//GEN-LAST:event_AgregarCurriculumActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1259,14 +1400,23 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JButton QuitarExperiencia;
     private javax.swing.JTable TablaExperiencia;
     private javax.swing.JButton btnActualizarCandidato;
+    private javax.swing.JButton btnBuscarEmpleos;
     private javax.swing.JButton btnBuscarMisPostulaciones;
     private javax.swing.JButton btnPostularEmpleos;
     private javax.swing.JButton btnRegistrarEstudioAcademico;
+    private javax.swing.JComboBox<String> cbxEstado;
     private javax.swing.JComboBox<String> cbxEstadoCivil;
     private javax.swing.JComboBox<String> cbxGenero;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> cbxModalidad;
+    private javax.swing.JComboBox<String> cbxModalidadEmpleos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1313,6 +1463,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtDescripcionEL;
+    private javax.swing.JTextField txtEdad;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextArea txtEmpleoDescripcion;
     private javax.swing.JTextField txtEmpresa;
