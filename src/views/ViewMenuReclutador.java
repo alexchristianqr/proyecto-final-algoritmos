@@ -739,7 +739,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
             Object candidato = tblListaEmpleo.getValueAt(fila, 7);
             Object edadMin = tblListaEmpleo.getValueAt(fila, 8);
             Object edadMax = tblListaEmpleo.getValueAt(fila, 9);
-            
+
             cbxEstadoActualizado.setSelectedItem(estado);
 
             StringBuilder descripcionCompleta = new StringBuilder();
@@ -801,6 +801,12 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
+
+        if (response.isSuccess()) {
+            util.alertMessage("Reporte exportado correctamente");
+        } else {
+            util.alertMessage("Error al exportar", true);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -810,6 +816,12 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
+
+        if (response.isSuccess()) {
+            util.alertMessage("Reporte exportado correctamente");
+        } else {
+            util.alertMessage("Error al exportar", true);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -819,6 +831,12 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
+
+        if (response.isSuccess()) {
+            util.alertMessage("Reporte exportado correctamente");
+        } else {
+            util.alertMessage("Error al exportar", true);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -828,6 +846,12 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
+
+        if (response.isSuccess()) {
+            util.alertMessage("Reporte exportado correctamente");
+        } else {
+            util.alertMessage("Error al exportar", true);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -837,6 +861,12 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
+
+        if (response.isSuccess()) {
+            util.alertMessage("Reporte exportado correctamente");
+        } else {
+            util.alertMessage("Error al exportar", true);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btnGuardarFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarFeedbackActionPerformed

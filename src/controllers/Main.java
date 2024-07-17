@@ -30,7 +30,7 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) {
-        testViewLogin();
+        //testViewLogin();
 
         /* AUTH */
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
@@ -66,6 +66,7 @@ public class Main {
         /* ARCHIVOS */
         //testUploadPDF();
         //testDownloadPDF();
+        testReporteExperiencias();
     }
 
     public static void testViewLogin() {
