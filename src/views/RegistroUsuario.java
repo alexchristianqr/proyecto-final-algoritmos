@@ -185,7 +185,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
             if (cuenta.equalsIgnoreCase("Seleccionar")) {
                 JOptionPane.showMessageDialog(null, "DEBE DE SELECCIONAR UN TIPO DE CUENTA");
             } else {
-                if (email.length() < 16 || email.length() > 50 || !email.contains("@") || !email.endsWith(".com")) {
+                if (email.length() < 16 || email.length() > 50 || !email.contains("@")) {
                     JOptionPane.showMessageDialog(null, "El email debe tener entre 16 y 50 caracteres y contener el símbolo '@'");
                 } else {
                     if (nombre.length() < 4 || nombre.length() > 22) {
