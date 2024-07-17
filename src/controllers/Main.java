@@ -61,7 +61,7 @@ public class Main {
         /* USUARIO */
         //testRegistrarUsuario();
         /* REPORTES */
-        //testReporteUsuarios();
+        testReporteUsuarios();
         //testReporte();
         /* ARCHIVOS */
         //testUploadPDF();
@@ -403,14 +403,6 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
-    public static void testReportePersonas() {
-        ReporteController reportecontroller = new ReporteController();
-
-        ResponseService<Boolean> response = reportecontroller.reportePersonas();
-        System.out.println("Success: " + response.isSuccess());
-        System.out.println("Mensaje: " + response.getMessage());
-        System.out.println("Resultado: " + response.getResult());
-    }
 
     public static void testReporteEdad() {
         ReporteController reportecontroller = new ReporteController();
