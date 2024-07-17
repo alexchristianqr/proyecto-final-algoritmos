@@ -30,7 +30,7 @@ public class Main {
 
     // Ejecutar programa, mostrando la vista de Login
     public static void main(String[] args) {
-        testViewLogin();
+        //testViewLogin();
 
         /* AUTH */
         //testLogin("maria.gonzales@utp.edu.pe", "reclutador2024");
@@ -56,7 +56,7 @@ public class Main {
         //testActualizarReclutador();
         /* EMPLEO */
         //testRegistrarEmpleo();
-        //testListarEmpleos();
+        testListarEmpleos();
         //testListarEmpleosCandidatos();
         /* USUARIO */
         //testRegistrarUsuario();
@@ -189,11 +189,11 @@ public class Main {
         EmpleoController empleoController = new EmpleoController();
 
         Empleo empleo = new Empleo();
-        empleo.setIdReclutador(2); // Asume un ID de reclutador, ajustar según sea necesario
+        empleo.setIdReclutador(1); // Asume un ID de reclutador, ajustar según sea necesario
 
         FiltroEmpleosReclutador filtroEmpleosReclutador = new FiltroEmpleosReclutador();
-        filtroEmpleosReclutador.setBuscar("java");
-        filtroEmpleosReclutador.setModalidad("hibrido");
+//        filtroEmpleosReclutador.setBuscar("java");
+//        filtroEmpleosReclutador.setModalidad("hibrido");
         filtroEmpleosReclutador.setEstado("disponible");// finalizado, eliminado
 
         ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);

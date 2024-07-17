@@ -39,7 +39,7 @@ public class EmpleoService extends BaseService {
         try {
             List<Object> parametrosList = new ArrayList<>();
 
-            querySQL_1 = "SELECT e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.estado, COUNT(po.id) AS 'total_candidatos_postulados', e.edad_min, e.edad_max, e.fecha_creado, e.fecha_actualizado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador JOIN personas pe ON pe.id = r.id_persona LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado') WHERE e.id_reclutador = ? ";
+            querySQL_1 = "SELECT e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.estado, c.id AS 'id_candidato', pc.nombre AS 'candidato', e.edad_min, e.edad_max, e.fecha_creado, e.fecha_actualizado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador JOIN personas pe ON pe.id = r.id_persona LEFT JOIN postulaciones po ON po.id_empleo = e.id AND po.estado NOT IN ('cancelado','rechazado','bloqueado') JOIN candidatos c ON c.id = po.id_candidato JOIN personas pc ON pc.id = c.id_persona WHERE e.id_reclutador = ? ";
             parametrosList.add(empleo.getIdReclutador());
             
             if (filtroEmpleosReclutador.getBuscar() != null) {
@@ -58,7 +58,6 @@ public class EmpleoService extends BaseService {
                 parametrosList.add(filtroEmpleosReclutador.getEstado());
             }
 
-            querySQL_1 += " GROUP BY e.id ";
             querySQL_1 += " ORDER BY e.id DESC; ";
 
             // Convertimos la lista a un array
@@ -76,11 +75,12 @@ public class EmpleoService extends BaseService {
                 data[3] = rs.getString("modalidad");
                 data[4] = rs.getString("descripcion");
                 data[5] = rs.getString("estado");
-                data[6] = rs.getInt("total_candidatos_postulados");
-                data[7] = rs.getInt("edad_min");
-                data[8] = rs.getInt("edad_max");
-                data[9] = rs.getString("fecha_creado");
-                data[10] = rs.getString("fecha_actualizado");
+                data[6] = rs.getInt("id_candidato");
+                data[7] = rs.getString("candidato");
+                data[8] = rs.getInt("edad_min");
+                data[9] = rs.getInt("edad_max");
+                data[10] = rs.getString("fecha_creado");
+                data[11] = rs.getString("fecha_actualizado");
 
                 lista.add(data);
             }
