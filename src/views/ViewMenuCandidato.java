@@ -4,15 +4,11 @@ import controllers.CandidatoController;
 import controllers.EmpleoController;
 import controllers.PostulacionController;
 import controllers.UpPDFController;
-import core.services.FileService;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import core.utils.Validation;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Candidato;
@@ -1226,12 +1222,12 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             StringBuilder descripcionCompleta = new StringBuilder();
             descripcionCompleta.append("================== DESCRIPCIÓN DEL EMPLEO ==================\n\n");
 
-            descripcionCompleta.append("Titulo:  ").append(titulo != null ? titulo.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Cargo:  ").append(titulo != null ? titulo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Empresa:  ").append(empresa != null ? empresa.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Sueldo:  ").append(sueldo != null ? sueldo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Modalidad:  ").append(modalidad != null ? modalidad.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
-            descripcionCompleta.append("Rango de edad permitido:  ").append(edadMin != null && edadMax != null ? edadMin.toString() + " - " + edadMax.toString(): "No disponible").append("\n\n");
+            descripcionCompleta.append("Rango de edad permitido:  ").append(edadMin != null && edadMax != null ? edadMin.toString() + " - " + edadMax.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Fecha creado:  ").append(fechaCreado != null ? fechaCreado.toString() : "No disponible").append("\n\n");
 
             txtEmpleoDescripcion.setText(descripcionCompleta.toString());
@@ -1280,8 +1276,8 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 } else {
                     util.alertMessage("Error al registrar su postulación", true);
                 }
-            }else{
-               util.alertMessage("Error al registrar su postulación", true); 
+            } else {
+                util.alertMessage("Error al registrar su postulación", true);
             }
 
         } else {

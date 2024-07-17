@@ -1,16 +1,21 @@
 package views;
 
 import controllers.EmpleoController;
+import controllers.PostulacionController;
 import controllers.ReclutadorController;
 import controllers.ReporteController;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import core.utils.Validation;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import models.Empleo;
+import models.FeedbackInfo;
 import models.FiltroEmpleosReclutador;
+import models.Postulacion;
 import models.Reclutador;
 
 public final class ViewMenuReclutador extends javax.swing.JFrame {
@@ -27,6 +32,14 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
 
     public void mostrarDatosBasicos() {
 
+        // Añadir ActionListener al JCheckBox
+        chbFeedback.setSelected(false);
+        chbFeedback.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtareaFeedback.setEnabled(chbFeedback.isSelected());
+            }
+        });
         txtNombres.setText(UsuarioThreadLocal.get().getReclutador().getNombre());
         txtApellidos.setText(UsuarioThreadLocal.get().getReclutador().getApellidos());
         txtEmail.setText(UsuarioThreadLocal.get().getUsername());
@@ -106,6 +119,11 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtareaFeedback = new javax.swing.JTextArea();
+        btnGuardarFeedback = new javax.swing.JButton();
+        chbFeedback = new javax.swing.JCheckBox();
+        cbxEstadoActualizado = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -335,17 +353,17 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         tblListaEmpleo.setBackground(new java.awt.Color(229, 229, 229));
         tblListaEmpleo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null, null, null, null, null, null, null, null, null},
-                {"", null, null, null, null, null, null, null, null, null, null},
-                {"", null, null, null, null, null, null, null, null, null, null},
-                {"", null, null, null, null, null, null, null, null, null, null}
+                {"", null, null, null, null, null, null, null, null, null, null, null},
+                {"", null, null, null, null, null, null, null, null, null, null, null},
+                {"", null, null, null, null, null, null, null, null, null, null, null},
+                {"", null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Cargo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Candidatos", "Edad Min", "Edad Max", "Creado", "Actualizado"
+                "Cargo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "ID Candidato", "Candidato", "Edad Min", "Edad Max", "Creado", "Actualizado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -393,15 +411,30 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
 
         jLabel15.setText("Cargo o Empresa o Descripción:");
 
+        txtareaFeedback.setEditable(false);
+        txtareaFeedback.setColumns(20);
+        txtareaFeedback.setRows(5);
+        jScrollPane4.setViewportView(txtareaFeedback);
+
+        btnGuardarFeedback.setText("GUARDAR");
+        btnGuardarFeedback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarFeedbackActionPerformed(evt);
+            }
+        });
+
+        chbFeedback.setText("¿Quiero enviar feedback?");
+
+        cbxEstadoActualizado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "postulado", "contratado", "contactado", "entrevistado", "cancelado", "rechazado", "bloqueado" }));
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtBuscarReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -416,8 +449,18 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
                                 .addComponent(cbxModalidadReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(36, 36, 36)
                                 .addComponent(btnBuscarEmpleos))
-                            .addComponent(jLabel14))))
-                .addContainerGap(69, Short.MAX_VALUE))
+                            .addComponent(jLabel14)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(cbxEstadoActualizado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnGuardarFeedback))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                            .addComponent(chbFeedback, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,7 +479,16 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbxEstadoActualizado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardarFeedback))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chbFeedback)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
@@ -682,17 +734,23 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
             Object sueldo = tblListaEmpleo.getValueAt(fila, 2);
             Object modalidad = tblListaEmpleo.getValueAt(fila, 3);
             Object descripcion = tblListaEmpleo.getValueAt(fila, 4);
-            Object edadMin = tblListaEmpleo.getValueAt(fila, 7);
-            Object edadMax = tblListaEmpleo.getValueAt(fila, 8);
+            Object estado = tblListaEmpleo.getValueAt(fila, 5);
+            Object id_candidato = tblListaEmpleo.getValueAt(fila, 6);
+            Object candidato = tblListaEmpleo.getValueAt(fila, 7);
+            Object edadMin = tblListaEmpleo.getValueAt(fila, 8);
+            Object edadMax = tblListaEmpleo.getValueAt(fila, 9);
+            
+            cbxEstadoActualizado.setSelectedItem(estado);
 
             StringBuilder descripcionCompleta = new StringBuilder();
             descripcionCompleta.append("================== DESCRIPCIÓN DEL EMPLEO ==================\n\n");
-            descripcionCompleta.append("Titulo:  ").append(titulo != null ? titulo.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Cargo:  ").append(titulo != null ? titulo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Empresa:  ").append(empresa != null ? empresa.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Sueldo:  ").append(sueldo != null ? sueldo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Modalidad:  ").append(modalidad != null ? modalidad.toString() : "No disponible").append("\n\n");
-            descripcionCompleta.append("Edad Min:  ").append(edadMin != null ? edadMin.toString() : "No disponible").append("\n\n");
-            descripcionCompleta.append("Edad Max:  ").append(edadMax != null ? edadMax.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Candidato postulado:  ").append(candidato != null ? candidato.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Estado:  ").append(estado != null ? estado.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Rango de edad permitido:  ").append(edadMin != null && edadMax != null ? edadMin.toString() + " - " + edadMax.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
 
             txtEmpleoDescripcion.setText(descripcionCompleta.toString());
@@ -781,6 +839,37 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         System.out.println("Resultado: " + response.getResult());
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void btnGuardarFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarFeedbackActionPerformed
+        // TODO add your handling code here:
+        // Validar
+        boolean validateestado = Validation.validateComponent(cbxEstadoActualizado).required(cb -> cb.getSelectedIndex() > 0).validate();
+
+        if (!validateestado) {
+            return;
+        }
+
+        String estado = cbxEstadoActualizado.getSelectedItem().toString();
+
+        PostulacionController postulacionController = new PostulacionController();
+
+        Postulacion postulacion = new Postulacion();
+        postulacion.setEstado(estado);
+
+        FeedbackInfo feedbackInfo = new FeedbackInfo();
+        feedbackInfo.setNombreCandidato(UsuarioThreadLocal.get().getCandidato().getNombre());
+        feedbackInfo.setNombreReclutador(UsuarioThreadLocal.get().getReclutador().getNombre());
+        feedbackInfo.setEmailReclutador(UsuarioThreadLocal.get().getUsername());
+        feedbackInfo.setEmpresaReclutador(UsuarioThreadLocal.get().getReclutador().getEmpresa());
+        feedbackInfo.setPuestoReclutador("Reclutador");
+        feedbackInfo.setTelefonoReclutador(UsuarioThreadLocal.get().getReclutador().getTelefono());
+
+        ResponseService<Boolean> response = postulacionController.registrarFeedbackPersonalizado(postulacion, feedbackInfo);
+
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }//GEN-LAST:event_btnGuardarFeedbackActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -820,10 +909,13 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarEmpleos;
     private javax.swing.JButton btnCrearEmpleo;
+    private javax.swing.JButton btnGuardarFeedback;
     private javax.swing.JButton btnGuardarReclutador;
+    private javax.swing.JComboBox<String> cbxEstadoActualizado;
     private javax.swing.JComboBox<String> cbxEstadoReclutador;
     private javax.swing.JComboBox<String> cbxModalidad;
     private javax.swing.JComboBox<String> cbxModalidadReclutador;
+    private javax.swing.JCheckBox chbFeedback;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -854,6 +946,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblListaEmpleo;
     private javax.swing.JTextField txtApellidos;
@@ -869,5 +962,6 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtSueldo;
     private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextArea txtareaFeedback;
     // End of variables declaration//GEN-END:variables
 }
