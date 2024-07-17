@@ -1379,11 +1379,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         empleo.setIdEmpleo(UsuarioThreadLocal.get().getIdCandidato());
 
         FiltroEmpleosCandidato filtroEmpleosCandidato = new FiltroEmpleosCandidato();
-        
-        System.out.println("es: "+cbxModalidadEmpleos.getSelectedItem());
 
         if (!txtBuscarEmpleos.getText().isEmpty()) {
-            filtroEmpleosCandidato.setBuscar(txtBuscarPostulacion.getText());
+            filtroEmpleosCandidato.setBuscar(txtBuscarEmpleos.getText());
         }
         if (!cbxModalidadEmpleos.getSelectedItem().toString().equals("todos")) {
             filtroEmpleosCandidato.setModalidad(cbxModalidadEmpleos.getSelectedItem().toString());
