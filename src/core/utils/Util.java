@@ -3,6 +3,9 @@ package core.utils;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.function.Predicate;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -93,9 +96,23 @@ public class Util {
         }
         System.out.println("|");
     }
-
+    
     // Función genérica para validar cualquier componente con reglas de validación
     public static boolean validateComponent(JComponent component, Predicate<JComponent> validationRule) {
         return validationRule.test(component);
+    }
+    
+     /**
+     * Calcula la edad de una persona basada en su fecha de nacimiento.
+     *
+     * @param fechaNacimiento La fecha de nacimiento en formato "dd/MM/yyyy".
+     * @return La edad calculada como String.
+     */
+    public static String calcularEdad(String fechaNacimiento) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate birthDate = LocalDate.parse(fechaNacimiento, formatter);
+        LocalDate currentDate = LocalDate.now();
+        int edad = (int) ChronoUnit.YEARS.between(birthDate, currentDate);
+        return String.valueOf(edad);
     }
 }

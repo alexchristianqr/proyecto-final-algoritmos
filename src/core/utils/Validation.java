@@ -1,6 +1,8 @@
 package core.utils;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +76,7 @@ public class Validation {
         errorMessages.add(String.format("El campo no debe exceder los %d caracteres.", maxLength));
         return this;
     }
-    
+
     // Nueva función de validación para verificar correos electrónicos
     public Validation email() {
         validationRules.add(comp -> {
@@ -87,17 +89,20 @@ public class Validation {
         errorMessages.add("El campo debe contener una dirección de correo electrónico válida.");
         return this;
     }
-     // Nueva función de validación para verificar la edad mínima
+    // Nueva función de validación para verificar la edad mínima
+
     public Validation validateAge() {
         validationRules.add(comp -> {
             if (comp instanceof JTextField jTextField) {
                 String text = jTextField.getText().trim();
                 if (text.length() >= 4) {
                     try {
-                        int birthYear = Integer.parseInt(text.substring(text.length() - 4));
-                        int currentYear = LocalDate.now().getYear();
-                        int age = currentYear - birthYear;
-                        return age >= 18;
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        LocalDate birthDate = LocalDate.parse(text, formatter);
+                        LocalDate currentDate = LocalDate.now();
+                        int edad = (int) ChronoUnit.YEARS.between(birthDate, currentDate);
+                        return edad >= 18;
                     } catch (NumberFormatException e) {
                         return false; // Los últimos 4 caracteres no son un año válido
                     }
@@ -109,7 +114,6 @@ public class Validation {
         errorMessages.add("Debe tener al menos 18 años.");
         return this;
     }
-    
 
     // Método para ejecutar la validación y mostrar el mensaje de error si falla
     public boolean validate() {
