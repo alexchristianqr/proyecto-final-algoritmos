@@ -166,7 +166,7 @@ public class CandidatoService extends BaseService {
                 querySQL_1.append("sexo = ?, ");
                 parametrosSQL_1.add(candidato.getSexo());
             }
-            if (candidato.getEstadoCivil()!= null) {
+            if (candidato.getEstadoCivil() != null) {
                 querySQL_1.append("estado_civil = ?, ");
                 parametrosSQL_1.add(candidato.getEstadoCivil());
             }
@@ -185,7 +185,7 @@ public class CandidatoService extends BaseService {
 
             // Elimina la última coma y espacio, y añade la cláusula WHERE
             querySQL_1.setLength(querySQL_1.length() - 2);
-            querySQL_1.append(" WHERE id = ? ;");
+            querySQL_1.append(" WHERE id = ?;");
             parametrosSQL_1.add(candidato.getIdPersona());
 
             Object[] parametrosArray = parametrosSQL_1.toArray();
@@ -195,18 +195,9 @@ public class CandidatoService extends BaseService {
                 success = true;
             }
 
-            //UPDATE personas SET nombre = ?, apellido = ?, tipo_documento = ?, nrodocumento = ?, sexo = ?, estado = ?, fecha_nacimiento = ?, telefono = ? WHERE id = ?;
             StringBuilder querySQL_2 = new StringBuilder("UPDATE candidatos SET ");
             List<Object> parametrosSQL_2 = new ArrayList<>();
 
-            if (candidato.getIdPersona() > 0) {
-                querySQL_2.append("id_persona = ?, ");
-                parametrosSQL_2.add(candidato.getIdPersona());
-            }
-            if (candidato.getIdUsuario() > 0) {
-                querySQL_2.append("id_usuario = ?, ");
-                parametrosSQL_2.add(candidato.getIdUsuario());
-            }
             if (candidato.getAptitudes() != null) {
                 querySQL_2.append("aptitudes = ?, ");
                 parametrosSQL_2.add(candidato.getAptitudes());
@@ -229,7 +220,7 @@ public class CandidatoService extends BaseService {
             }
 
             querySQL_2.setLength(querySQL_2.length() - 2);
-            querySQL_2.append(" WHERE id = ? ;");
+            querySQL_2.append(" WHERE id = ?;");
             parametrosSQL_2.add(candidato.getIdCandidato());
 
             Object[] parametrosArray2 = parametrosSQL_2.toArray(Object[]::new);

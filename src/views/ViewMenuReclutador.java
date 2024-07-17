@@ -217,7 +217,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel1.setText("Título:");
+        jLabel1.setText("Cargo:");
 
         jLabel2.setText("Empresa:");
 
@@ -249,7 +249,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtDescripcion);
 
         cbxModalidad.setBackground(new java.awt.Color(226, 226, 226));
-        cbxModalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "presencial", "remoto" }));
+        cbxModalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "presencial", "remoto", "hibrido" }));
 
         txtEdadMin.setBackground(new java.awt.Color(229, 229, 229));
 
@@ -564,8 +564,8 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
 
     private void btnGuardarReclutadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarReclutadorActionPerformed
         //Validar
-        boolean validateTxtNombres = Validation.validateComponent(txtNombres).required().min(1).max(50).validate();
-        boolean validateTxtApellidos = Validation.validateComponent(txtApellidos).required().min(1).max(50).validate();
+        boolean validateTxtNombres = Validation.validateComponent(txtNombres).required().min(2).max(50).validate();
+        boolean validateTxtApellidos = Validation.validateComponent(txtApellidos).required().min(2).max(50).validate();
         boolean validateTxtDNI = Validation.validateComponent(txtDNI).required().min(8).max(8).validate();
         boolean validateTxtCelular = Validation.validateComponent(txtCelular).required().min(9).max(9).validate();
 
@@ -573,12 +573,12 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
             return;
         }
 
-        String nombres = txtNombres.getText();
-        String apellidos = txtApellidos.getText();
-        String celular = txtCelular.getText();
-        String dni = txtDNI.getText();
-
         try {
+            String nombres = txtNombres.getText();
+            String apellidos = txtApellidos.getText();
+            String celular = txtCelular.getText();
+            String dni = txtDNI.getText();
+
             ReclutadorController reclutadorController = new ReclutadorController();
 
             // Reclutador
@@ -590,6 +590,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
             reclutador.setTelefono(celular);
             reclutador.setTipoDocumento(1);
             reclutador.setNroDocumento(dni);
+            reclutador.setEdad(dni);
 
             ResponseService<Boolean> response = reclutadorController.actualizarReclutador(reclutador);
             if (response.isSuccess()) {
@@ -606,53 +607,61 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarReclutadorActionPerformed
 
     private void btnCrearEmpleoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearEmpleoActionPerformed
-        boolean validateTxtTitulo = Validation.validateComponent(txtTitulo).required().min(35).max(100).validate();
-        boolean validateTxtEmpresa = Validation.validateComponent(txtEmpresa).required().min(2).max(20).validate();
-        boolean validateTxtSueldo = Validation.validateComponent(txtSueldo).required().min(4).max(4).validate();
+        boolean validateTxtTitulo = Validation.validateComponent(txtTitulo).required().min(5).max(100).validate();
+        boolean validateTxtEmpresa = Validation.validateComponent(txtEmpresa).required().min(2).max(100).validate();
+        boolean validateTxtSueldo = Validation.validateComponent(txtSueldo).required().min(4).max(5).validate();
         boolean validateModalidad = Validation.validateComponent(cbxModalidad).required(cb -> cb.getSelectedIndex() > 0).validate();
-        boolean validateDescripcion = Validation.validateComponent(txtDescripcion).required().min(100).max(200).validate();
+        boolean validateDescripcion = Validation.validateComponent(txtDescripcion).required().min(5).max(7000).validate();
+        boolean validateTxtEdadMin = Validation.validateComponent(txtEdadMin).required().validate();
+        boolean validateTxtEdadMax = Validation.validateComponent(txtEdadMax).required().validate();
 
-        if (!validateTxtTitulo || !validateTxtEmpresa || !validateTxtSueldo || !validateModalidad || !validateDescripcion) {
+        if (!validateTxtTitulo || !validateTxtEmpresa || !validateTxtSueldo || !validateModalidad || !validateDescripcion || !validateTxtEdadMin || !validateTxtEdadMax) {
             return;
         }
 
-        String titulo = txtTitulo.getText();
-        String empresa = txtEmpresa.getText();
-        String sueldo = txtSueldo.getText();
-        String modalidad = cbxModalidad.getSelectedItem().toString();
-        String descripcion = txtDescripcion.getText();
+        try {
+            String titulo = txtTitulo.getText();
+            String empresa = txtEmpresa.getText();
+            String sueldo = txtSueldo.getText();
+            String modalidad = cbxModalidad.getSelectedItem().toString();
+            String descripcion = txtDescripcion.getText();
+            String edadMin = txtEdadMin.getText();
+            String edadMax = txtEdadMax.getText();
 
-        Empleo empleo = new Empleo();
-        empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
-        empleo.setTitulo(titulo);
-        empleo.setEmpresa(empresa);
-        empleo.setSueldo(sueldo);
-        empleo.setModalidad(modalidad);
-        empleo.setDescripcion(descripcion);
-        empleo.setEstado("disponible");
+            Empleo empleo = new Empleo();
+            empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
+            empleo.setTitulo(titulo);
+            empleo.setEmpresa(empresa);
+            empleo.setSueldo(sueldo);
+            empleo.setModalidad(modalidad);
+            empleo.setDescripcion(descripcion);
+            empleo.setEdadMin(Integer.parseInt(edadMin));
+            empleo.setEdadMax(Integer.parseInt(edadMax));
+            empleo.setEstado("disponible");
 
-        ResponseService<Boolean> response = empleoController.registrarEmpleo(empleo);
-        System.out.println("Success: " + response.isSuccess());
-        System.out.println("Mensaje: " + response.getMessage());
-        System.out.println("Resultado: " + response.getResult());
+            ResponseService<Boolean> response = empleoController.registrarEmpleo(empleo);
 
-        if (response.isSuccess()) {
-            util.alertMessage(response.getMessage());
-            listarEmpleos();
-            txtTitulo.setText("");
-            txtEmpresa.setText("");
-            txtSueldo.setText("");
-            cbxModalidad.setSelectedIndex(0);
-            txtDescripcion.setText("");
-        } else {
+            if (response.isSuccess()) {
+                util.alertMessage("Empleo registrado correctamente");
+                listarEmpleos();
+                txtTitulo.setText("");
+                txtEmpresa.setText("");
+                txtSueldo.setText("");
+                cbxModalidad.setSelectedIndex(0);
+                txtDescripcion.setText("");
+                txtEdadMin.setText("");
+                txtEdadMax.setText("");
+            } else {
+                util.alertMessage("No se pudo registrar empleo", true);
+            }
+
+        } catch (Exception e) {
             util.alertMessage("Error al registrar", true);
+            throw new RuntimeException(e);
         }
-
     }//GEN-LAST:event_btnCrearEmpleoActionPerformed
 
     private void tblListaEmpleoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaEmpleoMouseClicked
-        System.out.println("clickeando");
-
         int fila = tblListaEmpleo.getSelectedRow();
         System.out.println("La fila es: " + fila);
 
@@ -717,7 +726,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarEmpleosActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     ReporteController reportecontroller = new ReporteController();
+        ReporteController reportecontroller = new ReporteController();
 
         ResponseService<Boolean> response = reportecontroller.reporteUsuarios();
         System.out.println("Success: " + response.isSuccess());
@@ -726,7 +735,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    ReporteController reportecontroller = new ReporteController();
+        ReporteController reportecontroller = new ReporteController();
 
         ResponseService<Boolean> response = reportecontroller.reportePersonas();
         System.out.println("Success: " + response.isSuccess());
@@ -735,7 +744,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    ReporteController reportecontroller = new ReporteController();
+        ReporteController reportecontroller = new ReporteController();
 
         ResponseService<Boolean> response = reportecontroller.reporteEdad();
         System.out.println("Success: " + response.isSuccess());
@@ -744,7 +753,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    ReporteController reportecontroller = new ReporteController();
+        ReporteController reportecontroller = new ReporteController();
 
         ResponseService<Boolean> response = reportecontroller.reporteAptitudes();
         System.out.println("Success: " + response.isSuccess());
@@ -762,7 +771,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-      ReporteController reportecontroller = new ReporteController();
+        ReporteController reportecontroller = new ReporteController();
 
         ResponseService<Boolean> response = reportecontroller.reporteReclutadores();
         System.out.println("Success: " + response.isSuccess());

@@ -80,7 +80,6 @@ public class ReclutadorService extends BaseService {
             }
 
             // Elimina la última coma y espacio, y añade la cláusula WHERE
-//            querySQL_1.setLength(querySQL_1.length() - 2);
             querySQL_1.append(" WHERE id = ?;");
             parametrosPersonaList.add(reclutador.getIdPersona());
 
