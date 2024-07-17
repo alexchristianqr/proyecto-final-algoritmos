@@ -597,18 +597,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ExperienciaFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -652,7 +640,19 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel3)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(ExperienciaFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))))))
+                                                .addComponent(ExperienciaFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ExperienciaFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(33, 33, 33))
         );
         jPanel1Layout.setVerticalGroup(
@@ -705,7 +705,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(jLabel7)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -726,11 +728,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                                     .addComponent(jLabel10)
                                     .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(txtExperienciaEL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -755,7 +755,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(QuitarEstudios)
                             .addComponent(btnRegistrarEstudioAcademico))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -879,7 +879,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mis Postulaciones", jPanel2);
@@ -988,7 +988,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnPostularEmpleos, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Empleos", jPanel3);
@@ -1219,7 +1219,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             Object sueldo = tblEmpleos.getValueAt(fila, 3);
             Object modalidad = tblEmpleos.getValueAt(fila, 4);
             Object descripcion = tblEmpleos.getValueAt(fila, 5);
-            Object fecha_creado = tblEmpleos.getValueAt(fila, 6);
+            Object fechaCreado = tblEmpleos.getValueAt(fila, 6);
 
             StringBuilder descripcionCompleta = new StringBuilder();
             descripcionCompleta.append("================== DESCRIPCIÓN DEL EMPLEO ==================\n\n");
@@ -1229,6 +1229,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             descripcionCompleta.append("Sueldo:  ").append(sueldo != null ? sueldo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Modalidad:  ").append(modalidad != null ? modalidad.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Fecha creado:  ").append(fechaCreado != null ? fechaCreado.toString() : "No disponible").append("\n\n");
 
             txtEmpleoDescripcion.setText(descripcionCompleta.toString());
         }
@@ -1245,34 +1246,44 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             postulacion.setEstado("postulado");
             postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
             postulacion.setIdEmpleo(Integer.parseInt(tblEmpleos.getValueAt(fila, 0).toString()));
-            postulacion.setEdad(60);
+            postulacion.setEdad(Integer.parseInt(util.calcularEdad(UsuarioThreadLocal.get().getCandidato().getFechaNacimiento())));
+
             ResponseService<String> response = postulacionController.registrarPostulacion(postulacion);
             System.out.println("Success: " + response.isSuccess());
             System.out.println("Mensaje: " + response.getMessage());
             System.out.println("Resultado: " + response.getResult());
 
-            if (response.isSuccess()) {
-                switch (response.getResult().toString()) {
-                    case "creado":
-                        util.alertMessage("Postulado correctamente");
-                        listarPostulaciones();
-                        break;
-                    case "postulado":
-                        util.alertMessage("Usted ya se encuentra postulado a este empleo", true);
-                        listarPostulaciones();
-                        break;
-                    default:
-                        util.alertMessage("Error al postular", true);
-                        break;
-                }
+            int totalRowsEstudiosAcademicos = tblListaEstudiosAcademicos.getSelectedRows().length;
+            System.out.println("tblListaEstudiosAcademicos Len: " + totalRowsEstudiosAcademicos);
+            int totalRowsExperiencias = TablaExperiencia.getSelectedRows().length;
+            System.out.println("TablaExperiencia Len: " + totalRowsExperiencias);
 
-            } else {
-                util.alertMessage("Error al registrar", true);
+            if (totalRowsEstudiosAcademicos > 0 && totalRowsExperiencias > 0) {
+                if (response.isSuccess()) {
+                    switch (response.getResult()) {
+                        case "creado":
+                            util.alertMessage("Postulado correctamente");
+                            listarPostulaciones();
+                            break;
+                        case "postulado":
+                            util.alertMessage("Usted ya se encuentra postulado a este empleo", true);
+                            listarPostulaciones();
+                            break;
+                        default:
+                            util.alertMessage("Error al postular", true);
+                            break;
+                    }
+
+                } else {
+                    util.alertMessage("Error al registrar su postulación", true);
+                }
+            }else{
+               util.alertMessage("Error al registrar su postulación", true); 
             }
 
         } else {
             // Mostrar mensaje de error si no se ha seleccionado una celda
-            util.alertMessage("POR FAVOR SELECCIONA UNA CELDA ANTES DE POSTULAR", true);
+            util.alertMessage("Porfavor, selecciona un empleo", true);
         }
     }//GEN-LAST:event_btnPostularEmpleosActionPerformed
 
@@ -1313,12 +1324,14 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         if (!cbxEstado.getSelectedItem().toString().equals("todos")) {
             filtroPostulaciones.setEstado(cbxEstado.getSelectedItem().toString());
         }
-
         if (!cbxModalidad.getSelectedItem().toString().equals("todos")) {
             filtroPostulaciones.setModalidad(cbxModalidad.getSelectedItem().toString());
         }
 
-        final ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion, filtroPostulaciones);
+        ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion, filtroPostulaciones);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
 
         if (response.isSuccess()) {
             List<Object[]> items = response.getResult();
@@ -1347,7 +1360,6 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             candidato.setPathCV(response.getResult());
 
             ResponseService<Boolean> responsito = candidatoController.actualizarCandidatoPorColumna(candidato, "path_curriculum_vitae");
-
             System.out.println("success: " + responsito.isSuccess());
             System.out.println("Mensaje: " + responsito.getMessage());
             System.out.println("Resultado: " + responsito.getResult());
@@ -1368,12 +1380,14 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         if (!txtBuscar.getText().isEmpty()) {
             filtroEmpleosCandidato.setBuscar(txtBuscar.getText());
         }
-
         if (!cbxModalidad.getSelectedItem().toString().equals("todos")) {
             filtroEmpleosCandidato.setModalidad(cbxModalidad.getSelectedItem().toString());
         }
 
-        final ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos(filtroEmpleosCandidato);
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos(filtroEmpleosCandidato);
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
 
         if (response.isSuccess()) {
             List<Object[]> items = response.getResult();

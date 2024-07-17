@@ -96,13 +96,13 @@ public class Util {
         }
         System.out.println("|");
     }
-    
+
     // Función genérica para validar cualquier componente con reglas de validación
     public static boolean validateComponent(JComponent component, Predicate<JComponent> validationRule) {
         return validationRule.test(component);
     }
-    
-     /**
+
+    /**
      * Calcula la edad de una persona basada en su fecha de nacimiento.
      *
      * @param fechaNacimiento La fecha de nacimiento en formato "dd/MM/yyyy".

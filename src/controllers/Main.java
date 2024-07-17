@@ -61,7 +61,7 @@ public class Main {
         /* USUARIO */
         //testRegistrarUsuario();
         /* REPORTES */
-        testReporteUsuarios();
+        //testReporteUsuarios();
         //testReporte();
         /* ARCHIVOS */
         //testUploadPDF();
