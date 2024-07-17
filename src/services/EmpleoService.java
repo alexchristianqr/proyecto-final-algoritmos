@@ -102,7 +102,7 @@ public class EmpleoService extends BaseService {
         try {
             List<Object> parametrosList = new ArrayList<>();
 
-            querySQL_1 = "SELECT e.id, e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.fecha_creado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador AND e.estado = 'disponible' JOIN personas pe ON pe.id = r.id_persona WHERE 1 = 1 ";
+            querySQL_1 = "SELECT e.id, e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, e.edad_min, e.edad_max, e.fecha_creado FROM empleos e JOIN reclutadores r ON r.id = e.id_reclutador AND e.estado = 'disponible' JOIN personas pe ON pe.id = r.id_persona WHERE 1 = 1 ";
 
             if (filtroEmpleosCandidato.getBuscar() != null) {
                 querySQL_1 += " AND (e.titulo LIKE ? OR e.descripcion LIKE ? OR e.empresa LIKE ?) ";
@@ -133,7 +133,9 @@ public class EmpleoService extends BaseService {
                 data[3] = rs.getString("sueldo");
                 data[4] = rs.getString("modalidad");
                 data[5] = rs.getString("descripcion");
-                data[6] = rs.getString("fecha_creado");
+                data[6] = rs.getString("edad_min");
+                data[7] = rs.getString("edad_max");
+                data[8] = rs.getString("fecha_creado");
 
                 lista.add(data);
             }

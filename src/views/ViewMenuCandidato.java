@@ -904,11 +904,11 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Cargo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Fecha Creado"
+                "Codigo", "Cargo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Edad Min", "Edad Max", "Fecha Creado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1219,7 +1219,9 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             Object sueldo = tblEmpleos.getValueAt(fila, 3);
             Object modalidad = tblEmpleos.getValueAt(fila, 4);
             Object descripcion = tblEmpleos.getValueAt(fila, 5);
-            Object fechaCreado = tblEmpleos.getValueAt(fila, 6);
+            Object edadMin = tblEmpleos.getValueAt(fila, 6);
+            Object edadMax = tblEmpleos.getValueAt(fila, 7);
+            Object fechaCreado = tblEmpleos.getValueAt(fila, 8);
 
             StringBuilder descripcionCompleta = new StringBuilder();
             descripcionCompleta.append("================== DESCRIPCIÓN DEL EMPLEO ==================\n\n");
@@ -1229,6 +1231,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             descripcionCompleta.append("Sueldo:  ").append(sueldo != null ? sueldo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Modalidad:  ").append(modalidad != null ? modalidad.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Rango de edad permitido:  ").append(edadMin != null && edadMax != null ? edadMin.toString() + " - " + edadMax.toString(): "No disponible").append("\n\n");
             descripcionCompleta.append("Fecha creado:  ").append(fechaCreado != null ? fechaCreado.toString() : "No disponible").append("\n\n");
 
             txtEmpleoDescripcion.setText(descripcionCompleta.toString());
