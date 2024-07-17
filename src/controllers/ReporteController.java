@@ -21,16 +21,6 @@ public class ReporteController extends BaseController<Object, Object> {
         return response;
     }
 
-    public ResponseService<Boolean> reportePersonas() {
-        ResponseService<Boolean> response = new ResponseService<>();
-        boolean success = reporteService.reportePersonas();
-
-        response.setSuccess(success);
-        response.setMessage("reporte Personas listo");
-
-        return response;
-    }
-
     public ResponseService<Boolean> reporteEdad() {
         ResponseService<Boolean> response = new ResponseService<>();
         boolean success = reporteService.reporteEdad();
