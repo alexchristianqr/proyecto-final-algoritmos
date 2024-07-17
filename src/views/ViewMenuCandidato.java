@@ -123,7 +123,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
 
         FiltroPostulaciones filtroPostulaciones = new FiltroPostulaciones();
-        filtroPostulaciones.setBuscar(txtBuscar.getText());
+        filtroPostulaciones.setBuscar(txtBuscarPostulacion.getText());
         final ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion, filtroPostulaciones);
 
         if (response.isSuccess()) {
@@ -216,24 +216,24 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         txtEdad = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        txtBuscar = new javax.swing.JTextField();
+        txtBuscarPostulacion = new javax.swing.JTextField();
         btnBuscarMisPostulaciones = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblMisPostulaciones = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtPostulacionesDescripcion = new javax.swing.JTextArea();
+        txtareaDetallePostulacionCandidato = new javax.swing.JTextArea();
         cbxEstado = new javax.swing.JComboBox<>();
         cbxModalidad = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jTextField15 = new javax.swing.JTextField();
+        txtBuscarEmpleos = new javax.swing.JTextField();
         btnBuscarEmpleos = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblEmpleos = new javax.swing.JTable();
         jScrollPane7 = new javax.swing.JScrollPane();
-        txtEmpleoDescripcion = new javax.swing.JTextArea();
+        txtareaDetalleEmpleosCandidato = new javax.swing.JTextArea();
         btnPostularEmpleos = new javax.swing.JButton();
         cbxModalidadEmpleos = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
@@ -778,7 +778,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
-        txtBuscar.setBackground(new java.awt.Color(229, 229, 229));
+        txtBuscarPostulacion.setBackground(new java.awt.Color(229, 229, 229));
 
         btnBuscarMisPostulaciones.setBackground(new java.awt.Color(102, 102, 102));
         btnBuscarMisPostulaciones.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -814,10 +814,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tblMisPostulaciones);
 
-        txtPostulacionesDescripcion.setBackground(new java.awt.Color(229, 229, 229));
-        txtPostulacionesDescripcion.setColumns(20);
-        txtPostulacionesDescripcion.setRows(5);
-        jScrollPane1.setViewportView(txtPostulacionesDescripcion);
+        txtareaDetallePostulacionCandidato.setBackground(new java.awt.Color(229, 229, 229));
+        txtareaDetallePostulacionCandidato.setColumns(20);
+        txtareaDetallePostulacionCandidato.setRows(5);
+        jScrollPane1.setViewportView(txtareaDetallePostulacionCandidato);
 
         cbxEstado.setBackground(new java.awt.Color(229, 229, 229));
         cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "postulado", "cancelado" }));
@@ -842,7 +842,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBuscarPostulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -867,7 +867,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarPostulacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarMisPostulaciones)
                     .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxModalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -882,7 +882,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTextField15.setBackground(new java.awt.Color(229, 229, 229));
+        txtBuscarEmpleos.setBackground(new java.awt.Color(229, 229, 229));
 
         btnBuscarEmpleos.setBackground(new java.awt.Color(102, 102, 102));
         btnBuscarEmpleos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -918,10 +918,10 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(tblEmpleos);
 
-        txtEmpleoDescripcion.setBackground(new java.awt.Color(229, 229, 229));
-        txtEmpleoDescripcion.setColumns(20);
-        txtEmpleoDescripcion.setRows(5);
-        jScrollPane7.setViewportView(txtEmpleoDescripcion);
+        txtareaDetalleEmpleosCandidato.setBackground(new java.awt.Color(229, 229, 229));
+        txtareaDetalleEmpleosCandidato.setColumns(20);
+        txtareaDetalleEmpleosCandidato.setRows(5);
+        jScrollPane7.setViewportView(txtareaDetalleEmpleosCandidato);
 
         btnPostularEmpleos.setBackground(new java.awt.Color(102, 102, 102));
         btnPostularEmpleos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -952,7 +952,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtBuscarEmpleos, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel15))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -975,7 +975,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarEmpleos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarEmpleos)
                     .addComponent(cbxModalidadEmpleos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
@@ -1230,7 +1230,7 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             descripcionCompleta.append("Rango de edad permitido:  ").append(edadMin != null && edadMax != null ? edadMin.toString() + " - " + edadMax.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Fecha creado:  ").append(fechaCreado != null ? fechaCreado.toString() : "No disponible").append("\n\n");
 
-            txtEmpleoDescripcion.setText(descripcionCompleta.toString());
+            txtareaDetalleEmpleosCandidato.setText(descripcionCompleta.toString());
         }
     }//GEN-LAST:event_tblEmpleosMouseClicked
 
@@ -1307,18 +1307,20 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
             descripcionCompleta.append("Modalidad:  ").append(modalidad != null ? modalidad.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
 
-            txtPostulacionesDescripcion.setText(descripcionCompleta.toString());
+            txtareaDetallePostulacionCandidato.setText(descripcionCompleta.toString());
         }
     }//GEN-LAST:event_tblMisPostulacionesMouseClicked
 
     private void btnBuscarMisPostulacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMisPostulacionesActionPerformed
 
+        txtareaDetallePostulacionCandidato.setText(null);
+
         Postulacion postulacion = new Postulacion();
         postulacion.setIdCandidato(UsuarioThreadLocal.get().getIdCandidato());
 
         FiltroPostulaciones filtroPostulaciones = new FiltroPostulaciones();
-        if (!txtBuscar.getText().isEmpty()) {
-            filtroPostulaciones.setBuscar(txtBuscar.getText());
+        if (!txtBuscarPostulacion.getText().isEmpty()) {
+            filtroPostulaciones.setBuscar(txtBuscarPostulacion.getText());
         }
         if (!cbxEstado.getSelectedItem().toString().equals("todos")) {
             filtroPostulaciones.setEstado(cbxEstado.getSelectedItem().toString());
@@ -1371,16 +1373,20 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
 
     private void btnBuscarEmpleosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleosActionPerformed
 
+        txtareaDetalleEmpleosCandidato.setText(null);
+
         Empleo empleo = new Empleo();
         empleo.setIdEmpleo(UsuarioThreadLocal.get().getIdCandidato());
 
         FiltroEmpleosCandidato filtroEmpleosCandidato = new FiltroEmpleosCandidato();
+        
+        System.out.println("es: "+cbxModalidadEmpleos.getSelectedItem());
 
-        if (!txtBuscar.getText().isEmpty()) {
-            filtroEmpleosCandidato.setBuscar(txtBuscar.getText());
+        if (!txtBuscarEmpleos.getText().isEmpty()) {
+            filtroEmpleosCandidato.setBuscar(txtBuscarPostulacion.getText());
         }
-        if (!cbxModalidad.getSelectedItem().toString().equals("todos")) {
-            filtroEmpleosCandidato.setModalidad(cbxModalidad.getSelectedItem().toString());
+        if (!cbxModalidadEmpleos.getSelectedItem().toString().equals("todos")) {
+            filtroEmpleosCandidato.setModalidad(cbxModalidadEmpleos.getSelectedItem().toString());
         }
 
         ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos(filtroEmpleosCandidato);
@@ -1516,25 +1522,25 @@ public class ViewMenuCandidato extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField15;
     private javax.swing.JTable tblEmpleos;
     private javax.swing.JTable tblListaEstudiosAcademicos;
     private javax.swing.JTable tblMisPostulaciones;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextArea txtAptitudes;
-    private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtBuscarEmpleos;
+    private javax.swing.JTextField txtBuscarPostulacion;
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtDescripcionEL;
     private javax.swing.JTextField txtEdad;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextArea txtEmpleoDescripcion;
     private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtExperienciaEL;
     private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNombres;
-    private javax.swing.JTextArea txtPostulacionesDescripcion;
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextArea txtareaDetalleEmpleosCandidato;
+    private javax.swing.JTextArea txtareaDetallePostulacionCandidato;
     // End of variables declaration//GEN-END:variables
 }

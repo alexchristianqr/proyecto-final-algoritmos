@@ -1103,7 +1103,7 @@
                           <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtBuscar" min="-2" pref="189" max="-2" attributes="0"/>
+                                  <Component id="txtBuscarPostulacion" min="-2" pref="189" max="-2" attributes="0"/>
                                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1137,7 +1137,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtBuscarPostulacion" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnBuscarMisPostulaciones" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbxEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbxModalidad" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1152,7 +1152,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextField" name="txtBuscar">
+            <Component class="javax.swing.JTextField" name="txtBuscarPostulacion">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
@@ -1267,7 +1267,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txtPostulacionesDescripcion">
+                <Component class="javax.swing.JTextArea" name="txtareaDetallePostulacionCandidato">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e5" green="e5" red="e5" type="rgb"/>
@@ -1355,7 +1355,7 @@
                               <Component id="jScrollPane7" alignment="1" min="-2" pref="830" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTextField15" min="-2" pref="149" max="-2" attributes="0"/>
+                                      <Component id="txtBuscarEmpleos" min="-2" pref="149" max="-2" attributes="0"/>
                                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1388,7 +1388,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField15" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtBuscarEmpleos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnBuscarEmpleos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbxModalidadEmpleos" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -1404,7 +1404,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextField" name="jTextField15">
+            <Component class="javax.swing.JTextField" name="txtBuscarEmpleos">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
@@ -1519,7 +1519,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txtEmpleoDescripcion">
+                <Component class="javax.swing.JTextArea" name="txtareaDetalleEmpleosCandidato">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e5" green="e5" red="e5" type="rgb"/>

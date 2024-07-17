@@ -113,7 +113,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
         txtBuscarReclutador = new javax.swing.JTextField();
         btnBuscarEmpleos = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        txtEmpleoDescripcion = new javax.swing.JTextArea();
+        txtareaDetalleEmpleosReclutador = new javax.swing.JTextArea();
         cbxEstadoReclutador = new javax.swing.JComboBox<>();
         cbxModalidadReclutador = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
@@ -396,10 +396,10 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
             }
         });
 
-        txtEmpleoDescripcion.setBackground(new java.awt.Color(226, 226, 226));
-        txtEmpleoDescripcion.setColumns(20);
-        txtEmpleoDescripcion.setRows(5);
-        jScrollPane3.setViewportView(txtEmpleoDescripcion);
+        txtareaDetalleEmpleosReclutador.setBackground(new java.awt.Color(226, 226, 226));
+        txtareaDetalleEmpleosReclutador.setColumns(20);
+        txtareaDetalleEmpleosReclutador.setRows(5);
+        jScrollPane3.setViewportView(txtareaDetalleEmpleosReclutador);
 
         cbxEstadoReclutador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "disponible", "finalizado", "eliminado" }));
 
@@ -753,7 +753,7 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
             descripcionCompleta.append("Rango de edad permitido:  ").append(edadMin != null && edadMax != null ? edadMin.toString() + " - " + edadMax.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
 
-            txtEmpleoDescripcion.setText(descripcionCompleta.toString());
+            txtareaDetalleEmpleosReclutador.setText(descripcionCompleta.toString());
         }
     }//GEN-LAST:event_tblListaEmpleoMouseClicked
 
@@ -763,6 +763,9 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
 
     private void btnBuscarEmpleosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleosActionPerformed
 
+        
+        txtareaDetalleEmpleosReclutador.setText(null);
+        
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
         FiltroEmpleosReclutador filtroEmpleosReclutador = new FiltroEmpleosReclutador();
@@ -987,11 +990,11 @@ public final class ViewMenuReclutador extends javax.swing.JFrame {
     private javax.swing.JTextField txtEdadMax;
     private javax.swing.JTextField txtEdadMin;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextArea txtEmpleoDescripcion;
     private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtSueldo;
     private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextArea txtareaDetalleEmpleosReclutador;
     private javax.swing.JTextArea txtareaFeedback;
     // End of variables declaration//GEN-END:variables
 }

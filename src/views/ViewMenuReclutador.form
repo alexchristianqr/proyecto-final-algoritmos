@@ -702,7 +702,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txtEmpleoDescripcion">
+                <Component class="javax.swing.JTextArea" name="txtareaDetalleEmpleosReclutador">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e2" green="e2" red="e2" type="rgb"/>
