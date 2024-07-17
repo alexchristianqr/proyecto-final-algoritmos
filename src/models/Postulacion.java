@@ -10,6 +10,7 @@ public class Postulacion extends Empleo {
     private int idReclutador;
     private String feedback;
     private Reclutador reclutador;
+    private int edad;
     private String estado;// postulado|en_proceso|contratado|cancelado|bloqueado
     private String fechaCreado;
     private String fechaActualizado;
@@ -26,9 +27,18 @@ public class Postulacion extends Empleo {
         this.feedback = postulacion.getFeedback();
         this.idReclutador = postulacion.getIdReclutador();
         this.reclutador = postulacion.getReclutador();
+        this.edad = postulacion.getEdad();
         this.estado = postulacion.getEstado();
         this.fechaCreado = postulacion.getFechaCreado();
         this.fechaActualizado = postulacion.getFechaActualizado();
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
     public String getFeedback() {

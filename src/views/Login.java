@@ -23,9 +23,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        txtUsername.setText("alex.quispe@gmail.com");
-        txtPwd.setText("candidato2024");
-
+        txtUsername.setText("maria.gonzales@utp.edu.pe");
+        txtPwd.setText("reclutador2024");
     }
 
     private char[] pwdToArray(String pwd) {

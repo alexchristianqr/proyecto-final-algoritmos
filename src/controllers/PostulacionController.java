@@ -3,6 +3,7 @@ package controllers;
 import core.services.ResponseService;
 import java.util.List;
 import models.FeedbackInfo;
+import models.FiltroPostulaciones;
 import models.Postulacion;
 import services.PostulacionService;
 
@@ -53,11 +54,11 @@ public class PostulacionController extends BaseController<Postulacion, Postulaci
         return response;
     }
 
-    public ResponseService<List<Object[]>> listarPostulaciones(Postulacion postulacion) {
+    public ResponseService<List<Object[]>> listarPostulaciones(Postulacion postulacion, FiltroPostulaciones filtroPostulaciones) {
         ResponseService<List<Object[]>> response = new ResponseService<>();
 
         String[] columnNames = {"Codigo", "Titulo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Feedback", "Fecha Creado"};
-        List<Object[]> resultado = service.listarPostulaciones(columnNames, postulacion);
+        List<Object[]> resultado = service.listarPostulaciones(columnNames, postulacion, filtroPostulaciones);
 
         response.setSuccess(true);
         response.setMessage("listado de postulaciones");

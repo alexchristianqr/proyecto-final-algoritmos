@@ -2,9 +2,9 @@ package core.services;
 
 public class ResponseService<T> {
 
-    public boolean success;
-    public String message;
-    public T result;
+    private boolean success;
+    private String message;
+    private T result;
 
     public boolean isSuccess() {
         return success;
@@ -23,11 +23,10 @@ public class ResponseService<T> {
     }
 
     public T getResult() {
-        return (T) result;
+        return result;
     }
 
     public void setResult(T result) {
         this.result = result;
     }
-
 }

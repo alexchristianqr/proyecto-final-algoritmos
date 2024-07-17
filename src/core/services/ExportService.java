@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import javax.swing.filechooser.FileSystemView;
 
 public class ExportService {
 
@@ -17,10 +18,10 @@ public class ExportService {
     }
 
     private static void prepareFile(PreparedStatement stmt, String filename, String fileExtension) throws IOException, InterruptedException, ExecutionException {
-        String basePath = "C:\\Users\\benja\\Desktop\\REPORTES\\";
-        File fileDownload = new File(basePath + filename + fileExtension);
-        exportFile(stmt, fileDownload);
-    }
+    File downloadsDir = FileSystemView.getFileSystemView().getDefaultDirectory();
+    File fileDownload = new File(downloadsDir, filename + fileExtension);
+    exportFile(stmt, fileDownload);
+}
 
     private static void exportFile(PreparedStatement stmt, File fileDownload) throws IOException, InterruptedException, ExecutionException {
         /*

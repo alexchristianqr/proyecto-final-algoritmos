@@ -13,6 +13,9 @@ import models.Empleo;
 import models.EstudioAcademico;
 import models.ExperienciaLaboral;
 import models.FeedbackInfo;
+import models.FiltroEmpleosCandidato;
+import models.FiltroEmpleosReclutador;
+import models.FiltroPostulaciones;
 import models.Postulacion;
 import models.Reclutador;
 import models.Usuario;
@@ -50,7 +53,7 @@ public class Main {
         //testListarExperienciasLaborales();
         /* RECLUTADOR */
         //testRegistrarReclutador();
-        //testRegistrarReclutador();
+        //testActualizarReclutador();
         /* EMPLEO */
         //testRegistrarEmpleo();
         //testListarEmpleos();
@@ -117,7 +120,6 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
-
     /* POSTULACION */
     public static void testRegistrarPostulacion() {
         PostulacionController postulacionController = new PostulacionController();
@@ -125,8 +127,9 @@ public class Main {
         // CREAR INSTANCIA
         Postulacion postulacion = new Postulacion();
         postulacion.setIdCandidato(1);
-        postulacion.setIdEmpleo(1);
+        postulacion.setIdEmpleo(5);
         postulacion.setEstado("postulado");
+        postulacion.setEdad(29);
 
         // ACCION POSTULAR A UN EMPLEO
         ResponseService<String> response = postulacionController.registrarPostulacion(postulacion);
@@ -168,25 +171,32 @@ public class Main {
         PostulacionController postulacionController = new PostulacionController();
 
         Postulacion postulacion = new Postulacion();
-        postulacion.setIdCandidato(2);
-        postulacion.setEstado("postulado");
+        postulacion.setIdCandidato(1);
+
+        FiltroPostulaciones filtroPostulaciones = new FiltroPostulaciones();
+        filtroPostulaciones.setBuscar("utp");
+        filtroPostulaciones.setModalidad("presencial");
 
         // MOSTRAR POSTULACIONES
-        ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion);
+        ResponseService<List<Object[]>> response = postulacionController.listarPostulaciones(postulacion, filtroPostulaciones);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
     }
-
 
     /* EMPLEOS */
     public static void testListarEmpleos() {
         EmpleoController empleoController = new EmpleoController();
 
         Empleo empleo = new Empleo();
-        empleo.setIdReclutador(2); // Asume un ID de reclutador, ajustar según sea necesario
+        empleo.setIdReclutador(1); // Asume un ID de reclutador, ajustar según sea necesario
 
-        ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo);
+        FiltroEmpleosReclutador filtroEmpleosReclutador = new FiltroEmpleosReclutador();
+//        filtroEmpleosReclutador.setBuscar("java");
+//        filtroEmpleosReclutador.setModalidad("hibrido");
+        filtroEmpleosReclutador.setEstado("disponible");// finalizado, eliminado
+
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -195,7 +205,11 @@ public class Main {
     public static void testListarEmpleosCandidatos() {
         EmpleoController empleoController = new EmpleoController();
 
-        ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos();
+        FiltroEmpleosCandidato filtroEmpleosCandidato = new FiltroEmpleosCandidato();
+        filtroEmpleosCandidato.setBuscar("SQL");
+        filtroEmpleosCandidato.setModalidad("remoto");
+
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleosCandidatos(filtroEmpleosCandidato);
         System.out.println("Success: " + response.isSuccess());
         System.out.println("Mensaje: " + response.getMessage());
         System.out.println("Resultado: " + response.getResult());
@@ -212,6 +226,8 @@ public class Main {
         empleo.setSueldo("4500.00");
         empleo.setModalidad("remoto");
         empleo.setDescripcion("Responsable del desarrollo de aplicaciones Java");
+        empleo.setEdadMin(18);
+        empleo.setEdadMax(35);
         empleo.setEstado("activo");
 
         ResponseService<Boolean> response = empleoController.registrarEmpleo(empleo);
@@ -220,21 +236,20 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
-
     /* RECLUTADOR */
     public static void testRegistrarReclutador() {
         ReclutadorController reclutadorController = new ReclutadorController();
 
         Reclutador reclutador = new Reclutador();
         reclutador.setIdUsuario(1);
-        reclutador.setNombre("Kevin");
-        reclutador.setApellidos("Lucca");
+        reclutador.setNombre("pedro");
+        reclutador.setApellidos("Gonzales");
         reclutador.setTipoDocumento(1);
-        reclutador.setNroDocumento("99988644");
+        reclutador.setNroDocumento("999444555");
         reclutador.setSexo("M");
-        reclutador.setEdad("23");
-        reclutador.setTelefono("999865774");
-        reclutador.setEstado("activo");
+        reclutador.setEdad("28");
+        reclutador.setTelefono("123456789");
+        //reclutador.setEstado("activo");
         reclutador.setEstadoCivil("soltero");
 
         ResponseService<Boolean> response = reclutadorController.registrarReclutador(reclutador);
@@ -243,6 +258,21 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
+    public static void testActualizarReclutador() {
+        ReclutadorController reclutadorController = new ReclutadorController();
+
+        Reclutador reclutador = new Reclutador();
+        reclutador.setIdReclutador(1);
+        reclutador.setNombre("Hola");
+        reclutador.setEstado("activo");
+        reclutador.setIdPersona(1);
+        //candidato.setIdUsuario(0);
+
+        ResponseService<Boolean> response = reclutadorController.actualizarReclutador(reclutador);
+        System.out.println("success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }
 
     /* CANDIDATO */
     public static void testRegistrarCandidato() {
@@ -373,14 +403,6 @@ public class Main {
         System.out.println("Resultado: " + response.getResult());
     }
 
-    public static void testReportePersonas() {
-        ReporteController reportecontroller = new ReporteController();
-
-        ResponseService<Boolean> response = reportecontroller.reportePersonas();
-        System.out.println("Success: " + response.isSuccess());
-        System.out.println("Mensaje: " + response.getMessage());
-        System.out.println("Resultado: " + response.getResult());
-    }
 
     public static void testReporteEdad() {
         ReporteController reportecontroller = new ReporteController();

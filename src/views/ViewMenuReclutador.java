@@ -1,22 +1,28 @@
 package views;
 
 import controllers.EmpleoController;
+import controllers.PostulacionController;
 import controllers.ReclutadorController;
+import controllers.ReporteController;
 import core.services.ResponseService;
 import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
+import core.utils.Validation;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Empleo;
+import models.FeedbackInfo;
+import models.FiltroEmpleosReclutador;
+import models.Postulacion;
 import models.Reclutador;
 
-public class ViewMenuReclutador extends javax.swing.JFrame {
+public final class ViewMenuReclutador extends javax.swing.JFrame {
 
     Util util = new Util();
     Login login = new Login();
     EmpleoController empleoController = new EmpleoController();
-    ReclutadorController reclutadorController = new ReclutadorController();
 
     public ViewMenuReclutador() {
         initComponents();
@@ -26,16 +32,26 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
     public void mostrarDatosBasicos() {
 
-        txtNombres.setText(UsuarioThreadLocal.get().getNombres());
-        txtApellidos.setText(UsuarioThreadLocal.get().getApellidos());
+        // Añadir ActionListener al JCheckBox
+        chbFeedback.setSelected(false);
+        chbFeedback.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtareaFeedback.setEnabled(chbFeedback.isSelected());
+            }
+        });
+        txtNombres.setText(UsuarioThreadLocal.get().getReclutador().getNombre());
+        txtApellidos.setText(UsuarioThreadLocal.get().getReclutador().getApellidos());
         txtEmail.setText(UsuarioThreadLocal.get().getUsername());
+        txtDNI.setText(UsuarioThreadLocal.get().getReclutador().getNroDocumento());
+        txtCelular.setText(UsuarioThreadLocal.get().getReclutador().getTelefono());
     }
 
     final public void listarEmpleos() {
         Empleo empleo = new Empleo();
         empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
-
-        final ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo);
+        FiltroEmpleosReclutador filtroEmpleosReclutador = new FiltroEmpleosReclutador();
+        final ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);
 
         if (response.isSuccess()) {
             List<Object[]> items = response.getResult();
@@ -87,14 +103,33 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
         cbxModalidad = new javax.swing.JComboBox<>();
+        txtEdadMin = new javax.swing.JTextField();
+        txtEdadMax = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblListaEmpleo = new javax.swing.JTable();
-        jTextField10 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        txtBuscarReclutador = new javax.swing.JTextField();
+        btnBuscarEmpleos = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtEmpleoDescripcion = new javax.swing.JTextArea();
+        cbxEstadoReclutador = new javax.swing.JComboBox<>();
+        cbxModalidadReclutador = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtareaFeedback = new javax.swing.JTextArea();
+        btnGuardarFeedback = new javax.swing.JButton();
+        chbFeedback = new javax.swing.JCheckBox();
+        cbxEstadoActualizado = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -107,6 +142,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
         jLabel6.setText("Nombre(s)");
 
+        txtEmail.setEditable(false);
         txtEmail.setBackground(new java.awt.Color(229, 229, 229));
 
         jLabel7.setText("Apellido(s)");
@@ -198,7 +234,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel1.setText("Título:");
+        jLabel1.setText("Cargo:");
 
         jLabel2.setText("Empresa:");
 
@@ -230,7 +266,15 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtDescripcion);
 
         cbxModalidad.setBackground(new java.awt.Color(226, 226, 226));
-        cbxModalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "presencial", "remoto" }));
+        cbxModalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "presencial", "remoto", "hibrido" }));
+
+        txtEdadMin.setBackground(new java.awt.Color(229, 229, 229));
+
+        txtEdadMax.setBackground(new java.awt.Color(229, 229, 229));
+
+        jLabel11.setText("Edad Min:");
+
+        jLabel12.setText("Edad Máx:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -241,22 +285,29 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(164, 164, 164)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel11))
                                 .addGap(63, 63, 63)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtEmpresa)
                                     .addComponent(txtSueldo)
                                     .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
-                                    .addComponent(cbxModalidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jLabel5)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cbxModalidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtEdadMin, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtEdadMax, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(398, 398, 398)
+                        .addGap(348, 348, 348)
                         .addComponent(btnCrearEmpleo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(210, Short.MAX_VALUE))
         );
@@ -279,13 +330,20 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cbxModalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtEdadMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtEdadMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12))
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addGap(18, 18, 18)
                 .addComponent(btnCrearEmpleo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
 
         jTabbedPane1.addTab("Crear Empleo", jPanel2);
@@ -295,17 +353,17 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         tblListaEmpleo.setBackground(new java.awt.Color(229, 229, 229));
         tblListaEmpleo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null, null, null, null, null, null, null},
-                {"", null, null, null, null, null, null, null, null},
-                {"", null, null, null, null, null, null, null, null},
-                {"", null, null, null, null, null, null, null, null}
+                {"", null, null, null, null, null, null, null, null, null, null, null},
+                {"", null, null, null, null, null, null, null, null, null, null, null},
+                {"", null, null, null, null, null, null, null, null, null, null, null},
+                {"", null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Título", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "Candidatos", "Creado", "Actualizado"
+                "Cargo", "Empresa", "Sueldo", "Modalidad", "Descripcion", "Estado", "ID Candidato", "Candidato", "Edad Min", "Edad Max", "Creado", "Actualizado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -326,17 +384,48 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblListaEmpleo);
 
-        jTextField10.setBackground(new java.awt.Color(229, 229, 229));
+        txtBuscarReclutador.setBackground(new java.awt.Color(229, 229, 229));
 
-        jButton3.setBackground(new java.awt.Color(102, 102, 102));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("BUSCAR");
+        btnBuscarEmpleos.setBackground(new java.awt.Color(102, 102, 102));
+        btnBuscarEmpleos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnBuscarEmpleos.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarEmpleos.setText("BUSCAR");
+        btnBuscarEmpleos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarEmpleosActionPerformed(evt);
+            }
+        });
 
         txtEmpleoDescripcion.setBackground(new java.awt.Color(226, 226, 226));
         txtEmpleoDescripcion.setColumns(20);
         txtEmpleoDescripcion.setRows(5);
         jScrollPane3.setViewportView(txtEmpleoDescripcion);
+
+        cbxEstadoReclutador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "disponible", "finalizado", "eliminado" }));
+
+        cbxModalidadReclutador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "remoto", "presencial", "hibrido" }));
+
+        jLabel13.setText("Estado:");
+
+        jLabel14.setText("Modalidad:");
+
+        jLabel15.setText("Cargo o Empresa o Descripción:");
+
+        txtareaFeedback.setEditable(false);
+        txtareaFeedback.setColumns(20);
+        txtareaFeedback.setRows(5);
+        jScrollPane4.setViewportView(txtareaFeedback);
+
+        btnGuardarFeedback.setText("GUARDAR");
+        btnGuardarFeedback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarFeedbackActionPerformed(evt);
+            }
+        });
+
+        chbFeedback.setText("¿Quiero enviar feedback?");
+
+        cbxEstadoActualizado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "postulado", "contratado", "contactado", "entrevistado", "cancelado", "rechazado", "bloqueado" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -344,42 +433,156 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscarReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxEstadoReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(cbxModalidadReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(btnBuscarEmpleos))
+                            .addComponent(jLabel14)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(cbxEstadoActualizado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnGuardarFeedback))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                            .addComponent(chbFeedback, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscarReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxEstadoReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxModalidadReclutador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarEmpleos))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbxEstadoActualizado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardarFeedback))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chbFeedback)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mis Empleos", jPanel4);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/empresario (2).png"))); // NOI18N
+        jButton1.setText("Reporte Usuarios");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(204, 204, 204));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/grupo-de-edad.png"))); // NOI18N
+        jButton3.setText("Reporte Edad");
+        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setBackground(new java.awt.Color(204, 204, 204));
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/aptitud-fisica.png"))); // NOI18N
+        jButton4.setText("Reporte Aptitudes");
+        jButton4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setBackground(new java.awt.Color(204, 204, 204));
+        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/experiencia.png"))); // NOI18N
+        jButton5.setText("Reporte Experiencias");
+        jButton5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setBackground(new java.awt.Color(204, 204, 204));
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/busqueda-de-talentos.png"))); // NOI18N
+        jButton6.setText("Reporte Reclutadores");
+        jButton6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 894, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(121, 121, 121))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(191, 191, 191)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(136, 136, 136)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4))
+                .addContainerGap(240, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reportes", jPanel3);
@@ -423,67 +626,105 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void btnGuardarReclutadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarReclutadorActionPerformed
-        String nombres = txtNombres.getText();
-        String apellidos = txtApellidos.getText();
-        String celular = txtCelular.getText();
-        String dni = txtDNI.getText();
+        //Validar
+        boolean validateTxtNombres = Validation.validateComponent(txtNombres).required().min(2).max(50).validate();
+        boolean validateTxtApellidos = Validation.validateComponent(txtApellidos).required().min(2).max(50).validate();
+        boolean validateTxtDNI = Validation.validateComponent(txtDNI).required().min(8).max(8).validate();
+        boolean validateTxtCelular = Validation.validateComponent(txtCelular).required().min(9).max(9).validate();
+
+        if (!validateTxtNombres || !validateTxtApellidos || !validateTxtDNI || !validateTxtCelular) {
+            return;
+        }
+
         try {
+            String nombres = txtNombres.getText();
+            String apellidos = txtApellidos.getText();
+            String celular = txtCelular.getText();
+            String dni = txtDNI.getText();
+
             ReclutadorController reclutadorController = new ReclutadorController();
-            Reclutador reclutador = new Reclutador();
 
             // Reclutador
+            Reclutador reclutador = new Reclutador();
+            reclutador.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
+            reclutador.setIdPersona(UsuarioThreadLocal.get().getReclutador().getIdPersona());
             reclutador.setNombre(nombres);
             reclutador.setApellidos(apellidos);
             reclutador.setTelefono(celular);
+            reclutador.setTipoDocumento(1);
             reclutador.setNroDocumento(dni);
+            reclutador.setEdad(dni);
 
-            ResponseService<Boolean> response = reclutadorController.registrarReclutador(reclutador);
-            System.out.println("Reclutador creado exitosamente.");
+            ResponseService<Boolean> response = reclutadorController.actualizarReclutador(reclutador);
+            if (response.isSuccess()) {
+                util.alertMessage("Reclutador guardado correctamente");
+            } else {
+                util.alertMessage("No se pudo guardar reclutador", true);
+            }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "NO SE PUDO GUARDAR TU USUARIO" + e);
+            util.alertMessage("Error al actualizar", true);
+            throw new RuntimeException(e);
         }
 
     }//GEN-LAST:event_btnGuardarReclutadorActionPerformed
 
     private void btnCrearEmpleoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearEmpleoActionPerformed
-        String titulo = txtTitulo.getText();
-        String empresa = txtEmpresa.getText();
-        String sueldo = txtSueldo.getText();
-        String modalidad = cbxModalidad.getSelectedItem().toString();
-        String descripcion = txtDescripcion.getText();
+        boolean validateTxtTitulo = Validation.validateComponent(txtTitulo).required().min(5).max(100).validate();
+        boolean validateTxtEmpresa = Validation.validateComponent(txtEmpresa).required().min(2).max(100).validate();
+        boolean validateTxtSueldo = Validation.validateComponent(txtSueldo).required().min(4).max(5).validate();
+        boolean validateModalidad = Validation.validateComponent(cbxModalidad).required(cb -> cb.getSelectedIndex() > 0).validate();
+        boolean validateDescripcion = Validation.validateComponent(txtDescripcion).required().min(5).max(7000).validate();
+        boolean validateTxtEdadMin = Validation.validateComponent(txtEdadMin).required().validate();
+        boolean validateTxtEdadMax = Validation.validateComponent(txtEdadMax).required().validate();
 
-        Empleo empleo = new Empleo();
-        empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
-        empleo.setTitulo(titulo);
-        empleo.setEmpresa(empresa);
-        empleo.setSueldo(sueldo);
-        empleo.setModalidad(modalidad);
-        empleo.setDescripcion(descripcion);
-        empleo.setEstado("disponible");
-
-        ResponseService<Boolean> response = empleoController.registrarEmpleo(empleo);
-        System.out.println("Success: " + response.isSuccess());
-        System.out.println("Mensaje: " + response.getMessage());
-        System.out.println("Resultado: " + response.getResult());
-
-        if (response.isSuccess()) {
-            util.alertMessage(response.getMessage());
-            listarEmpleos();
-            txtTitulo.setText("");
-            txtEmpresa.setText("");
-            txtSueldo.setText("");
-            cbxModalidad.setSelectedIndex(0);
-            txtDescripcion.setText("");
-        } else {
-            util.alertMessage("Error al registrar", true);
+        if (!validateTxtTitulo || !validateTxtEmpresa || !validateTxtSueldo || !validateModalidad || !validateDescripcion || !validateTxtEdadMin || !validateTxtEdadMax) {
+            return;
         }
 
+        try {
+            String titulo = txtTitulo.getText();
+            String empresa = txtEmpresa.getText();
+            String sueldo = txtSueldo.getText();
+            String modalidad = cbxModalidad.getSelectedItem().toString();
+            String descripcion = txtDescripcion.getText();
+            String edadMin = txtEdadMin.getText();
+            String edadMax = txtEdadMax.getText();
+
+            Empleo empleo = new Empleo();
+            empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
+            empleo.setTitulo(titulo);
+            empleo.setEmpresa(empresa);
+            empleo.setSueldo(sueldo);
+            empleo.setModalidad(modalidad);
+            empleo.setDescripcion(descripcion);
+            empleo.setEdadMin(Integer.parseInt(edadMin));
+            empleo.setEdadMax(Integer.parseInt(edadMax));
+            empleo.setEstado("disponible");
+
+            ResponseService<Boolean> response = empleoController.registrarEmpleo(empleo);
+
+            if (response.isSuccess()) {
+                util.alertMessage("Empleo registrado correctamente");
+                listarEmpleos();
+                txtTitulo.setText("");
+                txtEmpresa.setText("");
+                txtSueldo.setText("");
+                cbxModalidad.setSelectedIndex(0);
+                txtDescripcion.setText("");
+                txtEdadMin.setText("");
+                txtEdadMax.setText("");
+            } else {
+                util.alertMessage("No se pudo registrar empleo", true);
+            }
+
+        } catch (Exception e) {
+            util.alertMessage("Error al registrar", true);
+            throw new RuntimeException(e);
+        }
     }//GEN-LAST:event_btnCrearEmpleoActionPerformed
 
     private void tblListaEmpleoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaEmpleoMouseClicked
-        System.out.println("clickeando");
-
         int fila = tblListaEmpleo.getSelectedRow();
         System.out.println("La fila es: " + fila);
 
@@ -493,13 +734,23 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
             Object sueldo = tblListaEmpleo.getValueAt(fila, 2);
             Object modalidad = tblListaEmpleo.getValueAt(fila, 3);
             Object descripcion = tblListaEmpleo.getValueAt(fila, 4);
+            Object estado = tblListaEmpleo.getValueAt(fila, 5);
+            Object id_candidato = tblListaEmpleo.getValueAt(fila, 6);
+            Object candidato = tblListaEmpleo.getValueAt(fila, 7);
+            Object edadMin = tblListaEmpleo.getValueAt(fila, 8);
+            Object edadMax = tblListaEmpleo.getValueAt(fila, 9);
+            
+            cbxEstadoActualizado.setSelectedItem(estado);
 
             StringBuilder descripcionCompleta = new StringBuilder();
             descripcionCompleta.append("================== DESCRIPCIÓN DEL EMPLEO ==================\n\n");
-            descripcionCompleta.append("Titulo:  ").append(titulo != null ? titulo.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Cargo:  ").append(titulo != null ? titulo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Empresa:  ").append(empresa != null ? empresa.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Sueldo:  ").append(sueldo != null ? sueldo.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Modalidad:  ").append(modalidad != null ? modalidad.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Candidato postulado:  ").append(candidato != null ? candidato.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Estado:  ").append(estado != null ? estado.toString() : "No disponible").append("\n\n");
+            descripcionCompleta.append("Rango de edad permitido:  ").append(edadMin != null && edadMax != null ? edadMin.toString() + " - " + edadMax.toString() : "No disponible").append("\n\n");
             descripcionCompleta.append("Descripción:  ").append(descripcion != null ? descripcion.toString() : "No disponible").append("\n\n");
 
             txtEmpleoDescripcion.setText(descripcionCompleta.toString());
@@ -507,8 +758,117 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }//GEN-LAST:event_tblListaEmpleoMouseClicked
 
     private void tblListaEmpleoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblListaEmpleoKeyTyped
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_tblListaEmpleoKeyTyped
+
+    private void btnBuscarEmpleosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmpleosActionPerformed
+
+        Empleo empleo = new Empleo();
+        empleo.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
+        FiltroEmpleosReclutador filtroEmpleosReclutador = new FiltroEmpleosReclutador();
+
+        if (!txtBuscarReclutador.getText().isEmpty()) {
+            filtroEmpleosReclutador.setBuscar(txtBuscarReclutador.getText());
+        }
+        if (!cbxEstadoReclutador.getSelectedItem().toString().equals("todos")) {
+            filtroEmpleosReclutador.setEstado(cbxEstadoReclutador.getSelectedItem().toString());
+        }
+        if (!cbxModalidadReclutador.getSelectedItem().toString().equals("todos")) {
+            filtroEmpleosReclutador.setModalidad(cbxModalidadReclutador.getSelectedItem().toString());
+        }
+
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);
+
+        if (response.isSuccess()) {
+            List<Object[]> items = response.getResult();
+
+            DefaultTableModel modelo = (DefaultTableModel) tblListaEmpleo.getModel();
+            modelo.setRowCount(0);
+
+            // Agregar los datos al modelo
+            for (Object[] item : items) {
+                modelo.addRow(item);
+            }
+        } else {
+            util.alertMessage("Error al listar empleos", true);
+        }
+    }//GEN-LAST:event_btnBuscarEmpleosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ReporteController reportecontroller = new ReporteController();
+
+        ResponseService<Boolean> response = reportecontroller.reporteUsuarios();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        ReporteController reportecontroller = new ReporteController();
+
+        ResponseService<Boolean> response = reportecontroller.reporteEdad();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        ReporteController reportecontroller = new ReporteController();
+
+        ResponseService<Boolean> response = reportecontroller.reporteAptitudes();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        ReporteController reportecontroller = new ReporteController();
+
+        ResponseService<Boolean> response = reportecontroller.reporteExperiencias();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        ReporteController reportecontroller = new ReporteController();
+
+        ResponseService<Boolean> response = reportecontroller.reporteReclutadores();
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void btnGuardarFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarFeedbackActionPerformed
+        // TODO add your handling code here:
+        // Validar
+        boolean validateestado = Validation.validateComponent(cbxEstadoActualizado).required(cb -> cb.getSelectedIndex() > 0).validate();
+
+        if (!validateestado) {
+            return;
+        }
+
+        String estado = cbxEstadoActualizado.getSelectedItem().toString();
+
+        PostulacionController postulacionController = new PostulacionController();
+
+        Postulacion postulacion = new Postulacion();
+        postulacion.setEstado(estado);
+
+        FeedbackInfo feedbackInfo = new FeedbackInfo();
+        feedbackInfo.setNombreCandidato(UsuarioThreadLocal.get().getCandidato().getNombre());
+        feedbackInfo.setNombreReclutador(UsuarioThreadLocal.get().getReclutador().getNombre());
+        feedbackInfo.setEmailReclutador(UsuarioThreadLocal.get().getUsername());
+        feedbackInfo.setEmpresaReclutador(UsuarioThreadLocal.get().getReclutador().getEmpresa());
+        feedbackInfo.setPuestoReclutador("Reclutador");
+        feedbackInfo.setTelefonoReclutador(UsuarioThreadLocal.get().getReclutador().getTelefono());
+
+        ResponseService<Boolean> response = postulacionController.registrarFeedbackPersonalizado(postulacion, feedbackInfo);
+
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Mensaje: " + response.getMessage());
+        System.out.println("Resultado: " + response.getResult());
+    }//GEN-LAST:event_btnGuardarFeedbackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -547,12 +907,27 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarEmpleos;
     private javax.swing.JButton btnCrearEmpleo;
+    private javax.swing.JButton btnGuardarFeedback;
     private javax.swing.JButton btnGuardarReclutador;
+    private javax.swing.JComboBox<String> cbxEstadoActualizado;
+    private javax.swing.JComboBox<String> cbxEstadoReclutador;
     private javax.swing.JComboBox<String> cbxModalidad;
+    private javax.swing.JComboBox<String> cbxModalidadReclutador;
+    private javax.swing.JCheckBox chbFeedback;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -571,18 +946,22 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField10;
     private javax.swing.JTable tblListaEmpleo;
     private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtBuscarReclutador;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextArea txtDescripcion;
+    private javax.swing.JTextField txtEdadMax;
+    private javax.swing.JTextField txtEdadMin;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextArea txtEmpleoDescripcion;
     private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtSueldo;
     private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextArea txtareaFeedback;
     // End of variables declaration//GEN-END:variables
 }

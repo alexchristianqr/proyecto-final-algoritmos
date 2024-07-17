@@ -3,7 +3,7 @@ package tareas.tercer_avance.arbol_binario;
 public class Main {
 
     /*
-        Caso: Gestión de Inventario de Productos "TAMBO"
+        Caso: Gestión de Inventario de Productos "TIENDAS TAMBO"
      */
     public static void main(String[] args) {
         Inventario inventario = new Inventario();
@@ -41,18 +41,21 @@ public class Main {
         System.out.print("-----------\n");
 
         // Buscar producto en arbol binario
-        int codigoBusqueda = 40;
-        TreeNode resultado = inventario.buscar(codigoBusqueda);
+        int codigoABuscar = 40;
+        TreeNode resultado = inventario.buscar(codigoABuscar);
         System.out.print("\n");
 
         System.out.print("---------------\n");
         System.out.println("LOG: ENCONTRADO");
         System.out.print("---------------\n");
 
+        System.out.println("Buscar: "+codigoABuscar);
+        
+        int codigoBuscar = 40; 
         if (resultado != null) {
             System.out.println("Producto encontrado: Código " + resultado.getProducto().getCodigo() + ", Nombre " + resultado.getProducto().getNombre());
         } else {
-            System.out.println("Producto con código " + codigoBusqueda + " no encontrado en el inventario.");
+            System.out.println("Producto con código " + codigoABuscar + " no encontrado en el inventario.");
         }
     }
 }

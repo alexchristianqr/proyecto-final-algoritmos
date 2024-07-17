@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import models.FeedbackInfo;
+import models.FiltroPostulaciones;
 import models.Postulacion;
 
 public class PostulacionService extends BaseService {
@@ -15,28 +16,38 @@ public class PostulacionService extends BaseService {
     }
 
     public String registrarPostulacion(Postulacion postulacion) {
-        String response = "";
+        String response = "error";
 
         try {
+            ResultSet rs, rs_2;
+
             if (postulacion.getEstado().isEmpty() || postulacion.getEstado().isBlank()) {
-                util.alertMessage("[estado] es requerido");
+                util.alertMessage("[estado] es requerido", true);
             }
 
-            querySQL_1 = "SELECT p.estado FROM postulaciones p WHERE p.id_candidato = ? AND p.id_empleo = ? AND p.estado IN ('postulado', 'bloqueado', 'contactado', 'entrevistado', 'contratado') LIMIT 1";
+            querySQL_1 = "SELECT p.estado FROM postulaciones p WHERE p.id_candidato = ? AND p.id_empleo = ? AND p.estado IN ('postulado', 'bloqueado', 'contactado', 'entrevistado', 'contratado') LIMIT 1;";
             Object[] parametrosSQL_1 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo()};
-            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+            rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
 
-            String estado = "";
             if (rs.next()) {
-                estado = rs.getString("estado");
+                String estado = rs.getString("estado");
                 response = estado;
             } else {
-                querySQL_2 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado) VALUES (?,?,?)";
-                Object[] parametrosSQL_2 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
-                int creado = db.queryInsertar(querySQL_2, parametrosSQL_2);
+                querySQL_2 = "SELECT e.id FROM (SELECT * FROM empleos e WHERE e.id = ? HAVING (? >= e.edad_min AND ? <= e.edad_max)) e;";
+                Object[] parametrosSQL_2 = {postulacion.getIdEmpleo(), postulacion.getEdad(), postulacion.getEdad()};
+                rs_2 = db.queryConsultar(querySQL_2, parametrosSQL_2);
 
-                if (creado > 0) {
-                    response = "creado";// postulado
+                if (rs_2.next()) {
+                    int id_empleo = rs_2.getInt("id");
+                    if (id_empleo != 0) {
+                        querySQL_3 = "INSERT INTO postulaciones (id_candidato, id_empleo, estado) VALUES (?,?,?)";
+                        Object[] parametrosSQL_3 = {postulacion.getIdCandidato(), postulacion.getIdEmpleo(), postulacion.getEstado()};
+                        int creado = db.queryInsertar(querySQL_3, parametrosSQL_3);
+
+                        if (creado > 0) {
+                            response = "creado";// postulado
+                        }
+                    }
                 }
             }
 
@@ -130,7 +141,7 @@ public class PostulacionService extends BaseService {
         return success;
     }
 
-    public List listarPostulaciones(String[] columnNames, Postulacion postulacion) {
+    public List listarPostulaciones(String[] columnNames, Postulacion postulacion, FiltroPostulaciones filtroPostulaciones) {
         List<Object[]> lista = new ArrayList<>();
 
         try {
@@ -139,17 +150,27 @@ public class PostulacionService extends BaseService {
             querySQL_1 = "SELECT po.id, e.titulo, e.empresa, e.sueldo, e.modalidad, e.descripcion, po.estado, po.feedback, po.fecha_creado FROM empleos e JOIN postulaciones po ON po.id_empleo = e.id JOIN candidatos c ON c.id = po.id_candidato WHERE po.id_candidato = ? ";
             parametrosList.add(postulacion.getIdCandidato());
 
-            if (postulacion.getEstado() != null) {
+            if (filtroPostulaciones.getBuscar()!= null) {
+                querySQL_1 += " AND (e.titulo LIKE ? OR e.descripcion LIKE ? OR e.empresa LIKE ?) ";
+                String buscar = "%" + filtroPostulaciones.getBuscar() + "%";
+                parametrosList.add(buscar);
+                parametrosList.add(buscar);
+                parametrosList.add(buscar);
+            }
+            if (filtroPostulaciones.getModalidad() != null) {
+                querySQL_1 += " AND e.modalidad = ? ";
+                parametrosList.add(filtroPostulaciones.getModalidad());
+            }
+            if (filtroPostulaciones.getEstado() != null) {
                 querySQL_1 += " AND po.estado = ? ";
-                parametrosList.add(postulacion.getEstado());
+                parametrosList.add(filtroPostulaciones.getEstado());
             }
 
             querySQL_1 += " ORDER BY po.id DESC; ";
-
+            
             // Convertimos la lista a un array
-            Object[] parametrosSQL_1 = parametrosList.toArray(Object[]::new);
-
-            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL_1);
+            Object[] parametrosSQL = parametrosList.toArray(Object[]::new);
+            ResultSet rs = db.queryConsultar(querySQL_1, parametrosSQL);
 
             System.out.println("\n");
 
