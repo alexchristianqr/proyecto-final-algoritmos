@@ -7,18 +7,16 @@ import core.utils.UsuarioThreadLocal;
 import core.utils.Util;
 import core.utils.Validation;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Empleo;
 import models.FiltroEmpleosReclutador;
 import models.Reclutador;
 
-public class ViewMenuReclutador extends javax.swing.JFrame {
+public final class ViewMenuReclutador extends javax.swing.JFrame {
 
     Util util = new Util();
     Login login = new Login();
     EmpleoController empleoController = new EmpleoController();
-    ReclutadorController reclutadorController = new ReclutadorController();
 
     public ViewMenuReclutador() {
         initComponents();
@@ -28,9 +26,11 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
     public void mostrarDatosBasicos() {
 
-        txtNombres.setText(UsuarioThreadLocal.get().getNombres());
-        txtApellidos.setText(UsuarioThreadLocal.get().getApellidos());
+        txtNombres.setText(UsuarioThreadLocal.get().getReclutador().getNombre());
+        txtApellidos.setText(UsuarioThreadLocal.get().getReclutador().getApellidos());
         txtEmail.setText(UsuarioThreadLocal.get().getUsername());
+        txtDNI.setText(UsuarioThreadLocal.get().getReclutador().getNroDocumento());
+        txtCelular.setText(UsuarioThreadLocal.get().getReclutador().getTelefono());
     }
 
     final public void listarEmpleos() {
@@ -118,6 +118,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
         jLabel6.setText("Nombre(s)");
 
+        txtEmail.setEditable(false);
         txtEmail.setBackground(new java.awt.Color(229, 229, 229));
 
         jLabel7.setText("Apellido(s)");
@@ -486,13 +487,12 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
 
     private void btnGuardarReclutadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarReclutadorActionPerformed
         //Validar
-        boolean validateTxtNombres = Validation.validateComponent(txtNombres).required().min(5).max(10).validate();
-        boolean validateTxtApellidos = Validation.validateComponent(txtApellidos).required().min(10).max(20).validate();
+        boolean validateTxtNombres = Validation.validateComponent(txtNombres).required().min(1).max(50).validate();
+        boolean validateTxtApellidos = Validation.validateComponent(txtApellidos).required().min(1).max(50).validate();
         boolean validateTxtDNI = Validation.validateComponent(txtDNI).required().min(8).max(8).validate();
-        boolean validateTxtEmail = Validation.validateComponent(txtEmail).required().min(10).max(50).email().validate();
         boolean validateTxtCelular = Validation.validateComponent(txtCelular).required().min(9).max(9).validate();
 
-        if (!validateTxtNombres || !validateTxtApellidos || !validateTxtDNI || !validateTxtEmail || !validateTxtCelular) {
+        if (!validateTxtNombres || !validateTxtApellidos || !validateTxtDNI || !validateTxtCelular) {
             return;
         }
 
@@ -500,21 +500,30 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         String apellidos = txtApellidos.getText();
         String celular = txtCelular.getText();
         String dni = txtDNI.getText();
+
         try {
             ReclutadorController reclutadorController = new ReclutadorController();
-            Reclutador reclutador = new Reclutador();
 
             // Reclutador
+            Reclutador reclutador = new Reclutador();
+            reclutador.setIdReclutador(UsuarioThreadLocal.get().getIdReclutador());
+            reclutador.setIdPersona(UsuarioThreadLocal.get().getReclutador().getIdPersona());
             reclutador.setNombre(nombres);
             reclutador.setApellidos(apellidos);
             reclutador.setTelefono(celular);
+            reclutador.setTipoDocumento(1);
             reclutador.setNroDocumento(dni);
 
-            ResponseService<Boolean> response = reclutadorController.registrarReclutador(reclutador);
-            System.out.println("Reclutador creado exitosamente.");
+            ResponseService<Boolean> response = reclutadorController.actualizarReclutador(reclutador);
+            if (response.isSuccess()) {
+                util.alertMessage("Reclutador guardado correctamente");
+            } else {
+                util.alertMessage("No se pudo guardar reclutador", true);
+            }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "NO SE PUDO GUARDAR TU USUARIO" + e);
+            util.alertMessage("Error al actualizar", true);
+            throw new RuntimeException(e);
         }
 
     }//GEN-LAST:event_btnGuardarReclutadorActionPerformed
@@ -609,12 +618,11 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
         if (!cbxEstadoReclutador.getSelectedItem().toString().equals("todos")) {
             filtroEmpleosReclutador.setEstado(cbxEstadoReclutador.getSelectedItem().toString());
         }
-
         if (!cbxModalidadReclutador.getSelectedItem().toString().equals("todos")) {
             filtroEmpleosReclutador.setModalidad(cbxModalidadReclutador.getSelectedItem().toString());
         }
 
-        final ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);
+        ResponseService<List<Object[]>> response = empleoController.listarEmpleos(empleo, filtroEmpleosReclutador);
 
         if (response.isSuccess()) {
             List<Object[]> items = response.getResult();
@@ -627,7 +635,7 @@ public class ViewMenuReclutador extends javax.swing.JFrame {
                 modelo.addRow(item);
             }
         } else {
-            util.alertMessage("Error al lista empleos", true);
+            util.alertMessage("Error al listar empleos", true);
         }
     }//GEN-LAST:event_btnBuscarEmpleosActionPerformed
 
